@@ -1,5 +1,5 @@
-= Getting Started
-:page-children: solr-tutorial, a-quick-overview, solr-concepts, solr-glossary
+= Configuration Guide
+:page-children: using-the-solr-administration-user-interface, securing-solr, the-well-configured-solr-instance, solr-plugins
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -17,15 +17,4 @@
 // specific language governing permissions and limitations
 // under the License.
 
-[.lead]
-Solr makes it easy for programmers to develop sophisticated, high-performance search applications with advanced features.
-
-This section introduces you to the basic Solr architecture and features to help you get up and running quickly. It covers the following topics:
-
-<<solr-tutorial.adoc#solr-tutorial,Solr Tutorial>>: This tutorial covers getting Solr up and running
-
-<<a-quick-overview.adoc#a-quick-overview,A Quick Overview>>: A high-level overview of how Solr works.
-
-<<solr-system-requirements.adoc#solr-system-requirements,Solr System Requirements>>: Solr System Requirement
-
-<<installing-solr.adoc#installing-solr,Installing Solr>>: A walkthrough of the Solr installation process.
+new placeholder page

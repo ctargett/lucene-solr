@@ -1,6 +1,5 @@
 = Indexing and Basic Data Operations
-:page-children: introduction-to-solr-indexing, +
-  post-tool, +
+:page-children: post-tool, +
   uploading-data-with-index-handlers, +
   indexing-nested-documents, +
   uploading-data-with-solr-cell-using-apache-tika, +

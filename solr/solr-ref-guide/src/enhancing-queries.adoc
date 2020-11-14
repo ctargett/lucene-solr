@@ -1,4 +1,5 @@
-= Further Assistance
+= Enhancing Queries
+:page-children: spell-checking, suggester, morelikethis, query-re-ranking, the-terms-component, the-term-vector-component, the-stats-component, the-tagger-handler, realtime-get, parallel-sql-interface, analytics
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -16,6 +17,4 @@
 // specific language governing permissions and limitations
 // under the License.
 
-There is a very active user community around Solr and Lucene. The solr-user mailing list, and #solr IRC channel are both great resources for asking questions.
-
-To view the mailing list archives, subscribe to the list, or join the IRC channel, please see https://lucene.apache.org/solr/community.html.
+new placeholder page

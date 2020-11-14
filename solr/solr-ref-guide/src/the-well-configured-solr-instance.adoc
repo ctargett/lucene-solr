@@ -1,5 +1,6 @@
 = The Well-Configured Solr Instance
-:page-children: configuring-solrconfig-xml, \
+:page-children: near-real-time-searching, \
+    configuring-solrconfig-xml, \
     solr-cores-and-solr-xml, \
     resource-loading, \
     configuration-apis, \

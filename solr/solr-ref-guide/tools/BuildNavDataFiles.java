@@ -89,7 +89,7 @@ public class BuildNavDataFiles {
 
     { // the previous page seen during our walk
       AtomicReference<Page> previous = new AtomicReference<Page>();
-      
+
       mainPage.depthFirstWalk(new Page.RecursiveAction() {
         public boolean act(Page page) {
           if (null != previous.get()) {
@@ -102,7 +102,7 @@ public class BuildNavDataFiles {
         }
       });
     }
-    
+
     // Build up the scrollnav file for jekyll's footer
     File scrollnavFile = new File(new File(adocDir, "_data"), "scrollnav.json");
     if (scrollnavFile.exists()) {
@@ -132,7 +132,7 @@ public class BuildNavDataFiles {
       // HACK: jekyll doesn't like escaped forward slashes in it's JSON?
       w.write(scrollnav.toString(2).replaceAll("\\\\/","/"));
     }
-    
+
     // Build up the sidebar file for jekyll
     File sidebarFile = new File(new File(adocDir, "_data"), "sidebar.json");
     if (sidebarFile.exists()) {
@@ -142,11 +142,11 @@ public class BuildNavDataFiles {
     try (Writer w = new OutputStreamWriter(new FileOutputStream(sidebarFile), "UTF-8")) {
       // A stack for tracking what we're working on as we recurse
       final Stack<JSONObject> stack = new Stack<JSONObject>();
-      
+
       mainPage.depthFirstWalk(new Page.RecursiveAction() {
         public boolean act(Page page) {
           final int depth = stack.size();
-          if (4 < depth) {
+          if (6 < depth) {
             System.err.println("ERROR: depth==" + depth + " for " + page.permalink);
             System.err.println("sidebar.html template can not support pages this deep");
             System.exit(-1);
@@ -157,12 +157,12 @@ public class BuildNavDataFiles {
               .put("url", page.permalink)
               .put("depth", depth)
               .put("kids", new JSONArray());
-            
+
             if (0 < depth) {
               JSONObject parent = stack.peek();
               ((JSONArray)parent.get("kids")).put(current);
             }
-            
+
             stack.push(current);
           } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -183,7 +183,7 @@ public class BuildNavDataFiles {
         }
       });
     }
-    
+
   }
 
   /** Simple struct for modeling the key metadata for dealing with page navigation */
@@ -209,13 +209,13 @@ public class BuildNavDataFiles {
       if (! file.getName().endsWith(".adoc")) {
         throw new RuntimeException(file + " has does not end in '.adoc' - this code can't be used");
       }
-      
+
       this.file = file;
       this.title = header.getDocumentTitle().getMain();
 
       this.shortname = file.getName().replaceAll("\\.adoc$","");
       this.permalink = this.shortname + ".html";
-      
+
       // TODO: do error checking if attribute metadata we care about is missing
       Map<String,Object> attrs = header.getAttributes();
 
@@ -225,7 +225,7 @@ public class BuildNavDataFiles {
           throw new RuntimeException(file + ": remove the " + attr + " attribute, it's no longer needed, and may confuse readers/editors");
         }
       }
-      
+
       if (attrs.containsKey("page-children")) {
         String kidsString = ((String) attrs.get("page-children")).trim();
         this.kidShortnames = Collections.<String>unmodifiableList
@@ -238,9 +238,9 @@ public class BuildNavDataFiles {
       this.kids = Collections.<Page>unmodifiableList(mutableKids);
     }
 
-    /** 
-     * Recursively sets {@link #getParent} and populates {@link #kids} from {@link #kidShortnames} 
-     * via the <code>allPages</code> Map 
+    /**
+     * Recursively sets {@link #getParent} and populates {@link #kids} from {@link #kidShortnames}
+     * via the <code>allPages</code> Map
      */
     public void buildPageTreeRecursive(Page parent, Map<String,Page> allPages) {
       if (null != parent) {
@@ -261,8 +261,8 @@ public class BuildNavDataFiles {
       }
     }
 
-    /** 
-     * Do a depth first recursive action on this node and it's {@link #kids} 
+    /**
+     * Do a depth first recursive action on this node and it's {@link #kids}
      * @see RecursiveAction
      */
     public void depthFirstWalk(RecursiveAction action) {
@@ -278,15 +278,15 @@ public class BuildNavDataFiles {
     public static interface RecursiveAction {
       /** return true if kids should also be visited */
       public boolean act(Page page);
-      /** 
-       * called after recusion to each kid (if any) of specified node, 
-       * never called if {@link #act} returned false 
+      /**
+       * called after recusion to each kid (if any) of specified node,
+       * never called if {@link #act} returned false
        */
       public default void postKids(Page page) { /* No-op */ };
     }
   }
 
-  
+
   /** Trivial filter for only "*.adoc" files */
   public static final FilenameFilter ADOC_FILE_NAMES = new FilenameFilter() {
     public boolean accept(File dir, String name) {

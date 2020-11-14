@@ -1,4 +1,5 @@
-= Errata
+= Schema and Indexing Guide
+:page-children: solr-schema, documents-fields-and-schema-design, understanding-analyzers-tokenizers-and-filters, indexing-and-basic-data-operations, luke-request-handler
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -16,10 +17,4 @@
 // specific language governing permissions and limitations
 // under the License.
 
-== Errata For This Documentation
-
-Any mistakes found in this documentation after its release will be listed below.
-
-=== Errata For Past Versions of This Documentation
-
-Any known mistakes in past releases of this documentation will be noted below.
+new placeholder page

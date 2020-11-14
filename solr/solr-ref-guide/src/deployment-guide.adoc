@@ -1,5 +1,5 @@
-= Deployment and Operations
-:page-children: solr-control-script-reference, solr-configuration-files, taking-solr-to-production, making-and-restoring-backups, running-solr-on-hdfs, aws-solrcloud-tutorial, upgrading-a-solr-cluster, solr-upgrade-notes
+= Deployment Guide
+:page-children: installation-deployment, solr-control-script-reference, solr-configuration-files, monitoring-solr, scaling-solr, circuit-breakers, rate-limiters, upgrading-a-solr-cluster, client-apis
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
