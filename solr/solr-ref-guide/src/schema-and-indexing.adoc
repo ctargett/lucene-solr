@@ -17,4 +17,15 @@
 // specific language governing permissions and limitations
 // under the License.
 
-new placeholder page
+[.lead]
+intro tbd
+
+<<solr-schema.adoc#solr-schema,Solr Schema>>: description TBD
+
+<<documents-fields-and-schema-design.adoc#documents-fields-and-schema-design,Documents, Fields, and Schema Design>>: This section describes how Solr organizes data in the index. It explains how a Solr schema defines the fields and field types which Solr uses to organize data within the document files it indexes. *Page needs rename*
+
+<<understanding-analyzers-tokenizers-and-filters.adoc#understanding-analyzers-tokenizers-and-filters,Understanding Analyzers, Tokenizers, and Filters>>: This section explains how Solr prepares text for indexing and searching. Analyzers parse text and produce a stream of tokens, lexical units used for indexing and searching. Tokenizers break field data down into tokens. Filters perform other transformational or selective work on token streams.
+
+<<indexing-and-basic-data-operations.adoc#indexing-and-basic-data-operations,Indexing and Basic Data Operations>>: This section describes the indexing process and basic index operations, such as commit, optimize, and rollback.
+
+<<luke-request-handler.adoc#luke-request-handler,Luke Requst Handler>>: The request handler which provides access to information about fields in the index. This request handler powers the <<schema-browser-screen.adoc#schema-browser-screen,Schema Browser>> page of Solr's Admin UI.

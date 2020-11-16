@@ -17,4 +17,28 @@
 // specific language governing permissions and limitations
 // under the License.
 
-new placeholder page
+[.lead]
+TBD fill this in
+
+<<spell-checking.adoc#spell-checking,Spell Checking>>: Detailed information about Solr's spelling checker.
+
+<<suggester.adoc#suggester,Suggester>>: Detailed information about Solr's powerful autosuggest component.
+
+<<morelikethis.adoc#morelikethis,MoreLikeThis>>: Detailed information about Solr's similar results query component.
+
+<<query-re-ranking.adoc#query-re-ranking,Query Re-Ranking>>: Detailed information about re-ranking top scoring documents from simple queries using more complex scores.
+* <<learning-to-rank.adoc#learning-to-rank,Learning To Rank>>: How to use LTR to run machine learned ranking models in Solr.
+
+<<the-terms-component.adoc#the-terms-component,The Terms Component>>: Detailed information about accessing indexed terms and the documents that include them.
+
+<<the-term-vector-component.adoc#the-term-vector-component,The Term Vector Component>>: How to get term information about specific documents.
+
+<<the-stats-component.adoc#the-stats-component,The Stats Component>>: How to return information from numeric fields within a document set.
+
+<<the-tagger-handler.adoc#the-tagger-handler,The Tagger Handler>>: The SolrTextTagger, for basic named entity tagging in text.
+
+<<realtime-get.adoc#realtime-get,RealTime Get>>: How to get the latest version of a document without opening a searcher.
+
+<<parallel-sql-interface.adoc#parallel-sql-interface,Parallel SQL Interface>>: An interface for sending SQL statements to Solr, and using advanced parallel query processing and relational algebra for complex data analysis.
+
+<<analytics.adoc#analytics,The Analytics Component>>: A framework to compute complex analytics over a result set.

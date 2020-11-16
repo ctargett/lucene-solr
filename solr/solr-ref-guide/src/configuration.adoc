@@ -1,5 +1,5 @@
 = Configuration Guide
-:page-children: using-the-solr-administration-user-interface, securing-solr, the-well-configured-solr-instance, solr-plugins
+:page-children: solr-configuration-files, using-the-solr-administration-user-interface, securing-solr, scaling-solr, the-well-configured-solr-instance, solr-plugins
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -17,4 +17,17 @@
 // specific language governing permissions and limitations
 // under the License.
 
-new placeholder page
+[.lead]
+Solr has countless options for customizing the system.
+
+<<solr-configuration-files.adoc#solr-configuration-files,Solr Configuration Files>>: Overview of the installation layout and major configuration files.
+
+<<using-the-solr-administration-user-interface.adoc#using-the-solr-administration-user-interface,Using the Solr Administration User Interface>>: This section introduces the Web-based interface for administering Solr. From your browser you can view configuration files, submit queries, view logfile settings and Java environment settings, and monitor and control distributed configurations.
+
+<<securing-solr.adoc#securing-solr,Securing Solr>>: When planning how to secure Solr, you should consider which of the available features or approaches are right for you.
+
+<<scaling-solr.adoc#scaling-solr,Scaling Solr>>: TBD
+
+<<the-well-configured-solr-instance.adoc#the-well-configured-solr-instance,The Well-Configured Solr Instance>>: This section discusses performance tuning for Solr. It begins with an overview of the `solrconfig.xml` file, then tells you how to configure cores with `solr.xml`, how to configure the Lucene index writer, and more.
+
+<<solr-plugins.adoc#solr-plugins,Solr Plugins>>: TBD

@@ -1,5 +1,5 @@
 = Deployment Guide
-:page-children: installation-deployment, solr-control-script-reference, solr-configuration-files, monitoring-solr, scaling-solr, circuit-breakers, rate-limiters, upgrading-a-solr-cluster, client-apis
+:page-children: installation-deployment, solr-control-script-reference, monitoring-solr, circuit-breakers, rate-limiters, upgrading-a-solr-cluster, client-apis
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -17,22 +17,34 @@
 // specific language governing permissions and limitations
 // under the License.
 
-An important aspect of Solr is that all operations and deployment can be done online, with minimal or no impact to running applications. This includes minor upgrades and provisioning and removing nodes, backing up and restoring indexes and editing configurations
+[.lead]
+An important aspect of Solr is that all operations and deployment can be done online, with minimal or no impact to running applications.
 
-Common administrative tasks include:
+This includes minor upgrades and provisioning and removing nodes, backing up and restoring indexes and editing configurations.
+
+The Deployment Guide covers:
+
+<<installation-and-deployment.adoc#installation-and-deployment,Installation and Deployment>>:
+
+* <<solr-system-requirements.adoc#solr-system-requirements,Solr System Requirements>>: Solr system requirements.
+* <<installing-solr.adoc#installing-solr,Installing Solr>>: A walkthrough of the Solr installation process.
+* <<taking-solr-to-production.adoc#taking-solr-to-production,Taking Solr to Production>>: Detailed steps to help you install Solr as a service and take your application to production.
+* <<making-and-restoring-backups.adoc#making-and-restoring-backups,Making and Restoring Backups>>: Describes backup strategies for your Solr indexes.
+* <<running-solr-on-hdfs.adoc#running-solr-on-hdfs,Running Solr on HDFS>>: How to use HDFS to store your Solr indexes and transaction logs.
+* <<aws-solrcloud-tutorial.adoc#aws-solrcloud-tutorial,SolrCloud on AWS EC2>>: A tutorial on deploying Solr in Amazon Web Services (AWS) using EC2 instances.
+
 
 <<solr-control-script-reference.adoc#solr-control-script-reference,Solr Control Script Reference>>: This section provides information about all of the options available to the `bin/solr` / `bin\solr.cmd` scripts, which can start and stop Solr, configure authentication, and create or remove collections and cores.
 
-<<solr-configuration-files.adoc#solr-configuration-files,Solr Configuration Files>>: Overview of the installation layout and major configuration files.
+<<monitoring-solr.adoc#monitoring-solr,Monitoring Solr>>: Solr includes options for keeping an eye on the performance of your Solr cluster with the web-based administration console, through the command line interface, or using REST APIs.
+* *TODO* list out all the child pages here like above?
 
-<<taking-solr-to-production.adoc#taking-solr-to-production,Taking Solr to Production>>: Detailed steps to help you install Solr as a service and take your application to production.
+<<circuit-breakers.adoc#circuit-breakers,Circuit Breakers>>
 
-<<making-and-restoring-backups.adoc#making-and-restoring-backups,Making and Restoring Backups>>: Describes backup strategies for your Solr indexes.
-
-<<running-solr-on-hdfs.adoc#running-solr-on-hdfs,Running Solr on HDFS>>: How to use HDFS to store your Solr indexes and transaction logs.
-
-<<aws-solrcloud-tutorial.adoc#aws-solrcloud-tutorial,SolrCloud on AWS EC2>>: A tutorial on deploying Solr in Amazon Web Services (AWS) using EC2 instances.
+<<rate-limiters.adoc#rate-limiters,Request Rate Limiters>>
 
 <<upgrading-a-solr-cluster.adoc#upgrading-a-solr-cluster,Upgrading a Solr Cluster>>: Information for upgrading a production SolrCloud cluster.
+
+<<client-apis.adoc#client-apis,Client APIs>>: This section tells you how to access Solr through various client APIs, including JavaScript, JSON, and Ruby.
 
 <<solr-upgrade-notes.adoc#solr-upgrade-notes,Solr Upgrade Notes>>: Information about changes made in Solr releases.

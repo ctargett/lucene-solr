@@ -47,3 +47,6 @@ This section covers the following topics:
 ====
 The focus of this section is generally on configuring a single Solr instance, but for those interested in scaling a Solr implementation in a cluster environment, see also the section <<solrcloud.adoc#solrcloud,SolrCloud>>. There are also options to scale through sharding or replication, described in the section <<legacy-scaling-and-distribution.adoc#legacy-scaling-and-distribution,Legacy Scaling and Distribution>>.
 ====
+
+*TBD Add new section to this list*
+<<near-real-time-searching.adoc#near-real-time-searching,Near Real Time Searching>>: How to include documents in search results nearly immediately after they are indexed.

@@ -17,8 +17,8 @@
 // specific language governing permissions and limitations
 // under the License.
 
+[.lead]
 Administration and monitoring can be performed using the web-based administration console, through the command line interface, or using REST APIs.
-
 
 Common administrative tasks include:
 
@@ -37,5 +37,3 @@ Common administrative tasks include:
 <<performance-statistics-reference.adoc#performance-statistics-reference,Performance Statistics Reference>>: Additional information on statistics returned from JMX.
 
 <<solr-tracing.adoc#solr-tracing,Distributed Solr Tracing>>: Describes how to do distributed tracing for Solr requests.
-
-

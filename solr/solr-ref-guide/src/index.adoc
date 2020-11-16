@@ -4,7 +4,7 @@
     deployment-guide, \
     configuration, \
     schema-and-indexing, \
-    queries-and-results, \
+    query-guide, \
     solr-upgrade-notes, \
     how-to-contribute
 :page-notitle:
@@ -90,7 +90,6 @@ The *<<getting-started.adoc#getting-started,Getting Started>>* section guides yo
 
 *<<searching.adoc#searching,Searching>>*: This section presents an overview of the search process in Solr. It describes the main components used in searches, including request handlers, query parsers, and response writers. It lists the query parameters that can be passed to Solr, and it describes features such as boosting and faceting, which can be used to fine-tune search results.
 
-*<<streaming-expressions.adoc#streaming-expressions,Streaming Expressions>>*: A stream processing language for Solr, with a suite of functions to perform many types of queries and parallel execution tasks.
 
 *<<client-apis.adoc#client-apis,Client APIs>>*: This section tells you how to access Solr through various client APIs, including JavaScript, JSON, and Ruby.
 ****
