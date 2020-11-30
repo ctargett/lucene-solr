@@ -178,7 +178,11 @@ ul.nav li ul {
     content: '\002b';
 }
 .nav li.active > a > span:after {
+<<<<<<< HEAD
     content: '\2212';
+=======
+    content: '\25b4';
+>>>>>>> Ref Guide: fix wrong class name in CSS to toggle the icon shown in sidebar nav when a section is open
 }
 
 
