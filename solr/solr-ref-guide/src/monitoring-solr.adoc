@@ -1,5 +1,5 @@
 = Monitoring Solr
-:page-children: metrics-reporting, metrics-history, mbean-request-handler, configuring-logging, using-jmx-with-solr, monitoring-solr-with-prometheus-and-grafana, performance-statistics-reference, solr-tracing
+:page-children: configuring-logging, metrics-reporting, metrics-history, performance-statistics-reference, mbean-request-handler, using-jmx-with-solr, monitoring-solr-with-prometheus-and-grafana,  solr-tracing
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information

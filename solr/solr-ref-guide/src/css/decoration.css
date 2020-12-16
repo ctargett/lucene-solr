@@ -28,6 +28,24 @@
   border-color: #E6E7E8;
 }
 
+/* used for query parser labels in query-parameters.adoc */
+
+.badge-lucene {
+  background-color: #6F8061;
+  color: white;
+}
+
+.badge-dismax {
+  background-color: #305CB3;
+  color: white;
+}
+
+.badge-edismax {
+  background-color: #FF833D;
+  color: white;
+}
+
+
 input
 {
     margin: 0;

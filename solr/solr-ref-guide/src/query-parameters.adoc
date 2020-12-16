@@ -1,5 +1,4 @@
-= Installation and Deployment
-:page-children: solr-system-requirements, installing-solr, taking-solr-to-production, making-and-restoring-backups, running-solr-on-hdfs, aws-solrcloud-tutorial
+= Query Parser Parameters
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -17,4 +16,25 @@
 // specific language governing permissions and limitations
 // under the License.
 
-new placeholder page *TODO*
+*TODO this entire page*
+
+The following query parameters are supported by Solr. Some are only supported by specific query parsers.
+
+The query parsers supported are noted in the labels.
+
+[.badge.badge-pill.badge-lucene]*Lucene/Standard* +
+[.badge.badge-pill.badge-dismax]*DisMax* +
+[.badge.badge-pill.badge-edismax]*eDisMax*
+
+
+|===
+| Parameter | Description | Example(s) | Supported in
+
+| `q` | *Mandatory* Defines a query using standard query syntax. | `q=searchTerm` | [.badge.badge-pill.badge-lucene]*Lucene/Standard* +
+[.badge.badge-pill.badge-dismax]*DisMax* +
+[.badge.badge-pill.badge-edismax]*eDisMax*
+
+|`boost` | | `boost=div(1,sum(1,price))` | [.badge.badge-pill.badge-edismax]*eDisMax*
+
+
+|===
