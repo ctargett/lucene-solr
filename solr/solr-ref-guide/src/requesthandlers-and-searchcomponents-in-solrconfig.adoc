@@ -206,7 +206,7 @@ The following sections are allowed within a Search Handler:
 
 All the blocks are optional, especially since parameters can also be provided with `initParams` and `useParams`.
 
-The defaults/appends/invariants blocks were described <<#defaults-appends-and-invariants,higher>> on the page. All the parameters described in the section  <<searching.adoc#searching,Searching>> can be defined as parameters for any of the Search Handlers.
+The defaults/appends/invariants blocks were described <<#defaults-appends-and-invariants,higher>> on the page. All the parameters described in the section  <<query-guide.adoc#query-guide,Query Guide>> can be defined as parameters for any of the Search Handlers.
 
 The Search Components blocks are described next, and <<distributed-requests.adoc#configuring-the-shardhandlerfactory,shardHandlerFactory>> is for fine-tuning of the SolrCloud distributed requests.
 

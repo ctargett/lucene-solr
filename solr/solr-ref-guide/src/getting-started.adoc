@@ -22,10 +22,13 @@ Solr makes it easy for programmers to develop sophisticated, high-performance se
 
 This section introduces you to the basic Solr architecture and features to help you get up and running quickly. It covers the following topics:
 
-<<a-quick-overview.adoc#a-quick-overview,A Quick Overview>>: A high-level overview of how Solr works.
+<<a-quick-overview.adoc#a-quick-overview,*A Quick Overview*>>: A high-level overview of how Solr works.
 
-<<solr-concepts.adoc#solr-concepts,Introduction to Solr Concepts>>: Beginner information on Solr and information retrieval concepts.
+<<solr-concepts.adoc#solr-concepts,*Introduction to Solr Concepts*>>: Beginner information on Solr and information retrieval concepts.
 
-<<solr-tutorial.adoc#solr-tutorial,Solr Tutorial>>: A multi-exercise tutorial that covers the main concepts of indexing and querying Solr.
+// This pulls the sub-section list from the child page to reduce errors
+include::solr-concepts.adoc[tag=concept-sections]
 
-<<solr-glossary.adoc#solr-glossary,Solr Glossary>>: Solr's terminology in one place.
+<<solr-tutorial.adoc#solr-tutorial,*Solr Tutorial*>>: A multi-exercise tutorial that covers the main concepts of indexing and querying Solr.
+
+<<solr-glossary.adoc#solr-glossary,*Solr Glossary*>>: Solr's terminology in one place.

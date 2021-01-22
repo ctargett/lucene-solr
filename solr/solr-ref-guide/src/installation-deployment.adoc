@@ -1,5 +1,12 @@
 = Installation and Deployment
-:page-children: solr-system-requirements, installing-solr, taking-solr-to-production, making-and-restoring-backups, running-solr-on-hdfs, aws-solrcloud-tutorial
+:page-children: solr-system-requirements, \
+    installing-solr, \
+    taking-solr-to-production, \
+    jvm-settings, \
+    upgrading-a-solr-cluster, \
+    making-and-restoring-backups, \
+    running-solr-on-hdfs, \
+    aws-solrcloud-tutorial
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -17,4 +24,17 @@
 // specific language governing permissions and limitations
 // under the License.
 
-new placeholder page *TODO*
+[.lead]
+This section covers system requirements, installation, upgrades, and deployments.
+
+// This tags the below list so it can be used in the parent page section list
+// tag::install-sections[]
+* <<solr-system-requirements.adoc#solr-system-requirements,Solr System Requirements>>: Solr system requirements.
+* <<installing-solr.adoc#installing-solr,Installing Solr>>: A walkthrough of the Solr installation process.
+* <<taking-solr-to-production.adoc#taking-solr-to-production,Taking Solr to Production>>: Detailed steps to help you install Solr as a service and take your application to production.
+* <<jvm-settings.adoc#jvm-settings,JVM Settings>>: Gives some guidance on best practices for working with Java Virtual Machines.
+* <<upgrading-a-solr-cluster.adoc#upgrading-a-solr-cluster,Upgrading a Solr Cluster>>: Information for upgrading a production SolrCloud cluster.
+* <<making-and-restoring-backups.adoc#making-and-restoring-backups,Making and Restoring Backups>>: Describes backup strategies for your Solr indexes.
+* <<running-solr-on-hdfs.adoc#running-solr-on-hdfs,Running Solr on HDFS>>: How to use HDFS to store your Solr indexes and transaction logs.
+* <<aws-solrcloud-tutorial.adoc#aws-solrcloud-tutorial,SolrCloud on AWS EC2>>: A tutorial on deploying Solr in Amazon Web Services (AWS) using EC2 instances.
+// end::install-sections[]

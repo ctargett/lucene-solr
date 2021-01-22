@@ -17,7 +17,8 @@
 // specific language governing permissions and limitations
 // under the License.
 
-This section discusses the Solr Administration User Interface ("Admin UI").
+[.lead]
+This section covers the Solr Administration User Interface ("Admin UI").
 
 The <<overview-of-the-solr-admin-ui.adoc#overview-of-the-solr-admin-ui,Overview of the Solr Admin UI>> explains the basic features of the user interface, what's on the initial Admin UI page, and how to configure the interface. In addition, there are pages describing each screen of the Admin UI:
 

@@ -365,7 +365,7 @@ myFileName = myPassword
 
 For a multi-core configuration, you can specify `sharedLib='lib'` in the `<solr/>` section of `solr.xml` and place the necessary jar files there.
 
-For more information about Solr cores, see <<the-well-configured-solr-instance.adoc#the-well-configured-solr-instance,The Well-Configured Solr Instance>>.
+For more information about Solr cores, see <<solr-cores-and-solr-xml.adoc#solr-cores-and-solr-xml,Solr Cores and solr.xml>>.
 
 === Extending the ExtractingRequestHandler
 

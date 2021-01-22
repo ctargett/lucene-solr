@@ -1,5 +1,8 @@
 = Introduction to Solr Concepts
-:page-children: overview-of-documents-fields-and-schema-design, introduction-to-solr-indexing, overview-of-searching-in-solr, relevance
+:page-children: overview-of-documents-fields-and-schema-design, \
+    introduction-to-solr-indexing, \
+    overview-of-searching-in-solr, \
+    relevance
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -17,4 +20,18 @@
 // specific language governing permissions and limitations
 // under the License.
 
-new placeholder page
+[.lead]
+This section covers essential information retrieval concepts and an introduction to how they are implemented in Solr.
+
+*TODO* Also probably rename some of these pages.
+
+// This tags the below list so it can be used in the parent page section list
+// tag::concept-sections[]
+* <<overview-of-documents-fields-and-schema-design.adoc#overview-of-documents-fields-and-schema-design,Overview of Documents, Fields, and Schema Design>>: An introduction to how Solr breaks documents into fields.
+
+* <<introduction-to-solr-indexing.adoc#introduction-to-solr-indexing,Introduction to Solr Indexing>>: The process of adding documents or other data to Solr for later searching.
+
+* <<overview-of-searching-in-solr.adoc#overview-of-searching-in-solr,Overview of Searching in Solr>>: The basic building blocks of asking Solr questions.
+
+* <<relevance.adoc#relevance,Relevance>>: A beginner's guide to understanding what relevance means in the search context.
+// end::concept-sections[]

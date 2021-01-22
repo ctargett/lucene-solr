@@ -475,7 +475,7 @@ This time you get 13 results.
 
 ==== More Information on Searching
 
-We have only scratched the surface of the search options available in Solr. For more Solr search options, see the section on <<searching.adoc#searching,Searching>>.
+We have only scratched the surface of the search options available in Solr. For more Solr search options, see the section on <<query-guide.adoc#query-guide,Query Guide>>.
 
 === Exercise 1 Wrap Up
 

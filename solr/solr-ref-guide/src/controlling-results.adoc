@@ -1,5 +1,15 @@
 = Controlling Results
-:page-children: faceting, json-facet-api, highlighting, pagination-of-results, exporting-result-sets, transforming-result-documents, collapse-and-expand-results, result-grouping, result-clustering, the-query-elevation-component, response-writers
+:page-children: faceting, \
+    json-facet-api, \
+    highlighting, \
+    pagination-of-results, \
+    exporting-result-sets, \
+    transforming-result-documents, \
+    collapse-and-expand-results, \
+    result-grouping, \
+    result-clustering, \
+    the-query-elevation-component, \
+    response-writers
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -18,26 +28,29 @@
 // under the License.
 
 [.lead]
-TBD fill this in
+TODO fill this in
 
-<<faceting.adoc#faceting,Faceting>>: Detailed information about categorizing search results based on indexed terms.
+// This tags the below list so it can be used in the parent page section list
+// tag::results-sections[]
+* <<faceting.adoc#faceting,Faceting>>: Detailed information about categorizing search results based on indexed terms.
 
-<<json-facet-api.adoc#facet-analytics-module,JSON Facet API>>: Overview of Solr's JSON Facet API.
+* <<json-facet-api.adoc#facet-analytics-module,JSON Facet API>>: Overview of Solr's JSON Facet API.
 
-<<highlighting.adoc#highlighting,Highlighting>>: Detailed information about Solr's highlighting capabilities, including multiple underlying highlighter implementations.
+* <<highlighting.adoc#highlighting,Highlighting>>: Detailed information about Solr's highlighting capabilities, including multiple underlying highlighter implementations.
 
-<<pagination-of-results.adoc#pagination-of-results,Pagination of Results>>: Detailed information about fetching paginated results for display in a UI, or for fetching all documents matching a query.
+* <<pagination-of-results.adoc#pagination-of-results,Pagination of Results>>: Detailed information about fetching paginated results for display in a UI, or for fetching all documents matching a query.
 
-<<exporting-result-sets.adoc#exporting-result-sets,Exporting Result Sets>>: Functionality to export large result sets out of Solr.
+* <<exporting-result-sets.adoc#exporting-result-sets,Exporting Result Sets>>: Functionality to export large result sets out of Solr.
 
-<<transforming-result-documents.adoc#transforming-result-documents,Transforming Result Documents>>: Detailed information about using `DocTransformers` to add computed information to individual documents
+* <<transforming-result-documents.adoc#transforming-result-documents,Transforming Result Documents>>: Detailed information about using `DocTransformers` to add computed information to individual documents
 
-<<collapse-and-expand-results.adoc>>: TBD
+* <<collapse-and-expand-results.adoc#collapse-and-expand-results>>: TODO
 
-<<result-grouping.adoc#result-grouping,Result Grouping>>: Detailed information about grouping results based on common field values.
+* <<result-grouping.adoc#result-grouping,Result Grouping>>: Detailed information about grouping results based on common field values.
 
-<<result-clustering.adoc#result-clustering,Result Clustering>>: Detailed information about grouping search results based on cluster analysis applied to text fields. A bit like "unsupervised" faceting.
+* <<result-clustering.adoc#result-clustering,Result Clustering>>: Detailed information about grouping search results based on cluster analysis applied to text fields. A bit like "unsupervised" faceting.
 
-<<the-query-elevation-component.adoc#the-query-elevation-component,The Query Elevation Component>>: How to force documents to the top of the results for certain queries.
+* <<the-query-elevation-component.adoc#the-query-elevation-component,The Query Elevation Component>>: How to force documents to the top of the results for certain queries.
 
-<<response-writers.adoc#response-writers,Response Writers>>: Detailed information about configuring and using Solr's response writers.
+* <<response-writers.adoc#response-writers,Response Writers>>: Detailed information about configuring and using Solr's response writers.
+// end::results-sections[]

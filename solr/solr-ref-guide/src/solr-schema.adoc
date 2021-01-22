@@ -1,5 +1,8 @@
 = Solr Schema
-:page-children: schema-api, other-schema-elements, putting-the-pieces-together, schemaless-mode
+:page-children: schema-api, \
+    other-schema-elements, \
+    putting-the-pieces-together, \
+    schemaless-mode
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -19,11 +22,13 @@
 
 new placeholder page
 
+// This tags the below list so it can be used in the parent page section list
+// tag::schema-sections[]
+* <<schema-api.adoc#schema-api,Schema API>>: Use curl commands to read various parts of a schema or create new fields and copyField rules.
 
-<<schema-api.adoc#schema-api,Schema API>>: Use curl commands to read various parts of a schema or create new fields and copyField rules.
+* <<other-schema-elements.adoc#other-schema-elements,Other Schema Elements>>: Describes other important elements in the Solr schema.
 
-<<other-schema-elements.adoc#other-schema-elements,Other Schema Elements>>: Describes other important elements in the Solr schema.
+* <<putting-the-pieces-together.adoc#putting-the-pieces-together,Putting the Pieces Together>>: A higher-level view of the Solr schema and how its elements work together.
 
-<<putting-the-pieces-together.adoc#putting-the-pieces-together,Putting the Pieces Together>>: A higher-level view of the Solr schema and how its elements work together.
-
-<<schemaless-mode.adoc#schemaless-mode,Schemaless Mode>>: Automatically add previously unknown schema fields using value-based field type guessing.
+* <<schemaless-mode.adoc#schemaless-mode,Schemaless Mode>>: Automatically add previously unknown schema fields using value-based field type guessing.
+// end::schema-sections[]

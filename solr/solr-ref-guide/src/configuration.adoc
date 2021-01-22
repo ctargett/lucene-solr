@@ -1,5 +1,15 @@
 = Configuration Guide
-:page-children: solr-configuration-files, using-the-solr-administration-user-interface, securing-solr, scaling-solr, the-well-configured-solr-instance, solr-plugins
+:page-children: solr-configuration-files, \
+    solr-admin-ui, \
+    configuring-solrconfig-xml, \
+    solr-cores-and-solr-xml, \
+    configuration-apis, \
+    securing-solr, \
+    scaling-solr, \
+    near-real-time-searching, \
+    implicit-requesthandlers, \
+    resource-loading, \
+    solr-plugins
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -18,16 +28,47 @@
 // under the License.
 
 [.lead]
-Solr has countless options for customizing the system.
+This section covers configuration files and options for customizing your Solr installation.
 
-<<solr-configuration-files.adoc#solr-configuration-files,Solr Configuration Files>>: Overview of the installation layout and major configuration files.
+<<solr-configuration-files.adoc#solr-configuration-files,*Solr Configuration Files*>>: Overview of the installation layout and major configuration files.
 
-<<using-the-solr-administration-user-interface.adoc#using-the-solr-administration-user-interface,Using the Solr Administration User Interface>>: This section introduces the Web-based interface for administering Solr. From your browser you can view configuration files, submit queries, view logfile settings and Java environment settings, and monitor and control distributed configurations.
+<<solr-admin-ui.adoc#solr-admin-ui,*Using the Solr Administration User Interface*>>: This section introduces the Web-based interface for administering Solr. From your browser you can view configuration files, submit queries, view logfile settings and Java environment settings, and monitor and control distributed configurations.
 
-<<securing-solr.adoc#securing-solr,Securing Solr>>: When planning how to secure Solr, you should consider which of the available features or approaches are right for you.
+* *TODO* figure out what to do about child pages here, list is too long to do like the other sections below
 
-<<scaling-solr.adoc#scaling-solr,Scaling Solr>>: TBD
+<<configuring-solrconfig-xml.adoc#configuring-solrconfig-xml,*Configuring solrconfig.xml*>>: Describes how to work with the main configuration file for Solr, `solrconfig.xml`, covering the major sections of the file.
 
-<<the-well-configured-solr-instance.adoc#the-well-configured-solr-instance,The Well-Configured Solr Instance>>: This section discusses performance tuning for Solr. It begins with an overview of the `solrconfig.xml` file, then tells you how to configure cores with `solr.xml`, how to configure the Lucene index writer, and more.
+// This pulls the sub-section list from the child page to reduce errors
+include::configuring-solrconfig-xml.adoc[tag=solrconfig-sections]
 
-<<solr-plugins.adoc#solr-plugins,Solr Plugins>>: TBD
+<<solr-cores-and-solr-xml.adoc#solr-cores-and-solr-xml,*Solr Cores and solr.xml*>>: Describes how to work with `solr.xml` and `core.properties` to configure your Solr core, or multiple Solr cores within a single instance.
+
+// This pulls the sub-section list from the child page to reduce errors
+include::solr-cores-and-solr-xml.adoc[tag=solrxml-sections]
+
+<<configuration-apis.adoc#configuration-apis,*Configuration APIs*>>: Describes several APIs used to configure Solr: Blob Store, Config, Request Parameters and Managed Resources.
+
+// This pulls the sub-section list from the child page to reduce errors
+include::configuration-apis.adoc[tag=configapi-sections]
+
+<<securing-solr.adoc#securing-solr,*Securing Solr*>>: When planning how to secure Solr, you should consider which of the available features or approaches are right for you.
+
+// This pulls the sub-section list from the child page to reduce errors
+include::securing-solr.adoc[tags=list-of-authentication-plugins;list-of-authorization-plugins]
+* <<audit-logging.adoc#audit-logging,Audit Logging>>
+
+<<scaling-solr.adoc#scaling-solr,*Scaling Solr*>>:
+
+// This pulls the sub-section list from the child page to reduce errors
+include::scaling-solr.adoc[tag=scaling-sections]
+
+<<near-real-time-searching.adoc#near-real-time-searching,*Near Real Time Searching*>>: How to include documents in search results nearly immediately after they are indexed.
+
+<<implicit-requesthandlers.adoc#implicit-requesthandlers,*Implicit RequestHandlers*>>: Describes various end-points automatically provided by Solr and how to configure them.
+
+<<resource-loading.adoc#resource-loading,*Resource Loading*>>: Describes how word lists, model files, and other related data are resolved by the components that need them.
+
+<<solr-plugins.adoc#solr-plugins,*Solr Plugins*>>:
+
+// This pulls the sub-section list from the child page to reduce errors
+include::solr-plugins.adoc[tag=plugin-sections]

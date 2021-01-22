@@ -25,7 +25,7 @@ In addition to the logging options described below, there is a way to configure 
 
 == Temporary Logging Settings
 
-You can control the amount of logging output in Solr by using the Admin Web interface. Select the *LOGGING* link. Note that this page only lets you change settings in the running system and is not saved for the next run. (For more information about the Admin Web interface, see <<using-the-solr-administration-user-interface.adoc#using-the-solr-administration-user-interface,Using the Solr Administration User Interface>>.)
+You can control the amount of logging output in Solr by using the Admin Web interface. Select the *LOGGING* link. Note that this page only lets you change settings in the running system and is not saved for the next run. (For more information about the Admin Web interface, see <<solr-admin-ui.adoc#solr-admin-ui,Using the Solr Administration User Interface>>.)
 
 .The Logging Screen
 image::images/logging/logging.png[image]

@@ -1,5 +1,13 @@
 = Understanding Analyzers, Tokenizers, and Filters
-:page-children: analyzers, about-tokenizers, about-filters, tokenizers, filter-descriptions, charfilterfactories, language-analysis, phonetic-matching, running-your-analyzer
+:page-children: analyzers, \
+    about-tokenizers, \
+    about-filters, \
+    tokenizers, \
+    filter-descriptions, \
+    charfilterfactories, \
+    language-analysis, \
+    phonetic-matching, \
+    running-your-analyzer
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -35,20 +43,32 @@ These sections will show you how to configure field analyzers and also serves as
 
 *For Analyzers, see:*
 
+// This tags the below list so it can be used in the parent page section list
+// tag::analyzer-sections[]
 * <<analyzers.adoc#analyzers,Analyzers>>: Detailed conceptual information about Solr analyzers.
 * <<running-your-analyzer.adoc#running-your-analyzer,Running Your Analyzer>>: Detailed information about testing and running your Solr analyzer.
+// end::analyzer-sections[]
 
 *For Tokenizers, see:*
 
+// This tags the below list so it can be used in the parent page section list
+// tag::tokenizer-sections[]
 * <<about-tokenizers.adoc#about-tokenizers,About Tokenizers>>: Detailed conceptual information about Solr tokenizers.
 * <<tokenizers.adoc#tokenizers,Tokenizers>>: Information about configuring tokenizers, and about the tokenizer factory classes included in this distribution of Solr.
+// end::tokenizer-sections[]
 
 *For Filters, see:*
 
+// This tags the below list so it can be used in the parent page section list
+// tag::filter-sections[]
 * <<about-filters.adoc#about-filters,About Filters>>: Detailed conceptual information about Solr filters.
 * <<filter-descriptions.adoc#filter-descriptions,Filter Descriptions>>: Information about configuring filters, and about the filter factory classes included in this distribution of Solr.
 * <<charfilterfactories.adoc#charfilterfactories,CharFilterFactories>>: Information about filters for pre-processing input characters.
+// end::filter-sections[]
 
 *To find out how to use Tokenizers and Filters with various languages, see:*
 
+// This tags the below list so it can be used in the parent page section list
+// tag::language-sections[]
 * <<language-analysis.adoc#language-analysis,Language Analysis>>: Information about tokenizers and filters for character set conversion or for use with specific languages.
+// end::language-sections[]

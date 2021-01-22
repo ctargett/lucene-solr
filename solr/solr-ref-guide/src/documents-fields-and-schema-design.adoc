@@ -1,5 +1,9 @@
 = Documents, Fields, and Schema Design
-:page-children: solr-field-types, defining-fields, copying-fields, dynamic-fields, docvalues
+:page-children: solr-field-types, \
+    defining-fields, \
+    copying-fields, \
+    dynamic-fields, \
+    docvalues
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -21,12 +25,15 @@ This section discusses how Solr organizes its data into documents and fields, as
 
 This section includes the following topics:
 
-<<solr-field-types.adoc#solr-field-types,Solr Field Types>>: Detailed information about field types in Solr, including the field types in the default Solr schema.
+// This tags the below list so it can be used in the parent page section list
+// tag::fields-sections[]
+* <<solr-field-types.adoc#solr-field-types,Solr Field Types>>: Detailed information about field types in Solr, including the field types in the default Solr schema.
 
-<<defining-fields.adoc#defining-fields,Defining Fields>>: Describes how to define fields in Solr.
+* <<defining-fields.adoc#defining-fields,Defining Fields>>: Describes how to define fields in Solr.
 
-<<copying-fields.adoc#copying-fields,Copying Fields>>: Describes how to populate fields with data copied from another field.
+* <<copying-fields.adoc#copying-fields,Copying Fields>>: Describes how to populate fields with data copied from another field.
 
-<<dynamic-fields.adoc#dynamic-fields,Dynamic Fields>>: Information about using dynamic fields in order to catch and index fields that do not exactly conform to other field definitions in your schema.
+* <<dynamic-fields.adoc#dynamic-fields,Dynamic Fields>>: Information about using dynamic fields in order to catch and index fields that do not exactly conform to other field definitions in your schema.
 
-<<docvalues.adoc#docvalues,DocValues>>: Describes how to create a docValues index for faster lookups.
+* <<docvalues.adoc#docvalues,DocValues>>: Describes how to create a docValues index for faster lookups.
+// end::fields-sections[]

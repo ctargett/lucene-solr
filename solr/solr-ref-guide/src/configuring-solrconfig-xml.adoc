@@ -47,6 +47,8 @@ The `solrconfig.xml` file is located in the `conf/` directory for each collectio
 
 We've covered the options in the following sections:
 
+// This tags the below list so it can be used in the parent page section list
+// tag::solrconfig-sections[]
 * <<datadir-and-directoryfactory-in-solrconfig.adoc#datadir-and-directoryfactory-in-solrconfig,DataDir and DirectoryFactory in SolrConfig>>
 * <<schema-factory-definition-in-solrconfig.adoc#schema-factory-definition-in-solrconfig,Schema Factory Definition in SolrConfig>>
 * <<indexconfig-in-solrconfig.adoc#indexconfig-in-solrconfig,IndexConfig in SolrConfig>>
@@ -57,6 +59,7 @@ We've covered the options in the following sections:
 * <<requestdispatcher-in-solrconfig.adoc#requestdispatcher-in-solrconfig,RequestDispatcher in SolrConfig>>
 * <<update-request-processors.adoc#update-request-processors,Update Request Processors>>
 * <<codec-factory.adoc#codec-factory,Codec Factory>>
+//end::solrconfig-sections[]
 
 Some SolrConfig aspects are covered in other sections.
 See <<libs.adoc#lib-directives-in-solrconfig,lib directives in SolrConfig>>, which can be used for both Plugins and Resources.
