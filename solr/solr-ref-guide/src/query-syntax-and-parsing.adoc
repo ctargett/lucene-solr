@@ -46,4 +46,4 @@ The query parser plugins are all subclasses of {solr-javadocs}/core/org/apache/s
 * <<searching-nested-documents.adoc#searching-nested-documents,Searching Nested Documents>>: Detailed information about constructing nested and hierarchical queries.
 * <<spatial-search.adoc#spatial-search,Spatial Search>>: How to use Solr's spatial search capabilities.
 * <<other-parsers.adoc#other-parsers,Other Parsers>>: More parsers designed for use in specific situations.
-// end::parser-parameters[]
+// end::parser-sections[]

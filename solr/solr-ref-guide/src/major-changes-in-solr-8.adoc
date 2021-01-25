@@ -152,7 +152,7 @@ The following changes impact how fields behave.
 Note that if you have not specified any similarityFactory in the schema, or use the default
 `SchemaSimilarityFactory`, then `LegacyBM25Similarity` is automatically selected when the value for `luceneMatchVersion` is lower than `8.0.0`.
 +
-See also the section <<other-schema-elements.adoc#similarity,Similarity>> for more information.
+See also the section <<schema-elements.adoc#similarity,Similarity>> for more information.
 
 *Memory Codecs Removed*
 
