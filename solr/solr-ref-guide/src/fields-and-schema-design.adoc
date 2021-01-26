@@ -1,9 +1,10 @@
-= Documents, Fields, and Schema Design
+= Fields and Schema Design
 :page-children: solr-field-types, \
     defining-fields, \
     copy-fields, \
     dynamic-fields, \
-    docvalues
+    docvalues, \
+    luke-request-handler
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -27,13 +28,13 @@ This section includes the following topics:
 
 // This tags the below list so it can be used in the parent page section list
 // tag::fields-sections[]
-* <<solr-field-types.adoc#solr-field-types,Solr Field Types>>: Detailed information about field types in Solr, including the field types in the default Solr schema.
-
-* <<defining-fields.adoc#defining-fields,Defining Fields>>: Describes how to define fields in Solr.
-
-* <<copy-fields.adoc#copy-fields,Copy Fields>>: Describes how to populate fields with data copied from another field.
-
-* <<dynamic-fields.adoc#dynamic-fields,Dynamic Fields>>: Information about using dynamic fields in order to catch and index fields that do not exactly conform to other field definitions in your schema.
-
-* <<docvalues.adoc#docvalues,DocValues>>: Describes how to create a docValues index for faster lookups.
+[cols="1,1",frame=none,grid=none,stripes=none]
+|===
+| <<solr-field-types.adoc#solr-field-types,Solr Field Types>>: Field types in Solr, including the field types in the default Solr schema.
+| <<defining-fields.adoc#defining-fields,Defining Fields>>: Fields in Solr.
+| <<copy-fields.adoc#copy-fields,Copy Fields>>: Fields with data copied from another field.
+| <<dynamic-fields.adoc#dynamic-fields,Dynamic Fields>>: Fields that inherit field type properties at index time.
+| <<docvalues.adoc#docvalues,DocValues>>: DocValues indexes for faster lookups.
+| <<luke-request-handler.adoc#luke-request-handler,Luke Request Handler>>: Provides access to information about fields in the index.
+|===
 // end::fields-sections[]

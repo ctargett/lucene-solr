@@ -46,7 +46,7 @@ However, a biography will likely contains lots of words you don't care about and
 
 The solution to both these problems is field analysis. For the biography field, you can tell Solr how to break apart the biography into words. You can tell Solr that you want to make all the words lower case, and you can tell Solr to remove accents marks.
 
-Field analysis is an important part of a field type. <<understanding-analyzers-tokenizers-and-filters.adoc#understanding-analyzers-tokenizers-and-filters,Understanding Analyzers, Tokenizers, and Filters>> is a detailed description of field analysis.
+Field analysis is an important part of a field type. <<document-analysis.adoc#document-analysis,Document Analysis in Solr>> is a detailed description of field analysis.
 
 == Solr's Schema File
 

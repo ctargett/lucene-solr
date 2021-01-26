@@ -27,7 +27,7 @@ In the scenario above, Solr runs alongside other server applications. For exampl
 
 Solr makes it easy to add the capability to search through the online store through the following steps:
 
-. Define a _schema_. The schema tells Solr about the contents of documents it will be indexing. In the online store example, the schema would define fields for the product name, description, price, manufacturer, and so on. Solr's schema is powerful and flexible and allows you to tailor Solr's behavior to your application. See <<documents-fields-and-schema-design.adoc#documents-fields-and-schema-design,Documents, Fields, and Schema Design>> for all the details.
+. Define a _schema_. The schema tells Solr about the contents of documents it will be indexing. In the online store example, the schema would define fields for the product name, description, price, manufacturer, and so on. Solr's schema is powerful and flexible and allows you to tailor Solr's behavior to your application. See <<fields-and-schema-design.adoc#fields-and-schema-design,Fields and Schema Design>> for all the details.
 . Feed Solr documents for which your users will search.
 . Expose search functionality in your application.
 

@@ -1,4 +1,4 @@
-= Filter Descriptions
+= Filters
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -16,43 +16,86 @@
 // specific language governing permissions and limitations
 // under the License.
 
-Filters examine a stream of tokens and keep them, transform them or discard them, depending on the filter type being used.
+Filters examine a stream of tokens and keep them, transform them, or discard them depending on the filter type being used.
 
-You configure each filter with a `<filter>` element in `schema.xml` as a child of `<analyzer>`, following the `<tokenizer>` element. Filter definitions should follow a tokenizer or another filter definition because they take a `TokenStream` as input. For example:
+== About Filters
+
+Like <<tokenizers.adoc#tokenizers,tokenizers>>, filters consume input and produce a stream of tokens.
+Filters also derive from `org.apache.lucene.analysis.TokenStream` but unlike tokenizers, a filter's input is another TokenStream.
+The job of a filter is usually easier than that of a tokenizer since in most cases a filter looks at each token in the stream sequentially and decides whether to pass it along, replace it, or discard it.
+
+A filter may also do more complex analysis by looking ahead to consider multiple tokens at once, although this is less common.
+One hypothetical use for such a filter might be to normalize state names that would be tokenized as two words.
+For example, the single token "california" would be replaced with "CA", while the token pair "rhode" followed by "island" would become the single token "RI".
+
+Because filters consume one `TokenStream` and produce a new `TokenStream`, they can be chained one after another indefinitely.
+Each filter in the chain in turn processes the tokens produced by its predecessor.
+The order in which you specify the filters is therefore significant.
+Typically, the most general filtering is done first, and later filtering stages are more specialized.
+
+=== Filter Configuration
+Filters are configured with a `<filter>` element in the schema file as a child of `<analyzer>`, following the `<tokenizer>` element.
+
+For example:
 
 [.dynamic-tabs]
 --
-[example.tab-pane#byname-filter]
+[example.tab-pane#byname-filterexample]
 ====
 [.tab-label]*With name*
 [source,xml]
 ----
 <fieldType name="text" class="solr.TextField">
-  <analyzer type="index">
+  <analyzer>
     <tokenizer name="standard"/>
     <filter name="lowercase"/>
+    <filter name="englishPorter"/>
   </analyzer>
 </fieldType>
 ----
 ====
-[example.tab-pane#byclass-filter]
+[example.tab-pane#byclass-filterexample]
 ====
 [.tab-label]*With class name (legacy)*
 [source,xml]
 ----
 <fieldType name="text" class="solr.TextField">
-  <analyzer type="index">
+  <analyzer>
     <tokenizer class="solr.StandardTokenizerFactory"/>
     <filter class="solr.LowerCaseFilterFactory"/>
+    <filter class="solr.EnglishPorterFilterFactory"/>
   </analyzer>
 </fieldType>
 ----
 ====
 --
 
-The name/class attribute names a factory class that will instantiate a filter object as needed. Filter factory classes must implement the `org.apache.lucene.analysis.TokenFilterFactory` interface. Like tokenizers, filters are also instances of TokenStream and thus are producers of tokens. Unlike tokenizers, filters also consume tokens from a TokenStream. This allows you to mix and match filters, in any order you prefer, downstream of a tokenizer.
+This example starts with Solr's standard tokenizer, which breaks the field's text into tokens.
+All the tokens are then set to lowercase, which will facilitate case-insensitive matching at query time.
 
-Arguments may be passed to tokenizer factories to modify their behavior by setting attributes on the `<filter>` element. For example:
+The last filter in the above example is a stemmer filter that uses the Porter stemming algorithm.
+
+=== Stemming
+A stemmer is basically a set of mapping rules that maps the various forms of a word back to the base, or _stem_, word from which they derive.
+
+For example, in English the words "hugs", "hugging" and "hugged" are all forms of the stem word "hug".
+The stemmer will replace all of these terms with "hug", which is what will be indexed.
+This means that a query for "hug" will match the term "hugged", but not "huge".
+
+Conversely, applying a stemmer to your query terms will allow queries containing non-stemmed terms, like "hugging", to match documents with different variations of the same stem word, such as "hugged".
+This works because both the indexer and the query will map to the same stem ("hug").
+
+Word stemming is, obviously, very language specific.
+Solr includes several language-specific stemmers created by the http://snowball.tartarus.org/[Snowball] generator that are based on the Porter stemming algorithm.
+The generic <<Snowball Porter Stemmer Filter>> can be used to configure any of these language stemmers.
+Solr also includes a convenience wrapper for the English Snowball stemmer.
+There are also several purpose-built stemmers for non-English languages.
+These stemmers are described in <<language-analysis.adoc#language-analysis,Language Analysis>>.
+
+=== Filters with Arguments
+
+Arguments may be passed to tokenizer factories to modify their behavior by setting attributes on the `<filter>` element.
+For example:
 
 [.dynamic-tabs]
 --
@@ -88,7 +131,8 @@ The following sections describe the filter factories that are included in this r
 
 == ASCII Folding Filter
 
-This filter converts alphabetic, numeric, and symbolic Unicode characters which are not in the Basic Latin Unicode block (the first 127 ASCII characters) to their ASCII equivalents, if one exists. This filter converts characters from the following Unicode blocks:
+This filter converts alphabetic, numeric, and symbolic Unicode characters which are not in the Basic Latin Unicode block (the first 127 ASCII characters) to their ASCII equivalents, if one exists.
+This filter converts characters from the following Unicode blocks:
 
 * http://www.unicode.org/charts/PDF/U0080.pdf[C1 Controls and Latin-1 Supplement] (PDF)
 * http://www.unicode.org/charts/PDF/U0100.pdf[Latin Extended-A] (PDF)
