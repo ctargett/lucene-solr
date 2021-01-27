@@ -1,5 +1,12 @@
-= Using the Solr Administration User Interface
-:page-children: overview-of-the-solr-admin-ui, logging, cloud-screens, collections-core-admin, java-properties, thread-dump, collection-specific-tools, core-specific-tools
+= Using the Solr Admin UI
+:page-children: overview-of-the-solr-admin-ui, \
+    logging, \
+    cloud-screens, \
+    collections-core-admin, \
+    java-properties, \
+    thread-dump, \
+    collection-specific-tools, \
+    core-specific-tools
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information

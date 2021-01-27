@@ -1,4 +1,4 @@
-= Indexing Nested Child Documents
+= Indexing Nested Documents
 :solr-root-path: ../../
 :example-source-dir: {solr-root-path}solrj/src/test/org/apache/solr/client/ref_guide_examples/
 // Licensed to the Apache Software Foundation (ASF) under one
@@ -126,7 +126,7 @@ Even though the child documents in these examples are provided syntactically as 
 
 [CAUTION]
 =====
-The <<uploading-data-with-index-handlers#json-update-convenience-paths,`/update/json/docs` convenience path>> will automatically flatten complex JSON documents by default -- so to index nested JSON documents make sure to use `/update`.
+The <<indexing-with-update-handlers#json-update-convenience-paths,`/update/json/docs` convenience path>> will automatically flatten complex JSON documents by default -- so to index nested JSON documents make sure to use `/update`.
 =====
 ====
 

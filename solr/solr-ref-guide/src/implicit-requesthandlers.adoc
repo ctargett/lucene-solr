@@ -270,7 +270,7 @@ Terms:: Return a field's indexed terms and the number of documents containing ea
 [horizontal]
 Update:: Add, delete and update indexed documents formatted as SolrXML, CSV, SolrJSON or javabin.
 +
-*Documentation*: <<uploading-data-with-index-handlers.adoc#uploading-data-with-index-handlers,Uploading Data with Index Handlers>>
+*Documentation*: <<indexing-with-update-handlers.adoc#indexing-with-update-handlers,Indexing with Update Handlers>>
 +
 [cols="3*.",frame=none,grid=cols,options="header"]
 |===
@@ -280,7 +280,7 @@ Update:: Add, delete and update indexed documents formatted as SolrXML, CSV, Sol
 
 CSV Updates:: Add and update CSV-formatted documents.
 +
-*Documentation*: <<uploading-data-with-index-handlers.adoc#csv-update-convenience-paths,CSV Update Convenience Paths>>
+*Documentation*: <<indexing-with-update-handlers.adoc#csv-update-convenience-paths,CSV Update Convenience Paths>>
 +
 [cols="3*.",frame=none,grid=cols,options="header"]
 |===
@@ -290,7 +290,7 @@ CSV Updates:: Add and update CSV-formatted documents.
 
 JSON Updates:: Add, delete and update SolrJSON-formatted documents.
 +
-*Documentation*: <<uploading-data-with-index-handlers.adoc#json-update-convenience-paths,JSON Update Convenience Paths>>
+*Documentation*: <<indexing-with-update-handlers.adoc#json-update-convenience-paths,JSON Update Convenience Paths>>
 +
 [cols="3*.",frame=none,grid=cols,options="header"]
 |===

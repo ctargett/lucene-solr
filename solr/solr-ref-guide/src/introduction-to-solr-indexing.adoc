@@ -24,7 +24,7 @@ A Solr index can accept data from many different sources, including XML files, c
 
 Here are the three most common ways of loading data into a Solr index:
 
-* Using the <<uploading-data-with-solr-cell-using-apache-tika.adoc#uploading-data-with-solr-cell-using-apache-tika,Solr Cell>> framework built on Apache Tika for ingesting binary files or structured files such as Office, Word, PDF, and other proprietary formats.
+* Using the <<indexing-with-tika.adoc#indexing-with-tika,Solr Cell>> framework built on Apache Tika for ingesting binary files or structured files such as Office, Word, PDF, and other proprietary formats.
 
 * Uploading XML files by sending HTTP requests to the Solr server from any environment where such requests can be generated.
 

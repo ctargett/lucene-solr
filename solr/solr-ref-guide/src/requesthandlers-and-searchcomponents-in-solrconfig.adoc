@@ -315,7 +315,7 @@ If you need to define additional Update Request Handler, the syntax is:
 
 ----
 
-The full details are covered in the section <<uploading-data-with-index-handlers.adoc#uploading-data-with-index-handlers,Uploading Data with Index Handlers>>.
+The full details are covered in the section <<indexing-with-update-handlers.adoc#indexing-with-update-handlers,Indexing with Update Handlers>>.
 
 Similar to Search Components for Search Handlers, Solr has document-preprocessing plugins for Update Request Handlers,
 called <<update-request-processors.adoc#update-request-processors,Update Request Processors>>,

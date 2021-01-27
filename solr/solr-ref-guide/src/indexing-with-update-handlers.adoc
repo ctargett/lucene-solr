@@ -1,4 +1,4 @@
-= Uploading Data with Index Handlers
+= Indexing with Update Handlers
 :page-children: transforming-and-indexing-custom-json
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
@@ -17,8 +17,8 @@
 // specific language governing permissions and limitations
 // under the License.
 
-Index Handlers are Request Handlers designed to add, delete and update documents to the index.
-In addition to having plugins for importing rich documents <<uploading-data-with-solr-cell-using-apache-tika.adoc#uploading-data-with-solr-cell-using-apache-tika,using Tika>>, Solr natively supports indexing structured documents in XML, CSV and JSON.
+Update handlers are request handlers designed to add, delete and update documents to the index.
+In addition to having plugins for importing rich documents <<indexing-with-tika.adoc#indexing-with-tika,Indexing with Solr Cell and Apache Tika>>, Solr natively supports indexing structured documents in XML, CSV, and JSON.
 
 The recommended way to configure and use request handlers is with path based names that map to paths in the request URL.
 However, request handlers can also be specified with the `qt` (query type) parameter if the <<requestdispatcher-in-solrconfig.adoc#requestdispatcher-in-solrconfig,`requestDispatcher`>> is appropriately configured. It is possible to access the same handler using more than one name, which can be useful if you wish to specify different sets of default options.

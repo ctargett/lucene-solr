@@ -45,15 +45,17 @@ The tokens output by the analysis process define the values, or _terms_, of that
 These sections will show you how to configure field analyzers and also serves as a reference for the details of configuring each of the available tokenizer and filter classes.
 It also serves as a guide so that you can configure your own analysis classes if you have special needs that cannot be met with the included filters or tokenizers.
 
+****
 // This tags the below list so it can be used in the parent page section list
 // tag::analysis-sections[]
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
 | <<analyzers.adoc#analyzers,Analyzers>>: Detailed conceptual information about Solr analyzers.
-| <<running-your-analyzer.adoc#running-your-analyzer,Running Your Analyzer>>: Detailed information about testing and running your Solr analyzer.
 | <<tokenizers.adoc#tokenizers,Tokenizers>>: Information about configuring tokenizers, and about the tokenizer factory classes included in this distribution of Solr.
 | <<filters.adoc#filters,Filters>>: Information about configuring filters, and about the filter factory classes included in this distribution of Solr.
 | <<charfilterfactories.adoc#charfilterfactories,CharFilterFactories>>: Information about filters for pre-processing input characters.
 | <<language-analysis.adoc#language-analysis,Language Analysis>>: Information about tokenizers and filters for character set conversion or for use with specific languages.
+| <<running-your-analyzer.adoc#running-your-analyzer,Running Your Analyzer>>: Detailed information about testing and running your Solr analyzer.
 |===
 // end::analysis-sections[]
+****

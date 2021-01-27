@@ -25,6 +25,7 @@ Solr's schema governs how documents are indexed and how terms in a query are int
 The following sections cover how to work with the schema generally.
 Note, however, that many of the elements of a schema are covered in the section <<fields-and-schema-design.adoc#fields-and-schema-design,Fields and Schema Design>>.
 
+****
 // This tags the below list so it can be used in the parent page section list
 // tag::schema-sections[]
 [cols="1,1",frame=none,grid=none,stripes=none]
@@ -35,3 +36,4 @@ Note, however, that many of the elements of a schema are covered in the section 
 |
 |===
 // end::schema-sections[]
+****

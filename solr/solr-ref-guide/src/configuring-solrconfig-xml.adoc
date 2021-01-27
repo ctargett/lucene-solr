@@ -9,7 +9,6 @@
     requestdispatcher-in-solrconfig, \
     update-request-processors, \
     codec-factory
-
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -47,19 +46,24 @@ The `solrconfig.xml` file is located in the `conf/` directory for each collectio
 
 We've covered the options in the following sections:
 
+****
 // This tags the below list so it can be used in the parent page section list
 // tag::solrconfig-sections[]
-* <<datadir-and-directoryfactory-in-solrconfig.adoc#datadir-and-directoryfactory-in-solrconfig,DataDir and DirectoryFactory in SolrConfig>>
-* <<schema-factory-definition-in-solrconfig.adoc#schema-factory-definition-in-solrconfig,Schema Factory Definition in SolrConfig>>
-* <<indexconfig-in-solrconfig.adoc#indexconfig-in-solrconfig,IndexConfig in SolrConfig>>
-* <<requesthandlers-and-searchcomponents-in-solrconfig.adoc#requesthandlers-and-searchcomponents-in-solrconfig,RequestHandlers and SearchComponents in SolrConfig>>
-* <<initparams-in-solrconfig.adoc#initparams-in-solrconfig,InitParams in SolrConfig>>
-* <<updatehandlers-in-solrconfig.adoc#updatehandlers-in-solrconfig,UpdateHandlers in SolrConfig>>
-* <<query-settings-in-solrconfig.adoc#query-settings-in-solrconfig,Query Settings in SolrConfig>>
-* <<requestdispatcher-in-solrconfig.adoc#requestdispatcher-in-solrconfig,RequestDispatcher in SolrConfig>>
-* <<update-request-processors.adoc#update-request-processors,Update Request Processors>>
-* <<codec-factory.adoc#codec-factory,Codec Factory>>
+[cols="1,1",frame=none,grid=none,stripes=none]
+|===
+| <<datadir-and-directoryfactory-in-solrconfig.adoc#datadir-and-directoryfactory-in-solrconfig,DataDir and DirectoryFactory in SolrConfig>>
+| <<schema-factory-definition-in-solrconfig.adoc#schema-factory-definition-in-solrconfig,Schema Factory Definition in SolrConfig>>
+| <<indexconfig-in-solrconfig.adoc#indexconfig-in-solrconfig,IndexConfig in SolrConfig>>
+| <<requesthandlers-and-searchcomponents-in-solrconfig.adoc#requesthandlers-and-searchcomponents-in-solrconfig,RequestHandlers and SearchComponents in SolrConfig>>
+| <<initparams-in-solrconfig.adoc#initparams-in-solrconfig,InitParams in SolrConfig>>
+| <<updatehandlers-in-solrconfig.adoc#updatehandlers-in-solrconfig,UpdateHandlers in SolrConfig>>
+| <<query-settings-in-solrconfig.adoc#query-settings-in-solrconfig,Query Settings in SolrConfig>>
+| <<requestdispatcher-in-solrconfig.adoc#requestdispatcher-in-solrconfig,RequestDispatcher in SolrConfig>>
+| <<update-request-processors.adoc#update-request-processors,Update Request Processors>>
+| <<codec-factory.adoc#codec-factory,Codec Factory>>
+|===
 //end::solrconfig-sections[]
+****
 
 Some SolrConfig aspects are covered in other sections.
 See <<libs.adoc#lib-directives-in-solrconfig,lib directives in SolrConfig>>, which can be used for both Plugins and Resources.

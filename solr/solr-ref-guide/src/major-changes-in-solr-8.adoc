@@ -197,7 +197,7 @@ Also note that the default set of date patterns (formats) have expanded from pre
 
 *Solr Cell*
 
-* The extraction contrib (<<uploading-data-with-solr-cell-using-apache-tika.adoc#uploading-data-with-solr-cell-using-apache-tika,Solr Cell>>) no longer does any date parsing, and thus no longer supports the `date.formats` parameter. To ensure date strings are properly parsed, use the `ParseDateFieldUpdateProcessorFactory` in your update chain. This update request processor is found by default with the "parse-date" update processor when running Solr in "<<schemaless-mode.adoc#set-the-default-updaterequestprocessorchain,schemaless mode>>".
+* The extraction contrib (<<indexing-with-tika.adoc#indexing-with-tika,Solr Cell>>) no longer does any date parsing, and thus no longer supports the `date.formats` parameter. To ensure date strings are properly parsed, use the `ParseDateFieldUpdateProcessorFactory` in your update chain. This update request processor is found by default with the "parse-date" update processor when running Solr in "<<schemaless-mode.adoc#set-the-default-updaterequestprocessorchain,schemaless mode>>".
 
 *Langid Contrib*
 

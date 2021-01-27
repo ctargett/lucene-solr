@@ -1,5 +1,8 @@
 = Deployment Guide
-:page-children: installation-deployment, solr-control-script-reference, monitoring-solr, circuit-breakers, rate-limiters, client-apis
+:page-children: installation-deployment, \
+    solr-control-script-reference, \
+    monitoring-solr, \
+    client-apis
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -20,23 +23,27 @@
 [.lead]
 The Deployment Guide covers installation, upgrades, deployments, monitoring, and client integrations.
 
+****
 <<installation-deployment.adoc#installation-deployment,*Installation and Deployment*>>:
 
 // This pulls the sub-section list from the child page to reduce errors
 include::installation-deployment.adoc[tag=install-sections]
+****
 
+****
 <<solr-control-script-reference.adoc#solr-control-script-reference,*Solr Control Script Reference*>>: This section provides information about all of the options available to the `bin/solr` / `bin\solr.cmd` scripts, which can start and stop Solr, configure authentication, and create or remove collections and cores.
+****
 
+****
 <<monitoring-solr.adoc#monitoring-solr,*Monitoring Solr*>>: Solr includes options for keeping an eye on the performance of your Solr cluster with the web-based administration console, through the command line interface, or using REST APIs.
 
 // This pulls the sub-section list from the child page to reduce errors
 include::monitoring-solr.adoc[tag=monitoring-sections]
+****
 
-<<circuit-breakers.adoc#circuit-breakers,*Circuit Breakers*>>: *TODO* description
-
-<<rate-limiters.adoc#rate-limiters,*Request Rate Limiters*>> *TODO* description
-
+****
 <<client-apis.adoc#client-apis,*Client APIs*>>: This section tells you how to access Solr through various client APIs, including JavaScript, JSON, and Ruby.
 
 // This pulls the sub-section list from the child page to reduce errors
 include::client-apis.adoc[tag=client-sections]
+****

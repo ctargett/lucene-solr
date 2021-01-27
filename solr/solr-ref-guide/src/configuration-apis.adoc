@@ -22,10 +22,15 @@
 
 Solr includes several APIs that can be used to modify settings in `solrconfig.xml`.
 
+****
 // This tags the below list so it can be used in the parent page section list
 // tag::configapi-sections[]
-* <<config-api.adoc#config-api,Config API>>
-* <<request-parameters-api.adoc#request-parameters-api,Request Parameters API>>
-* <<managed-resources.adoc#managed-resources,Managed Resources>>
-* <<v2-api.adoc#v2-api,V2 API>>: Describes how to use the new V2 APIs, a redesigned API framework covering most Solr APIs.
+[cols="1,1",frame=none,grid=none,stripes=none]
+|===
+| <<config-api.adoc#config-api,Config API>>
+| <<request-parameters-api.adoc#request-parameters-api,Request Parameters API>>
+| <<managed-resources.adoc#managed-resources,Managed Resources>>
+| <<v2-api.adoc#v2-api,V2 API>>: Describes how to use the new V2 APIs, a redesigned API framework covering most Solr APIs.
+|===
 // end::configapi-sections[]
+****
