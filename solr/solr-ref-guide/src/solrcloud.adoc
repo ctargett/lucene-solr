@@ -1,5 +1,9 @@
 = SolrCloud
-:page-children: getting-started-with-solrcloud, how-solrcloud-works, solrcloud-resilience, solrcloud-configuration-and-parameters
+:page-children: getting-started-with-solrcloud, \
+    cloud-screens, \
+    how-solrcloud-works, \
+    solrcloud-resilience, \
+    solrcloud-configuration-and-parameters
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -27,19 +31,32 @@ SolrCloud is flexible distributed search and indexing, without a leader node to 
 
 In this section, we'll cover everything you need to know about using Solr in SolrCloud mode. We've split up the details into the following topics:
 
-* <<getting-started-with-solrcloud.adoc#getting-started-with-solrcloud,Getting Started with SolrCloud>>
-* <<how-solrcloud-works.adoc#how-solrcloud-works,How SolrCloud Works>>
+****
+// This tags the below list so it can be used in the parent page section list
+// tag::solrcloud-sections[]
+[cols="1,1",frame=none,grid=none,stripes=none]
+|===
+| <<getting-started-with-solrcloud.adoc#getting-started-with-solrcloud,Getting Started with SolrCloud>>
+| <<cloud-screens.adoc#cloud-screens,Cloud Screens>> display information about nodes when running in SolrCloud mode.
+a| <<how-solrcloud-works.adoc#how-solrcloud-works,How SolrCloud Works>>
+
 ** <<shards-and-indexing-data-in-solrcloud.adoc#shards-and-indexing-data-in-solrcloud,Shards and Indexing Data in SolrCloud>>
 ** <<distributed-requests.adoc#distributed-requests,Distributed Requests>>
-* <<solrcloud-resilience.adoc#solrcloud-resilience,SolrCloud Resilience>>
-** <<solrcloud-recoveries-and-write-tolerance.adoc#solrcloud-recoveries-and-write-tolerance,SolrCloud Recoveries and Write Tolerance>>
-** <<solrcloud-query-routing-and-read-tolerance.adoc#solrcloud-query-routing-and-read-tolerance,SolrCloud Query Routing And Read Tolerance>>
-* <<solrcloud-configuration-and-parameters.adoc#solrcloud-configuration-and-parameters,SolrCloud Configuration and Parameters>>
-** <<setting-up-an-external-zookeeper-ensemble.adoc#setting-up-an-external-zookeeper-ensemble,Setting Up an External ZooKeeper Ensemble>>
-** <<using-zookeeper-to-manage-configuration-files.adoc#using-zookeeper-to-manage-configuration-files,Using ZooKeeper to Manage Configuration Files>>
-** <<zookeeper-access-control.adoc#zookeeper-access-control,ZooKeeper Access Control>>
-** <<collections-api.adoc#collections-api,Collections API>>
-** <<parameter-reference.adoc#parameter-reference,Parameter Reference>>
-** <<command-line-utilities.adoc#command-line-utilities,Command Line Utilities>>
-** <<solrcloud-with-legacy-configuration-files.adoc#solrcloud-with-legacy-configuration-files,SolrCloud with Legacy Configuration Files>>
-** <<configsets-api.adoc#configsets-api,Configsets API>>
+a| <<solrcloud-resilience.adoc#solrcloud-resilience,SolrCloud Resilience>>
+
+* <<solrcloud-recoveries-and-write-tolerance.adoc#solrcloud-recoveries-and-write-tolerance,SolrCloud Recoveries and Write Tolerance>>
+* <<solrcloud-query-routing-and-read-tolerance.adoc#solrcloud-query-routing-and-read-tolerance,SolrCloud Query Routing And Read Tolerance>>
+a| <<solrcloud-configuration-and-parameters.adoc#solrcloud-configuration-and-parameters,SolrCloud Configuration and Parameters>>
+
+* <<setting-up-an-external-zookeeper-ensemble.adoc#setting-up-an-external-zookeeper-ensemble,Setting Up an External ZooKeeper Ensemble>>
+* <<using-zookeeper-to-manage-configuration-files.adoc#using-zookeeper-to-manage-configuration-files,Using ZooKeeper to Manage Configuration Files>>
+* <<zookeeper-access-control.adoc#zookeeper-access-control,ZooKeeper Access Control>>
+* <<collections-api.adoc#collections-api,Collections API>>
+* <<parameter-reference.adoc#parameter-reference,Parameter Reference>>
+* <<command-line-utilities.adoc#command-line-utilities,Command Line Utilities>>
+* <<solrcloud-with-legacy-configuration-files.adoc#solrcloud-with-legacy-configuration-files,SolrCloud with Legacy Configuration Files>>
+* <<configsets-api.adoc#configsets-api,Configsets API>>
+|
+|===
+// end::solrcloud-sections[]
+****

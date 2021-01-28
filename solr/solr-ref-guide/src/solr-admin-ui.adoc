@@ -1,10 +1,6 @@
 = Using the Solr Admin UI
 :page-children: overview-of-the-solr-admin-ui, \
-    logging, \
-    cloud-screens, \
     collections-core-admin, \
-    java-properties, \
-    thread-dump, \
     collection-specific-tools, \
     core-specific-tools
 // Licensed to the Apache Software Foundation (ASF) under one
@@ -27,13 +23,15 @@
 [.lead]
 This section covers the Solr Administration User Interface ("Admin UI").
 
-The <<overview-of-the-solr-admin-ui.adoc#overview-of-the-solr-admin-ui,Overview of the Solr Admin UI>> explains the basic features of the user interface, what's on the initial Admin UI page, and how to configure the interface. In addition, there are pages describing each screen of the Admin UI:
+The <<overview-of-the-solr-admin-ui.adoc#overview-of-the-solr-admin-ui,Overview of the Solr Admin UI>> explains the basic features of the user interface, what's on the initial Admin UI page, and how to configure the interface.
 
-* *<<logging.adoc#logging,Logging>>* shows recent messages logged by this Solr node and provides a way to change logging levels for specific classes.
-* *<<cloud-screens.adoc#cloud-screens,Cloud Screens>>* display information about nodes when running in SolrCloud mode.
+In addition, there are sections throughout the Guide describing each screen of the Admin UI:
+
+* <<configuring-logging.adoc#logging-screen,Logging Screen>>: shows recent messages logged by this Solr node and provides a way to change logging levels for specific classes.
+* <<cloud-screens.adoc#cloud-screens,Cloud Screens>> display information about nodes when running in SolrCloud mode.
 * *<<collections-core-admin.adoc#collections-core-admin,Collections / Core Admin>>* explains how to get management information about each core.
-* *<<java-properties.adoc#java-properties,Java Properties>>* shows the Java information about each core.
-* *<<thread-dump.adoc#thread-dump,Thread Dump>>* lets you see detailed information about each thread, along with state information.
+* <<jvm-settings.adoc#java-properties-screen,Java Properties Screen>> shows the Java information about each core.
+* <<thread-dump.adoc#thread-dump,Thread Dump Screen>> lets you see detailed information about each thread, along with state information.
 
 * *<<collection-specific-tools.adoc#collection-specific-tools,Collection-Specific Tools>>* is a section explaining additional screens available for each collection.
 // TODO: SOLR-10655 BEGIN: refactor this into a 'collection-screens-list.include.adoc' file for reuse
