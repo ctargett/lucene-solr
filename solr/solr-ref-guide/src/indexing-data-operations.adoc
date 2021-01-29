@@ -3,6 +3,7 @@
     indexing-with-tika, \
     indexing-nested-documents, \
     post-tool, \
+    documents-screen, \
     updating-parts-of-documents, \
     reindexing, \
     detecting-languages-during-indexing, \
@@ -38,11 +39,13 @@ This section describes how Solr adds data to its index. It covers the following 
 | <<transforming-and-indexing-custom-json.adoc#transforming-and-indexing-custom-json,Transforming and Indexing Custom JSON>>: Index any JSON of your choice
 | <<indexing-nested-documents.adoc#indexing-nested-documents,Indexing Nested Documents>>: Indexing and schema configuration for nested documents.
 | <<post-tool.adoc#post-tool,Post Tool>>: The `post.jar` to quickly upload content to your system.
+| <<documents-screen.adoc#documents-screen,Documents Screen>>: Form-based document updates using the Admin UI.
 | <<updating-parts-of-documents.adoc#updating-parts-of-documents,Updating Parts of Documents>>: Atomic updates and optimistic concurrency for partial document updates.
 | <<reindexing.adoc#reindexing,Reindexing>>: When reindexing is required or recommended, and some strategies for completely reindexing your documents.
 | <<detecting-languages-during-indexing.adoc#detecting-languages-during-indexing,Detecting Languages During Indexing>>: Language identification during the indexing process.
 | <<de-duplication.adoc#de-duplication,De-Duplication>>: Configuring Solr to mark duplicate documents as they are indexed.
 | <<content-streams.adoc#content-streams,Content Streams>>: Streaming content to Solr request handlers.
+|
 |===
 // end::indexing-sections[]
 ****

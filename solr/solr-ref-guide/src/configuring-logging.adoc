@@ -32,7 +32,7 @@ If there are multiple instances in a cluster, the log levels will not be changed
 Log levels will also be reset on next Solr restart.
 
 .The Logging Screen
-image::images/logging/logging.png[image]
+image::images/configuring-logging/logging.png[Logging Screen]
 
 This part of the Admin Web interface allows you to set the logging level for many different log categories.
 Fortunately, any categories that are *unset* will have the logging level of its parent.
@@ -41,7 +41,7 @@ This makes it possible to change many categories at once by adjusting the loggin
 When you select menu:Logging[Level], you see the following menu:
 
 .The Log Level Menu
-image::images/logging/level_menu.png[image,width=1159,height=577]
+image::images/configuring-logging/level_menu.png[image,width=1159,height=577]
 
 Solr classes are shown in the left column in a directory tree structure representing the classpath.
 The current level is shown in the right column.

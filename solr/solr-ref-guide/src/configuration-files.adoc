@@ -63,7 +63,7 @@ The crucial parts of the Solr home directory are shown in these examples:
 
 You may see other files, but the main ones you need to know are discussed in the next section.
 
-== Configuration Files
+== Solr's Configuration Files
 Inside Solr's Home, you'll find these files:
 
 * `solr.xml` specifies configuration options for your Solr server instance. For more information on `solr.xml` see <<solr-cores-and-solr-xml.adoc#solr-cores-and-solr-xml,Solr Cores and solr.xml>>.
@@ -76,3 +76,19 @@ Inside Solr's Home, you'll find these files:
 Note that the SolrCloud example does not include a `conf` directory for each Solr Core (so there is no `solrconfig.xml` or Schema file). This is because the configuration files usually found in the `conf` directory are stored in ZooKeeper so they can be propagated across the cluster.
 
 If you are using SolrCloud with the embedded ZooKeeper instance, you may also see `zoo.cfg` and `zoo.data` which are ZooKeeper configuration and data files. However, if you are running your own ZooKeeper ensemble, you would supply your own ZooKeeper configuration file when you start it and the copies in Solr would be unused. For more information about SolrCloud, see the section <<solrcloud.adoc#solrcloud,SolrCloud>>.
+
+== Files Screen
+
+The Files screen in the Admin UI lets you browse & view the configuration files (such `solrconfig.xml` and the schema file) for the collection you selected.
+
+.The Files Screen
+image::images/configuration-files/files-screen.png[Files screen,height=400]
+
+If you are using <<solrcloud.adoc#solrcloud,SolrCloud>>, the files displayed are the configuration files for this collection stored in ZooKeeper.
+In a standalone Solr installations, all files in the `conf` directory are displayed.
+
+The configuration files shown may or may not be used by the collection as use of the file depends on how they are referenced in either `solrconfig.xml` or your schema.
+
+Configuration files cannot be edited with this screen, so a text editor of some kind must be used.
+
+This screen is related to the <<schema-browser-screen.adoc#schema-browser-screen,Schema Browser Screen>>, in that they both can display information from the schema, but the Schema Browser provides a way to drill into the analysis chain and displays linkages between field types, fields, and dynamic field rules.

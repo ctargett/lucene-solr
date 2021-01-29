@@ -1,5 +1,5 @@
 = Configuration Guide
-:page-children: solr-configuration-files, \
+:page-children: configuration-files, \
     solr-admin-ui, \
     configuring-solrconfig-xml, \
     solr-cores-and-solr-xml, \
@@ -31,13 +31,11 @@
 This section covers configuration files and options for customizing your Solr installation.
 
 ****
-<<solr-configuration-files.adoc#solr-configuration-files,*Solr Configuration Files*>>: Overview of the installation layout and major configuration files.
+<<configuration-files.adoc#configuration-files,*Solr Configuration Files*>>: Overview of the installation layout and major configuration files.
 ****
 
 ****
 <<solr-admin-ui.adoc#solr-admin-ui,*Using the Solr Admin UI*>>: This section introduces the Web-based interface for administering Solr. From your browser you can view configuration files, submit queries, view logfile settings and Java environment settings, and monitor and control distributed configurations.
-
-* *TODO* figure out what to do about child pages here, list is too long to do like the other sections below
 ****
 
 ****

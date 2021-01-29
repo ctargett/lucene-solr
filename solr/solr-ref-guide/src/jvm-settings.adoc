@@ -61,4 +61,4 @@ The Java Properties screen, however, provides easy access to all the properties 
 In the Admin UI, it is available in the left-hand menu *Java Properties*.
 
 .Java Properties Screen
-image::images/java-properties/javaproperties.png[image,width=593,height=250]
+image::images/jvm-settings/javaproperties.png[image,width=593,height=250]

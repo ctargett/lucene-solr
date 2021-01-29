@@ -1,6 +1,7 @@
 = SolrCloud
 :page-children: getting-started-with-solrcloud, \
     cloud-screens, \
+    collections-core-admin, \
     how-solrcloud-works, \
     solrcloud-resilience, \
     solrcloud-configuration-and-parameters
@@ -37,7 +38,8 @@ In this section, we'll cover everything you need to know about using Solr in Sol
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
 | <<getting-started-with-solrcloud.adoc#getting-started-with-solrcloud,Getting Started with SolrCloud>>
-| <<cloud-screens.adoc#cloud-screens,Cloud Screens>> display information about nodes when running in SolrCloud mode.
+| <<cloud-screens.adoc#cloud-screens,Cloud Screens>>: Information about nodes when running in SolrCloud mode.
+| <<collections-core-admin.adoc#collections-core-admin,Collections / Core Admin>>: Information about each collection via the Admin UI.
 a| <<how-solrcloud-works.adoc#how-solrcloud-works,How SolrCloud Works>>
 
 ** <<shards-and-indexing-data-in-solrcloud.adoc#shards-and-indexing-data-in-solrcloud,Shards and Indexing Data in SolrCloud>>
@@ -56,7 +58,6 @@ a| <<solrcloud-configuration-and-parameters.adoc#solrcloud-configuration-and-par
 * <<command-line-utilities.adoc#command-line-utilities,Command Line Utilities>>
 * <<solrcloud-with-legacy-configuration-files.adoc#solrcloud-with-legacy-configuration-files,SolrCloud with Legacy Configuration Files>>
 * <<configsets-api.adoc#configsets-api,Configsets API>>
-|
 |===
 // end::solrcloud-sections[]
 ****
