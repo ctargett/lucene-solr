@@ -1,5 +1,10 @@
 = Getting Started
-:page-children: a-quick-overview, solr-concepts, solr-tutorial, solr-glossary
+:page-children: a-quick-overview, \
+    solr-admin-ui, \
+    solr-concepts, \
+    solr-tutorial, \
+    solr-control-script-reference, \
+    solr-glossary
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -22,13 +27,29 @@ Solr makes it easy for programmers to develop sophisticated, high-performance se
 
 This section introduces you to the basic Solr architecture and features to help you get up and running quickly. It covers the following topics:
 
+****
 <<a-quick-overview.adoc#a-quick-overview,*A Quick Overview*>>: A high-level overview of how Solr works.
+****
 
+****
+<<solr-admin-ui.adoc#solr-admin-ui,*Using the Solr Admin UI*>>: Solr's Web-based interface for administering Solr.
+****
+
+****
 <<solr-concepts.adoc#solr-concepts,*Introduction to Solr Concepts*>>: Beginner information on Solr and information retrieval concepts.
 
 // This pulls the sub-section list from the child page to reduce errors
 include::solr-concepts.adoc[tag=concept-sections]
+****
 
+****
 <<solr-tutorial.adoc#solr-tutorial,*Solr Tutorial*>>: A multi-exercise tutorial that covers the main concepts of indexing and querying Solr.
+****
 
+****
+<<solr-control-script-reference.adoc#solr-control-script-reference,*Solr Control Script Reference*>>: The options available to the `bin/solr` or `bin\solr.cmd` scripts.
+****
+
+****
 <<solr-glossary.adoc#solr-glossary,*Solr Glossary*>>: Solr's terminology in one place.
+****

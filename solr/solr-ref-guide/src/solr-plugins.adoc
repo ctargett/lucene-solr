@@ -54,15 +54,13 @@ The next sections describe some options:
 // tag::plugin-sections[]
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
-| <<libs.adoc#lib-directories,Lib Directories>>:
-Describes where to put the plugin's JAR files on the file system; either in one of the special places or a place convenient to you along with a  `<lib/>` directive in `solrconfig.xml`.
-This has been the standard approach since Solr's inception.
-It's simple and reliable but it's entirely on you to ensure that all nodes in a cluster have them.
-Contrib modules ship with Solr so there's no effort for them but not so for other plugins (yours or 3rd party).
+| <<libs.adoc#lib-directories,Lib Directories>>: The `<lib/>` directive to put the plugin's JAR files on the filesystem.
 | <<package-manager.adoc#package-manager,Package Management>>:
-Describes a new and experimental system to manage packages of plugins in SolrCloud.
-It includes CLI commands, cluster-wide installation, use of plugin registries that host plugins, cryptographically signed plugins for security, and more.
-Only some plugins support this as of now (support for more types of plugins coming soon).
+Manage packages of plugins in SolrCloud.
 | <<cluster-plugins.adoc#cluster-plugins,Cluster Plugins>>:
-Describes the API used for managing cluster-level plugins such as request handlers,
-cluster-level event producer and <<replica-placement-plugins.adoc#replica-placement-plugins,replica placement plugins>>.
+The API used for managing cluster-level plugins such as request handlers,
+cluster-level event producer, and replica placement plugins.
+|
+|===
+// end::plugin-sections[]
+****
