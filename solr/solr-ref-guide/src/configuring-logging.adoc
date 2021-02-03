@@ -46,9 +46,14 @@ image::images/configuring-logging/level_menu.png[image,width=1159,height=577]
 Solr classes are shown in the left column in a directory tree structure representing the classpath.
 The current level is shown in the right column.
 
+<<<<<<< HEAD
 A row highlighted in yellow indicates that the class currently has logging enabled.
 Click the current level in the right column and the Log Level Menu will appear.
 Select the desired level and the selection will be saved immediately.
+=======
+Directories are shown with their current logging levels. The Log Level Menu floats over these. To set a log level for a particular directory, select it and click the appropriate log level button.
+The log level change will be distributed to all nodes in the cluster.
+>>>>>>> master
 
 The possible log levels are as follows:
 
