@@ -9,6 +9,8 @@
     local-parameters-in-queries, \
     json-request-api, \
     searching-nested-documents, \
+    block-join-query-parser, \
+    join-query-parser, \
     spatial-search, \
     other-parsers, \
     parallel-sql-interface
@@ -60,10 +62,11 @@ The query parser plugins are all subclasses of {solr-javadocs}/core/org/apache/s
 | <<local-parameters-in-queries.adoc#,Local Parameters in Queries>>: How to add local arguments to queries.
 | <<json-request-api.adoc#,JSON Request API>>: Solr's JSON Request API.
 | <<searching-nested-documents.adoc#,Searching Nested Documents>>: Constructing nested and hierarchical queries.
+| <<block-join-query-parser.adoc#,Block Join Query Parser>>: Query parser dedicated to searching nested documents.
+| <<join-query-parser.adoc#,Join Query Parser>>: Query parser to facilitate joins.
 | <<spatial-search.adoc#,Spatial Search>>: Solr's spatial search capabilities.
 | <<other-parsers.adoc#,Other Parsers>>: More parsers designed for use in specific situations.
 | <<parallel-sql-interface.adoc#,Parallel SQL Interface>>: Send SQL statements to Solr, and use advanced parallel query processing and relational algebra for complex data analysis.
-|
 |===
 // end::parser-sections[]
 ****

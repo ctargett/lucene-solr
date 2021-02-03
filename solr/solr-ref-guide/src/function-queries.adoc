@@ -85,7 +85,7 @@ Returns the absolute value of the specified value or function.
 * `abs(-5)`
 
 === childfield(field) Function
-Returns the value of the given field for one of the matched child docs when searching by <<other-parsers.adoc#block-join-parent-query-parser,{!parent}>>. It can be used only in `sort` parameter.
+Returns the value of the given field for one of the matched child docs when searching by <<block-join-query-parser.adoc#block-join-parent-query-parser,{!parent}>>. It can be used only in `sort` parameter.
 
 *Syntax Examples*
 
