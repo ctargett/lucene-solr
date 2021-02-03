@@ -44,17 +44,17 @@ Finally, if you want to understand the terms in your index or get statistics fro
 // tag::queries-sections[]
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
-| <<spell-checking.adoc#spell-checking,Spell Checking>>: Spell check for user queries to correct mistakes on the fly.
-| <<suggester.adoc#suggester,Suggester>>: Autosuggest component to suggest query terms while the user types.
-| <<morelikethis.adoc#morelikethis,MoreLikeThis>>: Solr's similar results query component.
-| <<query-re-ranking.adoc#query-re-ranking,Query Re-Ranking>>: Re-ranking top scoring documents from simple queries using more complex scores. *TODO* this is about query parsers, maybe should move?
-| <<learning-to-rank.adoc#learning-to-rank,Learning to Rank>>: Use LTR to run machine learned ranking models in Solr.
-| <<tagger-handler.adoc#tagger-handler,Tagger Handler>>: Basic named entity tagging in text.
-| <<analytics.adoc#analytics,Analytics Component>>: A framework to compute complex analytics over a result set.
-| <<terms-component.adoc#terms-component,Terms Component>>: Access indexed terms and the documents that include them.
-| <<term-vector-component.adoc#term-vector-component,Term Vector Component>>: Term information about specific documents.
-| <<stats-component.adoc#stats-component,Stats Component>>: Get information from numeric fields within a document set.
-| <<realtime-get.adoc#realtime-get,RealTime Get>>: Get the latest version of a document without opening a searcher. *TODO* possibly move this.
+| <<spell-checking.adoc#,Spell Checking>>: Spell check for user queries to correct mistakes on the fly.
+| <<suggester.adoc#,Suggester>>: Autosuggest component to suggest query terms while the user types.
+| <<morelikethis.adoc#,MoreLikeThis>>: Solr's similar results query component.
+| <<query-re-ranking.adoc#,Query Re-Ranking>>: Re-ranking top scoring documents from simple queries using more complex scores. *TODO* this is about query parsers, maybe should move?
+| <<learning-to-rank.adoc#,Learning to Rank>>: Use LTR to run machine learned ranking models in Solr.
+| <<tagger-handler.adoc#,Tagger Handler>>: Basic named entity tagging in text.
+| <<analytics.adoc#,Analytics Component>>: A framework to compute complex analytics over a result set.
+| <<terms-component.adoc#,Terms Component>>: Access indexed terms and the documents that include them.
+| <<term-vector-component.adoc#,Term Vector Component>>: Term information about specific documents.
+| <<stats-component.adoc#,Stats Component>>: Get information from numeric fields within a document set.
+| <<realtime-get.adoc#,RealTime Get>>: Get the latest version of a document without opening a searcher. *TODO* possibly move this.
 |
 |===
 // end::queries-sections[]

@@ -50,19 +50,19 @@ The query parser plugins are all subclasses of {solr-javadocs}/core/org/apache/s
 // tag::parser-sections[]
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
-| <<query-parameters.adoc#query-parameters,Query Parser Parameters>>: Reference list of all supported parser parameters. *TODO work in progress*
-| <<query-screen.adoc#query-screen,Query Screen>>: Form-based query builder.
-| <<common-query-parameters.adoc#common-query-parameters,Common Query Parameters>>: Query parameters that can be used with all query parsers.
-| <<standard-query-parser.adoc#standard-query-parser,Standard Query Parser>>: The standard Lucene query parser.
-| <<dismax-query-parser.adoc#dismax-query-parser,DisMax Query Parser>>: The DisMax query parser.
-| <<edismax-query-parser.adoc#edismax-query-parser,Extended DisMax Query Parser>>: The Extended DisMax (eDisMax) Query Parser.
-| <<function-queries.adoc#function-queries,Function Queries>>: Parameters for generating relevancy scores using values from one or more numeric fields.
-| <<local-parameters-in-queries.adoc#local-parameters-in-queries,Local Parameters in Queries>>: How to add local arguments to queries.
-| <<json-request-api.adoc#json-request-api,JSON Request API>>: Solr's JSON Request API.
-| <<searching-nested-documents.adoc#searching-nested-documents,Searching Nested Documents>>: Constructing nested and hierarchical queries.
-| <<spatial-search.adoc#spatial-search,Spatial Search>>: Solr's spatial search capabilities.
-| <<other-parsers.adoc#other-parsers,Other Parsers>>: More parsers designed for use in specific situations.
-| <<parallel-sql-interface.adoc#parallel-sql-interface,Parallel SQL Interface>>: Send SQL statements to Solr, and use advanced parallel query processing and relational algebra for complex data analysis.
+| <<query-parameters.adoc#,Query Parser Parameters>>: Reference list of all supported parser parameters. *TODO work in progress*
+| <<query-screen.adoc#,Query Screen>>: Form-based query builder.
+| <<common-query-parameters.adoc#,Common Query Parameters>>: Query parameters that can be used with all query parsers.
+| <<standard-query-parser.adoc#,Standard Query Parser>>: The standard Lucene query parser.
+| <<dismax-query-parser.adoc#,DisMax Query Parser>>: The DisMax query parser.
+| <<edismax-query-parser.adoc#,Extended DisMax Query Parser>>: The Extended DisMax (eDisMax) Query Parser.
+| <<function-queries.adoc#,Function Queries>>: Parameters for generating relevancy scores using values from one or more numeric fields.
+| <<local-parameters-in-queries.adoc#,Local Parameters in Queries>>: How to add local arguments to queries.
+| <<json-request-api.adoc#,JSON Request API>>: Solr's JSON Request API.
+| <<searching-nested-documents.adoc#,Searching Nested Documents>>: Constructing nested and hierarchical queries.
+| <<spatial-search.adoc#,Spatial Search>>: Solr's spatial search capabilities.
+| <<other-parsers.adoc#,Other Parsers>>: More parsers designed for use in specific situations.
+| <<parallel-sql-interface.adoc#,Parallel SQL Interface>>: Send SQL statements to Solr, and use advanced parallel query processing and relational algebra for complex data analysis.
 |
 |===
 // end::parser-sections[]

@@ -26,9 +26,9 @@
 The following sections describe how Solr breaks down and works with textual data.
 There are three main concepts to understand: analyzers, tokenizers, and filters.
 
-* <<analyzers.adoc#analyzers,Field analyzers>> are used both during ingestion, when a document is indexed, and at query time. An analyzer examines the text of fields and generates a token stream. Analyzers may be a single class or they may be composed of a series of tokenizer and filter classes.
-* <<tokenizers.adoc#tokenizers,Tokenizers>> break field data into lexical units, or _tokens_.
-* <<filters.adoc#filters,Filters>> examine a stream of tokens and keep them, transform or discard them, or create new ones. Tokenizers and filters may be combined to form pipelines, or _chains_, where the output of one is input to the next. Such a sequence of tokenizers and filters is called an _analyzer_ and the resulting output of an analyzer is used to match query results or build indices.
+* <<analyzers.adoc#,Field analyzers>> are used both during ingestion, when a document is indexed, and at query time. An analyzer examines the text of fields and generates a token stream. Analyzers may be a single class or they may be composed of a series of tokenizer and filter classes.
+* <<tokenizers.adoc#,Tokenizers>> break field data into lexical units, or _tokens_.
+* <<filters.adoc#,Filters>> examine a stream of tokens and keep them, transform or discard them, or create new ones. Tokenizers and filters may be combined to form pipelines, or _chains_, where the output of one is input to the next. Such a sequence of tokenizers and filters is called an _analyzer_ and the resulting output of an analyzer is used to match query results or build indices.
 
 == Using Analyzers, Tokenizers, and Filters
 
@@ -50,12 +50,12 @@ It also serves as a guide so that you can configure your own analysis classes if
 // tag::analysis-sections[]
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
-| <<analyzers.adoc#analyzers,Analyzers>>: Detailed conceptual information about Solr analyzers.
-| <<tokenizers.adoc#tokenizers,Tokenizers>>: Information about configuring tokenizers, and about the tokenizer factory classes included in this distribution of Solr.
-| <<filters.adoc#filters,Filters>>: Information about configuring filters, and about the filter factory classes included in this distribution of Solr.
-| <<charfilterfactories.adoc#charfilterfactories,CharFilterFactories>>: Information about filters for pre-processing input characters.
-| <<language-analysis.adoc#language-analysis,Language Analysis>>: Information about tokenizers and filters for character set conversion or for use with specific languages.
-| <<running-your-analyzer.adoc#running-your-analyzer,Running Your Analyzer>>: Detailed information about testing and running your Solr analyzer.
+| <<analyzers.adoc#,Analyzers>>: Detailed conceptual information about Solr analyzers.
+| <<tokenizers.adoc#,Tokenizers>>: Information about configuring tokenizers, and about the tokenizer factory classes included in this distribution of Solr.
+| <<filters.adoc#,Filters>>: Information about configuring filters, and about the filter factory classes included in this distribution of Solr.
+| <<charfilterfactories.adoc#,CharFilterFactories>>: Information about filters for pre-processing input characters.
+| <<language-analysis.adoc#,Language Analysis>>: Information about tokenizers and filters for character set conversion or for use with specific languages.
+| <<running-your-analyzer.adoc#,Running Your Analyzer>>: Detailed information about testing and running your Solr analyzer.
 |===
 // end::analysis-sections[]
 ****

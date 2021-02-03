@@ -31,12 +31,12 @@ This section includes the following topics:
 // tag::fields-sections[]
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
-| <<solr-field-types.adoc#solr-field-types,Solr Field Types>>: Field types in Solr, including the field types in the default Solr schema.
-| <<defining-fields.adoc#defining-fields,Defining Fields>>: Fields in Solr.
-| <<copy-fields.adoc#copy-fields,Copy Fields>>: Fields with data copied from another field.
-| <<dynamic-fields.adoc#dynamic-fields,Dynamic Fields>>: Fields that inherit field type properties at index time.
-| <<docvalues.adoc#docvalues,DocValues>>: DocValues indexes for faster lookups.
-| <<luke-request-handler.adoc#luke-request-handler,Luke Request Handler>>: Provides access to information about fields in the index.
+| <<solr-field-types.adoc#,Solr Field Types>>: Field types in Solr, including the field types in the default Solr schema.
+| <<defining-fields.adoc#,Defining Fields>>: Fields in Solr.
+| <<copy-fields.adoc#,Copy Fields>>: Fields with data copied from another field.
+| <<dynamic-fields.adoc#,Dynamic Fields>>: Fields that inherit field type properties at index time.
+| <<docvalues.adoc#,DocValues>>: DocValues indexes for faster lookups.
+| <<luke-request-handler.adoc#,Luke Request Handler>>: Provides access to information about fields in the index.
 |===
 // end::fields-sections[]
 ****

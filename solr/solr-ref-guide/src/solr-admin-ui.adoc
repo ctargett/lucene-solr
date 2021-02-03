@@ -30,11 +30,11 @@ image::images/solr-admin-ui/dashboard.png[image,height=400]
 
 The left-side of the screen is a menu under the Solr logo that provides the navigation through the screens of the UI.
 
-The first set of links are for system-level information and configuration and provide access to <<configuring-logging.adoc#logging-screen,Logging Screen>>, <<collections-core-admin.adoc#collections-core-admin,Collection/Core Administration>>, and <<jvm-settings.adoc#java-properties-screen,Java Properties Screen>>, among other things.
+The first set of links are for system-level information and configuration and provide access to <<configuring-logging.adoc#logging-screen,Logging Screen>>, <<collections-core-admin.adoc#,Collection/Core Administration>>, and <<jvm-settings.adoc#java-properties-screen,Java Properties Screen>>, among other things.
 
 At the end of this information is at least one pulldown listing Solr cores configured for this instance.
-On <<solrcloud.adoc#solrcloud,SolrCloud>> nodes, an additional pulldown list shows all collections in this cluster.
-Clicking on a collection or core name shows secondary menus of information for the specified collection or core, such as a <<schema-browser-screen.adoc#schema-browser-screen,Schema Browser>>, <<configuration-files.adoc#files-screen,Files Screen>>, <<plugins-stats-screen.adoc#plugins-stats-screen,Plugins & Statistics>>, and an ability to perform <<query-screen.adoc#query-screen,Queries>> on indexed data.
+On <<solrcloud.adoc#,SolrCloud>> nodes, an additional pulldown list shows all collections in this cluster.
+Clicking on a collection or core name shows secondary menus of information for the specified collection or core, such as a <<schema-browser-screen.adoc#,Schema Browser>>, <<configuration-files.adoc#files-screen,Files Screen>>, <<plugins-stats-screen.adoc#,Plugins & Statistics>>, and an ability to perform <<query-screen.adoc#,Queries>> on indexed data.
 
 The left-side navigation appears on every screen, while the center changes to  the detail of the option selected.
 The Dashboard shows several information items in the center of the screen, including system uptime, the version being run, system-level data, JVM arguments, and the security plugins enabled (if any).
@@ -54,7 +54,7 @@ If authentication has been enabled, Solr will present a login screen to unauthen
 image::images/solr-admin-ui/login.png[]
 
 This login screen currently only works with Basic Authentication.
-See the section <<basic-authentication-plugin.adoc#basic-authentication-plugin,Basic Authentication Plugin>> for
+See the section <<basic-authentication-plugin.adoc#,Basic Authentication Plugin>> for
  details on how to configure Solr to use this method of authentication.
 
 Once logged in, the left-hand navigation will show the current user with an option to logout.
@@ -80,7 +80,7 @@ These icons include the following links.
 |Issue Tracker |Navigates to the JIRA issue tracking server for the Apache Solr project. This server resides at https://issues.apache.org/jira/browse/SOLR.
 |IRC Channel |Navigates to Solr's http://en.wikipedia.org/wiki/Internet_Relay_Chat[IRC] live-chat room: http://webchat.freenode.net/?channels=#solr.
 |Community forum |Navigates to the Apache Wiki page which has further information about ways to engage in the Solr User community mailing lists: https://cwiki.apache.org/confluence/display/solr/UsingMailingLists.
-|Solr Query Syntax |Navigates to the section <<query-syntax-and-parsing.adoc#query-syntax-and-parsing,Query Syntax and Parsing>> in this Reference Guide.
+|Solr Query Syntax |Navigates to the section <<query-syntax-and-parsing.adoc#,Query Syntax and Parsing>> in this Reference Guide.
 |===
 
 These links cannot be modified without editing the `index.html` in the `server/solr/solr-webapp` directory that contains the Admin UI files.
@@ -92,7 +92,7 @@ In the left-hand navigation bar, you will see a pull-down menu titled Collection
 .Only Visible When Using SolrCloud
 [NOTE]
 ====
-The Collection Selector pull-down menu is only available on Solr instances running in <<solrcloud.adoc#solrcloud,SolrCloud mode>>.
+The Collection Selector pull-down menu is only available on Solr instances running in <<solrcloud.adoc#,SolrCloud mode>>.
 
 Single node or leader/follower replication instances of Solr will not display this menu, instead the Collection specific UI pages described in this section will be available in the <<Core-Specific Tools,Core Selector pull-down menu>>.
 ====
@@ -126,10 +126,10 @@ here are sections throughout the Guide describing each screen of the Admin UI:
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
 | <<configuring-logging.adoc#logging-screen,Logging Screen>>: shows recent messages logged by this Solr node and provides a way to change logging levels for specific classes.
-| <<cloud-screens.adoc#cloud-screens,Cloud Screens>>: Information about nodes when running in SolrCloud mode.
-| <<collections-core-admin.adoc#collections-core-admin,Collections / Core Admin>>: Collection or Core management tools.
+| <<cloud-screens.adoc#,Cloud Screens>>: Information about nodes when running in SolrCloud mode.
+| <<collections-core-admin.adoc#,Collections / Core Admin>>: Collection or Core management tools.
 | <<jvm-settings.adoc#java-properties-screen,Java Properties Screen>>: Java information for each core.
-| <<thread-dump.adoc#thread-dump,Thread Dump Screen>>: Detailed information about each thread, along with state information.
+| <<thread-dump.adoc#,Thread Dump Screen>>: Detailed information about each thread, along with state information.
 |
 |===
 // end::ui-common-tools[]
@@ -142,12 +142,12 @@ here are sections throughout the Guide describing each screen of the Admin UI:
 // tag::ui-collection-tools[]
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
-| <<running-your-analyzer.adoc#running-your-analyzer,Analysis Screen>>: Test and validation tool for field type analyzers.
-| <<documents-screen.adoc#documents-screen,Documents Screen>>: Form-based document updates using the Admin UI.
+| <<running-your-analyzer.adoc#,Analysis Screen>>: Test and validation tool for field type analyzers.
+| <<documents-screen.adoc#,Documents Screen>>: Form-based document updates using the Admin UI.
 | <<configuration-files.adoc#files-screen,Files Screen>>: Browse current configuration files such as `solrconfig.xml`.
-| <<query-screen.adoc#query-screen,Query Screen>>: Form-based query builder.
-| <<stream-screen.adoc#stream-screen,Stream Screen>>: Submit streaming expressions and see results and parsing explanations.
-| <<schema-browser-screen.adoc#schema-browser-screen,Schema Browser>>: Schema details through the Admin UI.
+| <<query-screen.adoc#,Query Screen>>: Form-based query builder.
+| <<stream-screen.adoc#,Stream Screen>>: Submit streaming expressions and see results and parsing explanations.
+| <<schema-browser-screen.adoc#,Schema Browser>>: Schema details through the Admin UI.
 |===
 // end::ui-collection-tools[]
 ****
@@ -159,10 +159,10 @@ here are sections throughout the Guide describing each screen of the Admin UI:
 // tag::ui-core-tools[]
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
-| <<ping.adoc#ping,Ping>>: Ping a named core to determine whether it is active.
-| <<plugins-stats-screen.adoc#plugins-stats-screen,Plugins/Stats Screen>>: Statistics for request handlers, search components, plugins, and other installed components.
-| <<replication-screen.adoc#replication-screen,Replication Screen>>: The current replication status for the core, and lets you enable/disable replication.
-| <<segments-info.adoc#segments-info,Segments Info>>: A visualization of the underlying Lucene index segments.
+| <<ping.adoc#,Ping>>: Ping a named core to determine whether it is active.
+| <<plugins-stats-screen.adoc#,Plugins/Stats Screen>>: Statistics for request handlers, search components, plugins, and other installed components.
+| <<replication-screen.adoc#,Replication Screen>>: The current replication status for the core, and lets you enable/disable replication.
+| <<segments-info.adoc#,Segments Info>>: A visualization of the underlying Lucene index segments.
 |===
 // end::ui-core-tools[]
 ****

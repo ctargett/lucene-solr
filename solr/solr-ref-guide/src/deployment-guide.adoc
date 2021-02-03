@@ -24,29 +24,29 @@
 The Deployment Guide covers installation, upgrades, deployments, monitoring, and client integrations.
 
 ****
-<<installation-deployment.adoc#installation-deployment,*Installation and Deployment*>>:
+<<installation-deployment.adoc#,*Installation and Deployment*>>:
 
 // This pulls the sub-section list from the child page to reduce errors
 include::installation-deployment.adoc[tag=install-sections]
 ****
 
 ****
-<<monitoring-solr.adoc#monitoring-solr,*Monitoring Solr*>>: Monitoring options for a production Solr instance.
+<<monitoring-solr.adoc#,*Monitoring Solr*>>: Monitoring options for a production Solr instance.
 
 // This pulls the sub-section list from the child page to reduce errors
 include::monitoring-solr.adoc[tag=monitoring-sections]
 ****
 
 ****
-<<securing-solr.adoc#securing-solr,*Securing Solr*>>: Authentication and authorization plugins available with Solr.
+<<securing-solr.adoc#,*Securing Solr*>>: Authentication and authorization plugins available with Solr.
 
 // This pulls the sub-section list from the child page to reduce errors
 include::securing-solr.adoc[tags=list-of-authentication-plugins;list-of-authorization-plugins]
-* <<audit-logging.adoc#audit-logging,Audit Logging>>
+* <<audit-logging.adoc#,Audit Logging>>
 ****
 
 ****
-<<client-apis.adoc#client-apis,*Client APIs*>>: Access Solr through various client APIs, including JavaScript, JSON, and Ruby.
+<<client-apis.adoc#,*Client APIs*>>: Access Solr through various client APIs, including JavaScript, JSON, and Ruby.
 
 // This pulls the sub-section list from the child page to reduce errors
 include::client-apis.adoc[tag=client-sections]

@@ -23,11 +23,11 @@
 ****
 // This tags the below list so it can be used in the parent page section list
 // tag::scaling-sections[]
-*<<solrcloud.adoc#solrcloud,SolrCloud>>*
+*<<solrcloud.adoc#,SolrCloud>>*
 
 include::solrcloud.adoc[tag=solrcloud-sections]
 
-*<<legacy-scaling-and-distribution.adoc#legacy-scaling-and-distribution,Legacy Scaling and Distribution>>*
+*<<legacy-scaling-and-distribution.adoc#,Legacy Scaling and Distribution>>*
 
 include::legacy-scaling-and-distribution.adoc[tag=cluster-sections]
 // end::scaling-sections[]

@@ -32,14 +32,14 @@ This section covers system requirements, installation, upgrades, and deployments
 // tag::install-sections[]
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
-| <<solr-system-requirements.adoc#solr-system-requirements,Solr System Requirements>>: Solr system requirements.
-| <<installing-solr.adoc#installing-solr,Installing Solr>>: The Solr installation process.
-| <<taking-solr-to-production.adoc#taking-solr-to-production,Taking Solr to Production>>: Install Solr as a service and take your application to production.
-| <<jvm-settings.adoc#jvm-settings,JVM Settings>>: Best practices for working with Java Virtual Machines.
-| <<upgrading-a-solr-cluster.adoc#upgrading-a-solr-cluster,Upgrading a Solr Cluster>>: Upgrading a production SolrCloud cluster.
-| <<making-and-restoring-backups.adoc#making-and-restoring-backups,Making and Restoring Backups>>: Backup strategies for your Solr indexes.
-| <<running-solr-on-hdfs.adoc#running-solr-on-hdfs,Running Solr on HDFS>>: Store Solr indexes and transaction logs in HDFS.
-| <<aws-solrcloud-tutorial.adoc#aws-solrcloud-tutorial,SolrCloud on AWS EC2>>: Deploying Solr in Amazon Web Services (AWS) using EC2 instances.
+| <<solr-system-requirements.adoc#,Solr System Requirements>>: Solr system requirements.
+| <<installing-solr.adoc#,Installing Solr>>: The Solr installation process.
+| <<taking-solr-to-production.adoc#,Taking Solr to Production>>: Install Solr as a service and take your application to production.
+| <<jvm-settings.adoc#,JVM Settings>>: Best practices for working with Java Virtual Machines.
+| <<upgrading-a-solr-cluster.adoc#,Upgrading a Solr Cluster>>: Upgrading a production SolrCloud cluster.
+| <<making-and-restoring-backups.adoc#,Making and Restoring Backups>>: Backup strategies for your Solr indexes.
+| <<running-solr-on-hdfs.adoc#,Running Solr on HDFS>>: Store Solr indexes and transaction logs in HDFS.
+| <<aws-solrcloud-tutorial.adoc#,SolrCloud on AWS EC2>>: Deploying Solr in Amazon Web Services (AWS) using EC2 instances.
 |===
 // end::install-sections[]
 ****

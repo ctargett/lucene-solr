@@ -20,7 +20,7 @@ Filters examine a stream of tokens and keep them, transform them, or discard the
 
 == About Filters
 
-Like <<tokenizers.adoc#tokenizers,tokenizers>>, filters consume input and produce a stream of tokens.
+Like <<tokenizers.adoc#,tokenizers>>, filters consume input and produce a stream of tokens.
 Filters also derive from `org.apache.lucene.analysis.TokenStream` but unlike tokenizers, a filter's input is another TokenStream.
 The job of a filter is usually easier than that of a tokenizer since in most cases a filter looks at each token in the stream sequentially and decides whether to pass it along, replace it, or discard it.
 
@@ -90,7 +90,7 @@ Solr includes several language-specific stemmers created by the http://snowball.
 The generic <<Snowball Porter Stemmer Filter>> can be used to configure any of these language stemmers.
 Solr also includes a convenience wrapper for the English Snowball stemmer.
 There are also several purpose-built stemmers for non-English languages.
-These stemmers are described in <<language-analysis.adoc#language-analysis,Language Analysis>>.
+These stemmers are described in <<language-analysis.adoc#,Language Analysis>>.
 
 === Filters with Arguments
 

@@ -27,43 +27,43 @@
 This section covers configuration files and options for customizing your Solr installation.
 
 ****
-<<configuration-files.adoc#configuration-files,*Solr Configuration Files*>>: Overview of the installation layout and major configuration files.
+<<configuration-files.adoc#,*Solr Configuration Files*>>: Overview of the installation layout and major configuration files.
 ****
 
 ****
-<<configuring-solrconfig-xml.adoc#configuring-solrconfig-xml,*Configuring solrconfig.xml*>>: Describes how to work with the main configuration file for Solr, `solrconfig.xml`, covering the major sections of the file.
+<<configuring-solrconfig-xml.adoc#,*Configuring solrconfig.xml*>>: Describes how to work with the main configuration file for Solr, `solrconfig.xml`, covering the major sections of the file.
 
 // This pulls the sub-section list from the child page to reduce errors
 include::configuring-solrconfig-xml.adoc[tag=solrconfig-sections]
 ****
 
 ****
-<<solr-cores-and-solr-xml.adoc#solr-cores-and-solr-xml,*Solr Cores and solr.xml*>>: Describes how to work with `solr.xml` and `core.properties` to configure your Solr core, or multiple Solr cores within a single instance.
+<<solr-cores-and-solr-xml.adoc#,*Solr Cores and solr.xml*>>: Describes how to work with `solr.xml` and `core.properties` to configure your Solr core, or multiple Solr cores within a single instance.
 
 // This pulls the sub-section list from the child page to reduce errors
 include::solr-cores-and-solr-xml.adoc[tag=solrxml-sections]
 ****
 
 ****
-<<configuration-apis.adoc#configuration-apis,*Configuration APIs*>>: Configuration APIs available.
+<<configuration-apis.adoc#,*Configuration APIs*>>: Configuration APIs available.
 
 // This pulls the sub-section list from the child page to reduce errors
 include::configuration-apis.adoc[tag=configapi-sections]
 ****
 
 ****
-<<scaling-solr.adoc#scaling-solr,*Scaling Solr*>>: Cluster configuration options.
+<<scaling-solr.adoc#,*Scaling Solr*>>: Cluster configuration options.
 
 // This pulls the sub-section list from the child page to reduce errors
 include::scaling-solr.adoc[tag=scaling-sections]
 ****
 
 ****
-<<near-real-time-searching.adoc#near-real-time-searching,*Near Real Time Searching*>>: How to include documents in search results nearly immediately after they are indexed.
+<<near-real-time-searching.adoc#,*Near Real Time Searching*>>: How to include documents in search results nearly immediately after they are indexed.
 ****
 
 ****
-<<solr-plugins.adoc#solr-plugins,*Solr Plugins*>>:
+<<solr-plugins.adoc#,*Solr Plugins*>>:
 
 // This pulls the sub-section list from the child page to reduce errors
 include::solr-plugins.adoc[tag=plugin-sections]

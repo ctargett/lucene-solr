@@ -21,12 +21,12 @@ Solr stores details about the field types and fields it is expected to understan
 == Solr's Schema File
 The name and location of Solr's schema file may vary depending on how you initially configured Solr or if you modified it later.
 
-* `managed-schema` is the name for the schema file Solr uses by default to support making schema changes at runtime via the <<schema-api.adoc#schema-api,Schema API>>, or <<schemaless-mode.adoc#schemaless-mode,Schemaless Mode>> features.
+* `managed-schema` is the name for the schema file Solr uses by default to support making schema changes at runtime via the <<schema-api.adoc#,Schema API>>, or <<schemaless-mode.adoc#,Schemaless Mode>> features.
 +
-You may <<schema-factory-definition-in-solrconfig.adoc#schema-factory-definition-in-solrconfig,explicitly configure the managed schema features>> to use an alternative filename if you choose, but the contents of the files are still updated automatically by Solr.
-* `schema.xml` is the traditional name for a schema file which can be edited manually by users who use the <<schema-factory-definition-in-solrconfig.adoc#schema-factory-definition-in-solrconfig,`ClassicIndexSchemaFactory`>>.
+You may <<schema-factory-definition-in-solrconfig.adoc#,explicitly configure the managed schema features>> to use an alternative filename if you choose, but the contents of the files are still updated automatically by Solr.
+* `schema.xml` is the traditional name for a schema file which can be edited manually by users who use the <<schema-factory-definition-in-solrconfig.adoc#,`ClassicIndexSchemaFactory`>>.
 * If you are using SolrCloud you may not be able to find any file by these names on the local filesystem.
-You will only be able to see the schema through the Schema API (if enabled) or through the Solr Admin UI's <<cloud-screens.adoc#cloud-screens,Cloud Screens>>.
+You will only be able to see the schema through the Schema API (if enabled) or through the Solr Admin UI's <<cloud-screens.adoc#,Cloud Screens>>.
 
 Whichever name of the file in use in your installation, the structure of the file is not changed.
 However, the way you interact with the file will change.
@@ -34,7 +34,7 @@ If you are using the managed schema, it is expected that you only interact with 
 If you do not use the managed schema, you will only be able to make manual edits to the file, the Schema API will not support any modifications.
 
 Note that if you are not using the Schema API yet you do use SolrCloud, you will need to interact with `schema.xml` through ZooKeeper using `upconfig` and `downconfig` commands to make a local copy and upload your changes.
-The options for doing this are described in <<solr-control-script-reference.adoc#solr-control-script-reference,Solr Control Script Reference>> and <<using-zookeeper-to-manage-configuration-files.adoc#using-zookeeper-to-manage-configuration-files,Using ZooKeeper to Manage Configuration Files>>.
+The options for doing this are described in <<solr-control-script-reference.adoc#,Solr Control Script Reference>> and <<using-zookeeper-to-manage-configuration-files.adoc#,Using ZooKeeper to Manage Configuration Files>>.
 
 == Structure of the Schema File
 
@@ -55,9 +55,9 @@ This example is not real XML, but shows the primary elements that make up a sche
 ----
 
 The most commonly defined elements are `types` and `fields`, where the field types and the actual fields are configured.
-The sections <<solr-field-types.adoc#solr-field-types,Solr Field Types>>, and <<defining-fields.adoc#defining-fields,Defining Fields>> describe how to configure these for your schema.
+The sections <<solr-field-types.adoc#,Solr Field Types>>, and <<defining-fields.adoc#,Defining Fields>> describe how to configure these for your schema.
 
-These are supplemented by `copyFields`, described in <<copy-fields.adoc#copy-fields,Copy Fields>>, and `dynamicFields`, described in <<dynamic-fields.adoc#dynamic-fields,Dynamic Fields>>.
+These are supplemented by `copyFields`, described in <<copy-fields.adoc#,Copy Fields>>, and `dynamicFields`, described in <<dynamic-fields.adoc#,Dynamic Fields>>.
 
 The `uniqueKey` described in <<Unique Key>> below must always be defined.
 

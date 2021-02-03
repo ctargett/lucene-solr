@@ -24,17 +24,17 @@
 Solr's schema governs how documents are indexed and how terms in a query are interpreted.
 
 The following sections cover how to work with the schema generally.
-Note, however, that many of the elements of a schema are covered in the section <<fields-and-schema-design.adoc#fields-and-schema-design,Fields and Schema Design>>.
+Note, however, that many of the elements of a schema are covered in the section <<fields-and-schema-design.adoc#,Fields and Schema Design>>.
 
 ****
 // This tags the below list so it can be used in the parent page section list
 // tag::schema-sections[]
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
-| <<schema-elements.adoc#schema-elements,Schema Elements>>: The structure of Solr's schema.
-| <<schema-api.adoc#schema-api,Schema API>>: An API to read a schema or create new fields and copyField rules.
-| <<schemaless-mode.adoc#schemaless-mode,Schemaless Mode>>: Automatically add previously unknown fields using field type guessing.
-| <<schema-browser-screen.adoc#schema-browser-screen,Schema Browser>>: Schema details through the Admin UI.
+| <<schema-elements.adoc#,Schema Elements>>: The structure of Solr's schema.
+| <<schema-api.adoc#,Schema API>>: An API to read a schema or create new fields and copyField rules.
+| <<schemaless-mode.adoc#,Schemaless Mode>>: Automatically add previously unknown fields using field type guessing.
+| <<schema-browser-screen.adoc#,Schema Browser>>: Schema details through the Admin UI.
 |===
 // end::schema-sections[]
 ****
