@@ -28,4 +28,4 @@ If you are using Leader-Follower index replication, you can use this screen to:
 
 image::images/replication-screen/replication.png[image,width=412,height=250]
 
-More details on how to configure replication is available in the section called <<index-replication.adoc#index-replication,Index Replication>>.
+More details on how to configure replication is available in the section called <<index-replication.adoc#,Index Replication>>.

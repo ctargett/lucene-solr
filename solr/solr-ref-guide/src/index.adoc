@@ -52,7 +52,7 @@ The Guide includes the following sections:
 [sidebar.col]
 ****
 
-The *<<getting-started.adoc#getting-started,Getting Started>>* section guides you through the installation and setup of Solr. A detailed tutorial for first-time users shows many of Solr's features.
+The *<<getting-started.adoc#,Getting Started>>* section guides you through the installation and setup of Solr. A detailed tutorial for first-time users shows many of Solr's features.
 
 ****
 --
@@ -68,17 +68,17 @@ The *<<getting-started.adoc#getting-started,Getting Started>>* section guides yo
 [sidebar.col]
 ****
 
-*<<deployment-guide.adoc#deployment-guide,Deployment Guide>>*
+*<<deployment-guide.adoc#,Deployment Guide>>*
 
 This section includes information about installing Solr, taking it to production and how to run it in HDFS or AWS.
 
-*<<solr-upgrade-notes.adoc#solr-upgrade-notes,Solr Upgrade Notes>>*: Notes for upgrading between minor versions and migrating to the next major version.
+*<<solr-upgrade-notes.adoc#,Solr Upgrade Notes>>*: Notes for upgrading between minor versions and migrating to the next major version.
 ****
 
 .Configuration Guide
 [sidebar.col]
 ****
-*<<configuration.adoc#configuration,Configuration Guide>>*
+*<<configuration.adoc#,Configuration Guide>>*
 
 Covers tuning Solr's configuration files for your use case. Includes sections on securing Solr, scaling Solr, and integrating plugins.
 ****
@@ -95,7 +95,7 @@ Covers tuning Solr's configuration files for your use case. Includes sections on
 [sidebar.col]
 ****
 
-*<<schema-and-indexing.adoc#schema-and-indexing,Schema and Indexing Guide>>*
+*<<schema-and-indexing.adoc#,Schema and Indexing Guide>>*
 
 Covers all aspects of configuring Solr's schema and indexing documents.
 ****
@@ -103,7 +103,7 @@ Covers all aspects of configuring Solr's schema and indexing documents.
 .Query Guide
 [sidebar.col]
 ****
-*<<query-guide.adoc#query-guide,Query Guide>>*
+*<<query-guide.adoc#,Query Guide>>*
 
 This section presents an overview of the search process in Solr. It describes the main components used in searches, including request handlers, query parsers, and response writers. It lists the query parameters that can be passed to Solr, and it describes features such as boosting and faceting, which can be used to fine-tune search results.
 

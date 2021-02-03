@@ -27,13 +27,13 @@ It covers the following topics:
 // tag::client-sections[]
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
-| <<introduction-to-client-apis.adoc#introduction-to-client-apis,Introduction to Client APIs>>: A conceptual overview of Solr client APIs.
-| <<choosing-an-output-format.adoc#choosing-an-output-format,Choosing an Output Format>>: How Solr formats responses to requests.
-| <<using-solrj.adoc#using-solrj,Using SolrJ>>: SolrJ, an API for working with Java applications.
-| <<using-javascript.adoc#using-javascript,Using JavaScript>>: JavaScript clients.
-| <<using-python.adoc#using-python,Using Python>>: Python and JSON responses.
-| <<using-solr-from-ruby.adoc#using-solr-from-ruby,Using Solr From Ruby>>: Solr with Ruby applications.
-| <<client-api-lineup.adoc#client-api-lineup,Other Clients>>: Links to 3rd-party client libraries.
+| <<introduction-to-client-apis.adoc#,Introduction to Client APIs>>: A conceptual overview of Solr client APIs.
+| <<choosing-an-output-format.adoc#,Choosing an Output Format>>: How Solr formats responses to requests.
+| <<using-solrj.adoc#,Using SolrJ>>: SolrJ, an API for working with Java applications.
+| <<using-javascript.adoc#,Using JavaScript>>: JavaScript clients.
+| <<using-python.adoc#,Using Python>>: Python and JSON responses.
+| <<using-solr-from-ruby.adoc#,Using Solr From Ruby>>: Solr with Ruby applications.
+| <<client-api-lineup.adoc#,Other Clients>>: Links to 3rd-party client libraries.
 |
 |===
 //end::client-sections[]
