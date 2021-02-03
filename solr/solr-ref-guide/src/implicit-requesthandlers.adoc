@@ -257,7 +257,7 @@ Streaming Expressions:: Distributed stream processing.
 
 Terms:: Return a field's indexed terms and the number of documents containing each term.
 +
-*Documentation*: <<the-terms-component.adoc#using-the-terms-component-in-a-request-handler,Using the Terms Component in a Request Handler>>
+*Documentation*: <<terms-component.adoc#using-the-terms-component-in-a-request-handler,Using the Terms Component in a Request Handler>>
 +
 [cols="3*.",frame=none,grid=cols,options="header"]
 |===

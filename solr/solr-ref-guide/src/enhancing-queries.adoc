@@ -3,13 +3,13 @@
     suggester, \
     morelikethis, \
     query-re-ranking, \
-    the-terms-component, \
-    the-term-vector-component, \
-    the-stats-component, \
-    the-tagger-handler, \
-    realtime-get, \
-    parallel-sql-interface, \
-    analytics
+    learning-to-rank, \
+    tagger-handler, \
+    analytics, \
+    terms-component, \
+    term-vector-component, \
+    stats-component, \
+    realtime-get
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -28,31 +28,34 @@
 // under the License.
 
 [.lead]
-TBD fill this in
+Solr provides many options for assisting users with their queries.
 
+These options allow you to show users alternate spellings for their search terms, or provide suggestions for terms while they type.
+
+Re-ranking provides an ability to show documents in an order based on a query that may be more complex than the user's query.
+This forms the basis of Solr's Learning to Rank functionality, which can re-rank documents based on a machine-learned model.
+
+The Tagger request handler provides basic named entity recognition functionality.
+
+Finally, if you want to understand the terms in your index or get statistics from terms in the index, those options are covered here also.
+
+****
 // This tags the below list so it can be used in the parent page section list
 // tag::queries-sections[]
-* <<spell-checking.adoc#spell-checking,Spell Checking>>: Detailed information about Solr's spelling checker.
-
-* <<suggester.adoc#suggester,Suggester>>: Detailed information about Solr's powerful autosuggest component.
-
-* <<morelikethis.adoc#morelikethis,MoreLikeThis>>: Detailed information about Solr's similar results query component.
-
-* <<query-re-ranking.adoc#query-re-ranking,Query Re-Ranking>>: Detailed information about re-ranking top scoring documents from simple queries using more complex scores.
-
-* <<learning-to-rank.adoc#learning-to-rank,Learning To Rank>>: How to use LTR to run machine learned ranking models in Solr.
-
-* <<the-terms-component.adoc#the-terms-component,The Terms Component>>: Detailed information about accessing indexed terms and the documents that include them.
-
-* <<the-term-vector-component.adoc#the-term-vector-component,The Term Vector Component>>: How to get term information about specific documents.
-
-* <<the-stats-component.adoc#the-stats-component,The Stats Component>>: How to return information from numeric fields within a document set.
-
-* <<the-tagger-handler.adoc#the-tagger-handler,The Tagger Handler>>: The SolrTextTagger, for basic named entity tagging in text.
-
-* <<realtime-get.adoc#realtime-get,RealTime Get>>: How to get the latest version of a document without opening a searcher.
-
-* <<parallel-sql-interface.adoc#parallel-sql-interface,Parallel SQL Interface>>: An interface for sending SQL statements to Solr, and using advanced parallel query processing and relational algebra for complex data analysis.
-
-* <<analytics.adoc#analytics,The Analytics Component>>: A framework to compute complex analytics over a result set.
+[cols="1,1",frame=none,grid=none,stripes=none]
+|===
+| <<spell-checking.adoc#spell-checking,Spell Checking>>: Spell check for user queries to correct mistakes on the fly.
+| <<suggester.adoc#suggester,Suggester>>: Autosuggest component to suggest query terms while the user types.
+| <<morelikethis.adoc#morelikethis,MoreLikeThis>>: Solr's similar results query component.
+| <<query-re-ranking.adoc#query-re-ranking,Query Re-Ranking>>: Re-ranking top scoring documents from simple queries using more complex scores. *TODO* this is about query parsers, maybe should move?
+| <<learning-to-rank.adoc#learning-to-rank,Learning to Rank>>: Use LTR to run machine learned ranking models in Solr.
+| <<tagger-handler.adoc#tagger-handler,Tagger Handler>>: Basic named entity tagging in text.
+| <<analytics.adoc#analytics,Analytics Component>>: A framework to compute complex analytics over a result set.
+| <<terms-component.adoc#terms-component,Terms Component>>: Access indexed terms and the documents that include them.
+| <<term-vector-component.adoc#term-vector-component,Term Vector Component>>: Term information about specific documents.
+| <<stats-component.adoc#stats-component,Stats Component>>: Get information from numeric fields within a document set.
+| <<realtime-get.adoc#realtime-get,RealTime Get>>: Get the latest version of a document without opening a searcher. *TODO* possibly move this.
+|
+|===
 // end::queries-sections[]
+****

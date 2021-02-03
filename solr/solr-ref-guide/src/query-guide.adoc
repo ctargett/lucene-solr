@@ -1,5 +1,8 @@
 = Query Guide
-:page-children: query-syntax-and-parsing, controlling-results, enhancing-queries, streaming-expressions
+:page-children: query-syntax-and-parsing, \
+    enhancing-queries, \
+    controlling-results, \
+    streaming-expressions
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -17,25 +20,34 @@
 // specific language governing permissions and limitations
 // under the License.
 
-TBD fix up this page
+[.lead]
+This section describes options to control how Solr works with user input and returns results for queries.
 
-This section describes how Solr works with search requests. It covers the following topics:
+It covers the following topics:
 
-<<query-syntax-and-parsing.adoc#query-syntax-and-parsing,*Query Syntax and Parsing*>>: A brief conceptual overview of query syntax and parsing. It also contains the following sub-sections:
+****
+<<query-syntax-and-parsing.adoc#query-syntax-and-parsing,*Query Syntax and Parsing*>>: Solr's query syntax and parsing.
 
 // This pulls the sub-section list from the child page to reduce errors
 include::query-syntax-and-parsing.adoc[tag=parser-sections]
+****
 
-<<controlling-results.adoc#controlling-results,*Controlling Results*>>: description TODO
-
-// This pulls the sub-section list from the child page to reduce errors
-include::controlling-results.adoc[tag=results-sections]
-
-<<enhancing-queries.adoc#enhancing-queries,*Enhancing Queries*>>: description TODO
+****
+<<enhancing-queries.adoc#enhancing-queries,*Enhancing Queries*>>: Augment user queries with other data from the index or based on machine learning.
 
 // This pulls the sub-section list from the child page to reduce errors
 include::enhancing-queries.adoc[tag=queries-sections]
+****
 
-<<streaming-expressions.adoc#streaming-expressions,*Streaming Expressions*>>: A stream processing language for Solr, with a suite of functions to perform many types of queries and parallel execution tasks.
+****
+<<controlling-results.adoc#controlling-results,*Controlling Results*>>: Modify standard results as needed for your use case.
 
-* TODO child page has no master list of sub-sections
+// This pulls the sub-section list from the child page to reduce errors
+include::controlling-results.adoc[tag=results-sections]
+****
+
+****
+<<streaming-expressions.adoc#streaming-expressions,*Streaming Expressions*>>: A stream processing language with a suite of functions for many types of queries and parallel execution tasks.
+
+* *TODO* child page has no master list of sub-sections
+****

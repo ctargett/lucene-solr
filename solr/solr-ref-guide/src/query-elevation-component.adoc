@@ -1,4 +1,4 @@
-= The Query Elevation Component
+= Query Elevation Component
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -18,7 +18,7 @@
 
 The Query Elevation Component lets you configure the top results for a given query regardless of the normal Lucene scoring.
 
-This is sometimes called "sponsored search", "editorial boosting", or "best bets." This component matches the user query text to a configured map of top results. The text can be any string or non-string IDs, as long as it's indexed. Although this component will work with any QueryParser, it makes the most sense to use with <<the-dismax-query-parser.adoc#the-dismax-query-parser,DisMax>> or <<the-extended-dismax-query-parser.adoc#the-extended-dismax-query-parser,eDisMax>>.
+This is sometimes called "sponsored search", "editorial boosting", or "best bets." This component matches the user query text to a configured map of top results. The text can be any string or non-string IDs, as long as it's indexed. Although this component will work with any QueryParser, it makes the most sense to use with <<dismax-query-parser.adoc#dismax-query-parser,DisMax>> or <<edismax-query-parser.adoc#edismax-query-parser,eDisMax>>.
 
 The Query Elevation Component also supports distributed searching.
 

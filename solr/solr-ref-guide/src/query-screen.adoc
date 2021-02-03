@@ -61,10 +61,10 @@ debugQuery::
 Click this button to augment the query response with debugging information, including "explain info" for each document returned. This debugging information is intended to be intelligible to the administrator or programmer.
 
 dismax::
-Click this button to enable the Dismax query parser. See <<the-dismax-query-parser.adoc#the-dismax-query-parser,The DisMax Query Parser>> for further information.
+Click this button to enable the DisMax query parser. See <<dismax-query-parser.adoc#dismax-query-parser,The DisMax Query Parser>> for further information.
 
 edismax::
-Click this button to enable the Extended query parser. See <<the-extended-dismax-query-parser.adoc#the-extended-dismax-query-parser,The Extended DisMax Query Parser>> for further information.
+Click this button to enable the Extended query parser. See <<edismax-query-parser.adoc#edismax-query-parser,The Extended DisMax Query Parser>> for further information.
 
 hl:: Click this button to enable highlighting in the query response. See <<highlighting.adoc#highlighting,Highlighting>> for more information.
 

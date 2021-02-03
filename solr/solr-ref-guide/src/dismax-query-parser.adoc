@@ -1,4 +1,4 @@
-= The DisMax Query Parser
+= DisMax Query Parser
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -150,13 +150,13 @@ Generally speaking, using `bq` (or `bf`, below) is considered a poor way to "boo
 
 "Multiplicative Boosting" is generally considered to be a more predictable method of influencing document score, because it acts as a "scaling factor" -- increasing (or decreasing) the scores of each document by a _relative_ amount.
 
-The <<other-parsers.adoc#boost-query-parser,`{!boost}` QParser>> provides a convenient wrapper for implementing multiplicative boosting, and the <<the-extended-dismax-query-parser.adoc#extended-dismax-parameters,`{!edismax}` QParser>> offers a `boost` query parameter shortcut for using it.
+The <<other-parsers.adoc#boost-query-parser,`{!boost}` QParser>> provides a convenient wrapper for implementing multiplicative boosting, and the <<edismax-query-parser.adoc#extended-dismax-parameters,`{!edismax}` QParser>> offers a `boost` query parameter shortcut for using it.
 ====
 
 
 === bf (Boost Functions) Parameter
 
-The `bf` parameter specifies functions (with optional <<the-standard-query-parser.adoc#boosting-a-term-with,query boost>>) that will be used to construct FunctionQueries which will be _added_ to the user's main query as optional clauses that will influence the score. Any <<function-queries.adoc#available-functions,function supported natively by Solr>> can be used, along with a boost value. For example:
+The `bf` parameter specifies functions (with optional <<standard-query-parser.adoc#boosting-a-term-with,query boost>>) that will be used to construct FunctionQueries which will be _added_ to the user's main query as optional clauses that will influence the score. Any <<function-queries.adoc#available-functions,function supported natively by Solr>> can be used, along with a boost value. For example:
 
 [source,text]
 ----

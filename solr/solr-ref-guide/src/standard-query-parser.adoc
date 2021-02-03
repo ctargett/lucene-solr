@@ -1,4 +1,4 @@
-= The Standard Query Parser
+= Standard Query Parser
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -18,7 +18,7 @@
 
 Solr's default Query Parser is also known as the "```lucene```" parser.
 
-The key advantage of the standard query parser is that it supports a robust and fairly intuitive syntax allowing you to create a variety of structured queries. The largest disadvantage is that it's very intolerant of syntax errors, as compared with something like the <<the-dismax-query-parser.adoc#the-dismax-query-parser,DisMax>> query parser which is designed to throw as few errors as possible.
+The key advantage of the standard query parser is that it supports a robust and fairly intuitive syntax allowing you to create a variety of structured queries. The largest disadvantage is that it's very intolerant of syntax errors, as compared with something like the <<dismax-query-parser.adoc#dismax-query-parser,DisMax>> query parser which is designed to throw as few errors as possible.
 
 == Standard Query Parser Parameters
 

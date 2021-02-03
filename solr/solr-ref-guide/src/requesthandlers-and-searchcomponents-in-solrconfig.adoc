@@ -227,9 +227,9 @@ As you can see below, what we see as a search experience is mostly a sequence of
 |facet_module |`solr.facet.FacetModule` | JSON Faceting and Analytics module, described in the section <<json-facet-api.adoc#json-facet-api, JSON Facet API>>.
 |mlt |`solr.MoreLikeThisComponent` |Described in the section <<morelikethis.adoc#morelikethis,MoreLikeThis>>.
 |highlight |`solr.HighlightComponent` |Described in the section <<highlighting.adoc#highlighting,Highlighting>>.
-|stats |`solr.StatsComponent` |Described in the section <<the-stats-component.adoc#the-stats-component,The Stats Component>>.
+|stats |`solr.StatsComponent` |Described in the section <<stats-component.adoc#stats-component,Stats Component>>.
 |expand |`solr.ExpandComponent` |Described in the section <<collapse-and-expand-results.adoc#collapse-and-expand-results,Collapse and Expand Results>>.
-|terms |`solr.TermsComponent` |Described in the section <<the-terms-component.adoc#the-terms-component,The Terms Component>>.
+|terms |`solr.TermsComponent` |Described in the section <<terms-component.adoc#terms-component,Terms Component>>.
 |debug |`solr.DebugComponent` |Described in the section on <<common-query-parameters.adoc#debug-parameter,Common Query Parameters>>.
 |===
 
@@ -240,12 +240,12 @@ They do need to defined and referenced in `solrconfig.xml` to be actually used.
 * `AnalyticsComponent`, described in the section <<analytics.adoc#analytics,Analytics>>.
 * `ClusteringComponent`, described in the section <<result-clustering.adoc#result-clustering,Result Clustering>>.
 * `PhrasesIdentificationComponent`, used to identify & score "phrases" found in the input string, based on shingles in indexed fields, described in the {solr-javadocs}/core/org/apache/solr/handler/component/PhrasesIdentificationComponent.html[PhrasesIdentificationComponent] javadocs.
-* `QueryElevationComponent`, described in the section <<the-query-elevation-component.adoc#the-query-elevation-component,The Query Elevation Component>>.
+* `QueryElevationComponent`, described in the section <<query-elevation-component.adoc#query-elevation-component,Query Elevation Component>>.
 * `RealTimeGetComponent`, described in the section <<realtime-get.adoc#realtime-get,RealTime Get>>.
 * `ResponseLogComponent`, used to record which documents are returned to the user via the Solr log, described in the {solr-javadocs}/core/org/apache/solr/handler/component/ResponseLogComponent.html[ResponseLogComponent] javadocs.
 * `SpellCheckComponent`, described in the section <<spell-checking.adoc#spell-checking,Spell Checking>>.
 * `SuggestComponent`, described in the section <<suggester.adoc#suggester,Suggester>>.
-* `TermVectorComponent`, described in the section <<the-term-vector-component.adoc#the-term-vector-component,The Term Vector Component>>.
+* `TermVectorComponent`, described in the section <<term-vector-component.adoc#term-vector-component,Term Vector Component>>.
 
 Some third party components are also linked from https://solr.cool/ website.
 
