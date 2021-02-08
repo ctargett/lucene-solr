@@ -18,6 +18,7 @@ package org.apache.solr.cloud.api.collections;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -27,11 +28,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicReference;
 
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.StringUtils;
@@ -82,6 +83,8 @@ import org.apache.solr.common.util.StrUtils;
 import org.apache.solr.common.util.SuppressForbidden;
 import org.apache.solr.common.util.TimeSource;
 import org.apache.solr.common.util.Utils;
+import org.apache.solr.core.backup.BackupId;
+import org.apache.solr.core.backup.repository.BackupRepository;
 import org.apache.solr.handler.component.HttpShardHandlerFactory;
 import org.apache.solr.handler.component.ShardHandler;
 import org.apache.solr.handler.component.ShardRequest;
@@ -200,6 +203,7 @@ public class OverseerCollectionMessageHandler implements OverseerMessageHandler,
         .put(DELETENODE, new DeleteNodeCmd(this))
         .put(BACKUP, new BackupCmd(this))
         .put(RESTORE, new RestoreCmd(this))
+        .put(DELETEBACKUP, new DeleteBackupCmd(this))
         .put(CREATESNAPSHOT, new CreateSnapshotCmd(this))
         .put(DELETESNAPSHOT, new DeleteSnapshotCmd(this))
         .put(SPLITSHARD, new SplitShardCmd(this))
@@ -487,21 +491,15 @@ public class OverseerCollectionMessageHandler implements OverseerMessageHandler,
   }
 
   String waitForCoreNodeName(String collectionName, String msgNodeName, String msgCore) {
-    AtomicReference<String> coreNodeName = new AtomicReference<>();
     try {
-      zkStateReader.waitForState(collectionName, 320, TimeUnit.SECONDS, c -> {
-        String name = ClusterStateMutator.getAssignedCoreNodeName(c, msgNodeName, msgCore);
-        if (name == null) {
-          return false;
-        }
-        coreNodeName.set(name);
-        return true;
-      });
+      DocCollection collection = zkStateReader.waitForState(collectionName, 320, TimeUnit.SECONDS, c ->
+        ClusterStateMutator.getAssignedCoreNodeName(c, msgNodeName, msgCore) != null
+      );
+      return ClusterStateMutator.getAssignedCoreNodeName(collection, msgNodeName, msgCore);
     } catch (TimeoutException | InterruptedException e) {
       SolrZkClient.checkInterrupted(e);
       throw new SolrException(ErrorCode.SERVER_ERROR, "Failed waiting for coreNodeName", e);
     }
-    return coreNodeName.get();
   }
 
   ClusterState waitForNewShard(String collectionName, String sliceName) throws KeeperException, InterruptedException {
@@ -609,29 +607,39 @@ public class OverseerCollectionMessageHandler implements OverseerMessageHandler,
 
   Map<String, Replica> waitToSeeReplicasInState(String collectionName, Collection<String> coreNames) throws InterruptedException {
     assert coreNames.size() > 0;
-    Map<String, Replica> results = new HashMap<>();
-    AtomicReference<DocCollection> lastState = new AtomicReference<>();
+    Map<String, Replica> results = new ConcurrentHashMap<>();
 
     long maxWait = Long.getLong("solr.waitToSeeReplicasInStateTimeoutSeconds", 120); // could be a big cluster
     try {
       zkStateReader.waitForState(collectionName, maxWait, TimeUnit.SECONDS, c -> {
         if (c == null) return false;
 
+        // We write into a ConcurrentHashMap, which will be ok if called multiple times by multiple threads
         c.getSlices().stream().flatMap(slice -> slice.getReplicas().stream())
-            .filter(r -> coreNames.contains(r.getCoreName()))   // Only the elements that were asked for...
-            .filter(r -> !results.containsKey(r.getCoreName())) // ...but not the ones we've seen already...
-            .forEach(r -> results.put(r.getCoreName(), r));     // ...get added to the map
+            .filter(r -> coreNames.contains(r.getCoreName()))       // Only the elements that were asked for...
+            .forEach(r -> results.putIfAbsent(r.getCoreName(), r)); // ...get added to the map
 
-        lastState.set(c);
         log.debug("Expecting {} cores, found {}", coreNames, results);
         return results.size() == coreNames.size();
       });
     } catch (TimeoutException e) {
-      String error = "Timed out waiting to see all replicas: " + coreNames + " in cluster state. Last state: " + lastState.get();
-      throw new SolrException(ErrorCode.SERVER_ERROR, error);
+      throw new SolrException(ErrorCode.SERVER_ERROR, e.getMessage(), e);
     }
 
     return results;
+  }
+
+  @SuppressWarnings({"rawtypes"})
+  void cleanBackup(BackupRepository  repository, URI backupPath, BackupId backupId) throws Exception {
+    ((DeleteBackupCmd)commandMap.get(DELETEBACKUP))
+            .deleteBackupIds(backupPath, repository, Collections.singleton(backupId), new NamedList());
+  }
+
+  void deleteBackup(BackupRepository repository, URI backupPath,
+                    int maxNumBackup,
+                    @SuppressWarnings({"rawtypes"}) NamedList results) throws Exception {
+    ((DeleteBackupCmd)commandMap.get(DELETEBACKUP))
+            .keepNumberOfBackup(repository, backupPath, maxNumBackup, results);
   }
 
   List<ZkNodeProps> addReplica(ClusterState clusterState, ZkNodeProps message, @SuppressWarnings({"rawtypes"})NamedList results, Runnable onComplete)

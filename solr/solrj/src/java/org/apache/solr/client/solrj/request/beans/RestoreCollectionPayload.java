@@ -14,59 +14,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.solr.client.solrj.request.beans;
 
 import org.apache.solr.common.annotation.JsonProperty;
 import org.apache.solr.common.util.ReflectMapWriter;
 
-public class ClusterPropInfo implements ReflectMapWriter {
+import java.util.Map;
 
-  @JsonProperty
-  public String urlScheme;
+import static org.apache.solr.client.solrj.request.beans.V2ApiConstants.CREATE_COLLECTION_KEY;
 
-  @JsonProperty
-  public Integer maxCoresPerNode;
-  @JsonProperty
-  public String location;
+/**
+ * V2 API POJO for the /v2/collections 'restore-collection' command.
+ *
+ * Analogous to the request parameters for v1 /admin/collections?action=RESTORE API.
+ */
+public class RestoreCollectionPayload implements ReflectMapWriter {
 
-  @JsonProperty
-  public DefaultsInfo defaults;
+    @JsonProperty(required = true)
+    public String collection;
 
-  @JsonProperty
-  public CollectionDefaults collectionDefaults;
-
-  public static class CollectionDefaults implements ReflectMapWriter {
-    @JsonProperty
-    public Integer numShards;
-    @JsonProperty
-    public Integer tlogReplicas;
-    @JsonProperty
-    public Integer pullReplicas;
-    @JsonProperty
-    public Integer nrtReplicas;
-
-  }
-
-  public static class DefaultsInfo implements ReflectMapWriter {
+    @JsonProperty(required = true)
+    public String name;
 
     @JsonProperty
-    public CollectionDefaults collection;
+    public String location;
 
     @JsonProperty
-    public ClusterInfo cluster;
-
-  }
-
-  public static class ClusterInfo implements ReflectMapWriter {
-    @JsonProperty
-    public Boolean useLegacyReplicaAssignment;
-
+    public String repository;
 
     @JsonProperty
-    public CollectionDefaults collection;
+    public Integer backupId;
 
-  }
+    @JsonProperty(CREATE_COLLECTION_KEY)
+    public Map<String, Object> createCollectionParams;
 
-
+    @JsonProperty
+    public String async;
 }

@@ -16,25 +16,11 @@
  */
 package org.apache.solr.client.solrj.request;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.Set;
-import java.util.TimeZone;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
 import org.apache.solr.client.solrj.RoutedAliasTypes;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrResponse;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.V2RequestSupport;
 import org.apache.solr.client.solrj.response.CollectionAdminResponse;
 import org.apache.solr.client.solrj.response.RequestStatusState;
 import org.apache.solr.client.solrj.util.SolrIdentifierValidator;
@@ -54,26 +40,29 @@ import org.apache.solr.common.params.ShardParams;
 import org.apache.solr.common.params.SolrParams;
 import org.apache.solr.common.util.NamedList;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Properties;
+import java.util.Set;
+import java.util.TimeZone;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
 import static org.apache.solr.common.cloud.DocCollection.PER_REPLICA_STATE;
-import static org.apache.solr.common.cloud.ZkStateReader.NRT_REPLICAS;
-import static org.apache.solr.common.cloud.ZkStateReader.PULL_REPLICAS;
-import static org.apache.solr.common.cloud.ZkStateReader.READ_ONLY;
-import static org.apache.solr.common.cloud.ZkStateReader.REPLICATION_FACTOR;
-import static org.apache.solr.common.cloud.ZkStateReader.TLOG_REPLICAS;
-import static org.apache.solr.common.params.CollectionAdminParams.ALIAS;
-import static org.apache.solr.common.params.CollectionAdminParams.COLL_CONF;
-import static org.apache.solr.common.params.CollectionAdminParams.COUNT_PROP;
-import static org.apache.solr.common.params.CollectionAdminParams.CREATE_NODE_SET_PARAM;
-import static org.apache.solr.common.params.CollectionAdminParams.CREATE_NODE_SET_SHUFFLE_PARAM;
-import static org.apache.solr.common.params.CollectionAdminParams.ROUTER_PREFIX;
-import static org.apache.solr.common.params.CollectionAdminParams.SKIP_NODE_ASSIGNMENT;
+import static org.apache.solr.common.cloud.ZkStateReader.*;
+import static org.apache.solr.common.params.CollectionAdminParams.*;
 
 /**
  * This class is experimental and subject to change.
  *
  * @since solr 4.5
  */
-public abstract class CollectionAdminRequest<T extends CollectionAdminResponse> extends SolrRequest<T> implements V2RequestSupport, MapWriter {
+public abstract class CollectionAdminRequest<T extends CollectionAdminResponse> extends SolrRequest<T> implements MapWriter {
 
   /**
    * The set of modifiable collection properties
@@ -95,14 +84,6 @@ public abstract class CollectionAdminRequest<T extends CollectionAdminResponse> 
   public CollectionAdminRequest(String path, CollectionAction action) {
     super(METHOD.GET, path);
     this.action = checkNotNull(CoreAdminParams.ACTION, action);
-  }
-
-  @Override
-  @SuppressWarnings({"rawtypes"})
-  public SolrRequest getV2Request() {
-    return usev2 ?
-        V1toV2ApiMapper.convert(this).useBinary(useBinaryV2).build() :
-        this;
   }
 
   @Override
@@ -983,6 +964,8 @@ public abstract class CollectionAdminRequest<T extends CollectionAdminResponse> 
     protected String location;
     protected Optional<String> commitName = Optional.empty();
     protected Optional<String> indexBackupStrategy = Optional.empty();
+    protected boolean incremental = true;
+    protected Optional<Integer> maxNumBackupPoints = Optional.empty();
 
     public Backup(String collection, String name) {
       super(CollectionAction.BACKUP, collection);
@@ -1026,6 +1009,38 @@ public abstract class CollectionAdminRequest<T extends CollectionAdminResponse> 
       return this;
     }
 
+    /**
+     * Specifies the backup method to use: the deprecated 'full-snapshot' format, or the current 'incremental' format.
+     *
+     * Defaults to 'true' if unspecified.
+     *
+     * Incremental backups are almost always preferable to the deprecated 'full-snapshot' format, as incremental backups
+     * can take advantage of previously backed-up files and will only upload those that aren't already stored in the
+     * repository - saving lots of time and network bandwidth.  The older 'full-snapshot' format should only be used by
+     * experts with a particular reason to do so.
+     *
+     * @param incremental true to use incremental backups, false otherwise.
+     */
+    @Deprecated
+    public Backup setIncremental(boolean incremental) {
+      this.incremental = incremental;
+      return this;
+    }
+
+    /**
+     * Specifies the maximum number of backup points to keep at the backup location.
+     *
+     * If the current backup causes the number of stored backup points to exceed this value, the oldest backup points
+     * are cleaned up so that only {@code #maxNumBackupPoints} are retained.
+     *
+     * This parameter is ignored if the request uses a non-incremental backup.
+     * @param maxNumBackupPoints the number of backup points to retain after the current backup
+     */
+    public Backup setMaxNumberBackupPoints(int maxNumBackupPoints) {
+      this.maxNumBackupPoints = Optional.of(maxNumBackupPoints);
+      return this;
+    }
+
     @Override
     public SolrParams getParams() {
       ModifiableSolrParams params = (ModifiableSolrParams) super.getParams();
@@ -1041,6 +1056,10 @@ public abstract class CollectionAdminRequest<T extends CollectionAdminResponse> 
       if (indexBackupStrategy.isPresent()) {
         params.set(CollectionAdminParams.INDEX_BACKUP_STRATEGY, indexBackupStrategy.get());
       }
+      if (maxNumBackupPoints.isPresent()) {
+        params.set(CoreAdminParams.MAX_NUM_BACKUP_POINTS, maxNumBackupPoints.get());
+      }
+      params.set(CoreAdminParams.BACKUP_INCREMENTAL, incremental);
       return params;
     }
 
@@ -1065,6 +1084,7 @@ public abstract class CollectionAdminRequest<T extends CollectionAdminResponse> 
     protected Optional<String> createNodeSet = Optional.empty();
     protected Optional<Boolean> createNodeSetShuffle = Optional.empty();
     protected Properties properties;
+    protected Integer backupId;
 
     public Restore(String collection, String backupName) {
       super(CollectionAction.RESTORE, collection);
@@ -1126,6 +1146,21 @@ public abstract class CollectionAdminRequest<T extends CollectionAdminResponse> 
     }
     public Restore setProperties(Properties properties) { this.properties = properties; return this;}
 
+    /**
+     * Specify the ID of the backup-point to restore from.
+     *
+     * '-1'q is used by default to have Solr restore from the most recent backup-point.
+     *
+     * Solr can store multiple backup points for a given collection - each identified by a unique backup ID.  Users who
+     * want to restore a particular backup-point can specify it using this method.
+     *
+     * @param backupId the ID of the backup-point to restore from
+     */
+    public Restore setBackupId(int backupId) {
+      this.backupId = backupId;
+      return this;
+    }
+
     // TODO support rule, snitch
 
     @Override
@@ -1162,6 +1197,9 @@ public abstract class CollectionAdminRequest<T extends CollectionAdminResponse> 
       }
       if (createNodeSetShuffle.isPresent()) {
         params.set(CREATE_NODE_SET_SHUFFLE_PARAM, createNodeSetShuffle.get());
+      }
+      if (backupId != null) {
+        params.set(CoreAdminParams.BACKUP_ID, backupId);
       }
 
       return params;

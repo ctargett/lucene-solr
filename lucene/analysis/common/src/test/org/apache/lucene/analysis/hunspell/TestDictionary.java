@@ -20,13 +20,10 @@ import java.io.ByteArrayInputStream;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
-import java.util.Random;
 import org.apache.lucene.store.ByteBuffersDirectory;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.CharsRef;
 import org.apache.lucene.util.IntsRef;
 import org.apache.lucene.util.IntsRefBuilder;
@@ -41,106 +38,59 @@ import org.junit.Test;
 public class TestDictionary extends LuceneTestCase {
 
   public void testSimpleDictionary() throws Exception {
-    InputStream affixStream = getClass().getResourceAsStream("simple.aff");
-    InputStream dictStream = getClass().getResourceAsStream("simple.dic");
-    Directory tempDir = getDirectory();
-
-    Dictionary dictionary = new Dictionary(tempDir, "dictionary", affixStream, dictStream);
+    Dictionary dictionary = loadDictionary("simple.aff", "simple.dic");
     assertEquals(3, dictionary.lookupSuffix(new char[] {'e'}).length);
     assertEquals(1, dictionary.lookupPrefix(new char[] {'s'}).length);
     IntsRef ordList = dictionary.lookupWord(new char[] {'o', 'l', 'r'}, 0, 3);
     assertNotNull(ordList);
     assertEquals(1, ordList.length);
 
-    BytesRef ref = new BytesRef();
-    char[] flags = dictionary.decodeFlags(ordList.ints[0], ref);
-    assertEquals(1, flags.length);
+    assertEquals('B', assertSingleFlag(dictionary, ordList));
 
     int offset = random().nextInt(10);
     ordList = dictionary.lookupWord((" ".repeat(offset) + "lucen").toCharArray(), offset, 5);
     assertNotNull(ordList);
     assertEquals(1, ordList.length);
-    flags = dictionary.decodeFlags(ordList.ints[0], ref);
-    assertEquals(1, flags.length);
+    assertEquals('A', assertSingleFlag(dictionary, ordList));
+  }
 
-    affixStream.close();
-    dictStream.close();
-    tempDir.close();
+  private static char assertSingleFlag(Dictionary dictionary, IntsRef ordList) {
+    int entryId = ordList.ints[0];
+    char[] flags = dictionary.flagLookup.getFlags(entryId);
+    assertEquals(1, flags.length);
+    return flags[0];
   }
 
   public void testCompressedDictionary() throws Exception {
-    InputStream affixStream = getClass().getResourceAsStream("compressed.aff");
-    InputStream dictStream = getClass().getResourceAsStream("compressed.dic");
-
-    Directory tempDir = getDirectory();
-    Dictionary dictionary = new Dictionary(tempDir, "dictionary", affixStream, dictStream);
+    Dictionary dictionary = loadDictionary("compressed.aff", "compressed.dic");
     assertEquals(3, dictionary.lookupSuffix(new char[] {'e'}).length);
     assertEquals(1, dictionary.lookupPrefix(new char[] {'s'}).length);
     IntsRef ordList = dictionary.lookupWord(new char[] {'o', 'l', 'r'}, 0, 3);
-    BytesRef ref = new BytesRef();
-    char[] flags = dictionary.decodeFlags(ordList.ints[0], ref);
-    assertEquals(1, flags.length);
-
-    affixStream.close();
-    dictStream.close();
-    tempDir.close();
+    assertSingleFlag(dictionary, ordList);
   }
 
   public void testCompressedBeforeSetDictionary() throws Exception {
-    InputStream affixStream = getClass().getResourceAsStream("compressed-before-set.aff");
-    InputStream dictStream = getClass().getResourceAsStream("compressed.dic");
-    Directory tempDir = getDirectory();
-
-    Dictionary dictionary = new Dictionary(tempDir, "dictionary", affixStream, dictStream);
+    Dictionary dictionary = loadDictionary("compressed-before-set.aff", "compressed.dic");
     assertEquals(3, dictionary.lookupSuffix(new char[] {'e'}).length);
     assertEquals(1, dictionary.lookupPrefix(new char[] {'s'}).length);
     IntsRef ordList = dictionary.lookupWord(new char[] {'o', 'l', 'r'}, 0, 3);
-    BytesRef ref = new BytesRef();
-    char[] flags = dictionary.decodeFlags(ordList.ints[0], ref);
-    assertEquals(1, flags.length);
-
-    affixStream.close();
-    dictStream.close();
-    tempDir.close();
+    assertSingleFlag(dictionary, ordList);
   }
 
   public void testCompressedEmptyAliasDictionary() throws Exception {
-    InputStream affixStream = getClass().getResourceAsStream("compressed-empty-alias.aff");
-    InputStream dictStream = getClass().getResourceAsStream("compressed.dic");
-    Directory tempDir = getDirectory();
-
-    Dictionary dictionary = new Dictionary(tempDir, "dictionary", affixStream, dictStream);
+    Dictionary dictionary = loadDictionary("compressed-empty-alias.aff", "compressed.dic");
     assertEquals(3, dictionary.lookupSuffix(new char[] {'e'}).length);
     assertEquals(1, dictionary.lookupPrefix(new char[] {'s'}).length);
     IntsRef ordList = dictionary.lookupWord(new char[] {'o', 'l', 'r'}, 0, 3);
-    BytesRef ref = new BytesRef();
-    char[] flags = dictionary.decodeFlags(ordList.ints[0], ref);
-    assertEquals(1, flags.length);
-
-    affixStream.close();
-    dictStream.close();
-    tempDir.close();
+    assertSingleFlag(dictionary, ordList);
   }
 
   // malformed rule causes ParseException
-  public void testInvalidData() throws Exception {
-    InputStream affixStream = getClass().getResourceAsStream("broken.aff");
-    InputStream dictStream = getClass().getResourceAsStream("simple.dic");
-    Directory tempDir = getDirectory();
-
+  public void testInvalidData() {
     ParseException expected =
-        expectThrows(
-            ParseException.class,
-            () -> new Dictionary(tempDir, "dictionary", affixStream, dictStream));
-    assertTrue(
-        expected
-            .getMessage()
-            .startsWith("The affix file contains a rule with less than four elements"));
+        expectThrows(ParseException.class, () -> loadDictionary("broken.aff", "simple.dic"));
+    assertTrue(expected.getMessage().startsWith("Invalid syntax"));
     assertEquals(24, expected.getErrorOffset());
-
-    affixStream.close();
-    dictStream.close();
-    tempDir.close();
   }
 
   public void testUsingFlagsBeforeFlagDirective() throws IOException, ParseException {
@@ -157,20 +107,21 @@ public class TestDictionary extends LuceneTestCase {
     assertEquals(42, dictionary.keepcase);
   }
 
-  // malformed flags causes ParseException
-  public void testInvalidFlags() throws Exception {
-    InputStream affixStream = getClass().getResourceAsStream("broken-flags.aff");
-    InputStream dictStream = getClass().getResourceAsStream("simple.dic");
-    Directory tempDir = getDirectory();
+  public void testForgivableErrors() throws Exception {
+    Dictionary dictionary = loadDictionary("forgivable-errors.aff", "simple.dic");
+    assertEquals(1, dictionary.repTable.size());
+    assertEquals(2, dictionary.compoundMax);
 
-    Exception expected =
-        expectThrows(
-            Exception.class, () -> new Dictionary(tempDir, "dictionary", affixStream, dictStream));
-    assertTrue(expected.getMessage().startsWith("expected only one flag"));
+    loadDictionary("forgivable-errors-long.aff", "single-word.dic");
+    loadDictionary("forgivable-errors-num.aff", "single-word.dic");
+  }
 
-    affixStream.close();
-    dictStream.close();
-    tempDir.close();
+  private Dictionary loadDictionary(String aff, String dic) throws IOException, ParseException {
+    try (InputStream affixStream = getClass().getResourceAsStream(aff);
+        InputStream dicStream = getClass().getResourceAsStream(dic);
+        Directory tempDir = getDirectory()) {
+      return new Dictionary(tempDir, "dictionary", affixStream, dicStream);
+    }
   }
 
   private static class CloseCheckInputStream extends FilterInputStream {
@@ -291,31 +242,6 @@ public class TestDictionary extends LuceneTestCase {
     String asAscii = new String(src.getBytes(StandardCharsets.UTF_8), Dictionary.DEFAULT_CHARSET);
     assertNotEquals(src, asAscii);
     assertEquals(src, new String(strategy.parseFlags(asAscii)));
-  }
-
-  @Test
-  public void testFlagSerialization() {
-    Random r = random();
-    char[] flags = new char[r.nextInt(10)];
-    for (int i = 0; i < flags.length; i++) {
-      flags[i] = (char) r.nextInt(Character.MIN_SURROGATE);
-    }
-
-    String[] flagLines = {"FLAG long", "FLAG UTF-8", "FLAG num"};
-    Charset[] charsets = {StandardCharsets.UTF_8, Dictionary.DEFAULT_CHARSET};
-    for (String flagLine : flagLines) {
-      for (Charset charset : charsets) {
-        Dictionary.FlagParsingStrategy strategy =
-            Dictionary.getFlagParsingStrategy(flagLine, charset);
-        StringBuilder serialized = new StringBuilder();
-        for (char flag : flags) {
-          strategy.appendFlag(flag, serialized);
-        }
-
-        char[] deserialized = strategy.parseFlags(serialized.toString());
-        assertEquals(new String(flags), new String(deserialized));
-      }
-    }
   }
 
   private Directory getDirectory() {

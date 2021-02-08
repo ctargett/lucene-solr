@@ -16,19 +16,16 @@
  */
 package org.apache.lucene.analysis.hunspell;
 
-import java.util.List;
-import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.CharsRef;
 import org.apache.lucene.util.IntsRef;
 
 class CheckCompoundPattern {
-  private final char[] endChars;
-  private final char[] beginChars;
-  private final char[] replacement;
+  private final String endChars;
+  private final String beginChars;
+  private final String replacement;
   private final char[] endFlags;
   private final char[] beginFlags;
   private final Dictionary dictionary;
-  private final BytesRef scratch = new BytesRef();
 
   CheckCompoundPattern(
       String unparsed, Dictionary.FlagParsingStrategy strategy, Dictionary dictionary) {
@@ -39,71 +36,62 @@ class CheckCompoundPattern {
     }
 
     int flagSep = parts[1].indexOf("/");
-    endChars = (flagSep < 0 ? parts[1] : parts[1].substring(0, flagSep)).toCharArray();
+    endChars = flagSep < 0 ? parts[1] : parts[1].substring(0, flagSep);
     endFlags = flagSep < 0 ? new char[0] : strategy.parseFlags(parts[1].substring(flagSep + 1));
 
     flagSep = parts[2].indexOf("/");
-    beginChars = (flagSep < 0 ? parts[2] : parts[2].substring(0, flagSep)).toCharArray();
+    beginChars = flagSep < 0 ? parts[2] : parts[2].substring(0, flagSep);
     beginFlags = flagSep < 0 ? new char[0] : strategy.parseFlags(parts[2].substring(flagSep + 1));
 
-    replacement = parts.length == 3 ? null : parts[3].toCharArray();
+    replacement = parts.length == 3 ? null : parts[3];
   }
 
   @Override
   public String toString() {
-    return new String(endChars)
-        + " "
-        + new String(beginChars)
-        + (replacement == null ? "" : " -> " + new String(replacement));
+    return endChars + " " + beginChars + (replacement == null ? "" : " -> " + replacement);
   }
 
   boolean prohibitsCompounding(
-      CharsRef word, int breakPos, List<CharsRef> stemsBefore, List<CharsRef> stemsAfter) {
+      CharsRef word, int breakPos, CharsRef stemBefore, CharsRef stemAfter) {
     if (isNonAffixedPattern(endChars)) {
-      if (stemsBefore.stream()
-          .noneMatch(stem -> charsMatch(word, breakPos - stem.length, stem.chars))) {
+      if (!charsMatch(word, breakPos - stemBefore.length, stemBefore)) {
         return false;
       }
-    } else if (!charsMatch(word, breakPos - endChars.length, endChars)) {
+    } else if (!charsMatch(word, breakPos - endChars.length(), endChars)) {
       return false;
     }
 
     if (isNonAffixedPattern(beginChars)) {
-      if (stemsAfter.stream().noneMatch(stem -> charsMatch(word, breakPos, stem.chars))) {
+      if (!charsMatch(word, breakPos, stemAfter)) {
         return false;
       }
     } else if (!charsMatch(word, breakPos, beginChars)) {
       return false;
     }
 
-    if (endFlags.length > 0 && !hasStemWithFlags(stemsBefore, endFlags)) {
+    if (endFlags.length > 0 && !stemHasFlags(stemBefore, endFlags)) {
       return false;
     }
     //noinspection RedundantIfStatement
-    if (beginFlags.length > 0 && !hasStemWithFlags(stemsAfter, beginFlags)) {
+    if (beginFlags.length > 0 && !stemHasFlags(stemAfter, beginFlags)) {
       return false;
     }
 
     return true;
   }
 
-  private static boolean isNonAffixedPattern(char[] pattern) {
-    return pattern.length == 1 && pattern[0] == '0';
+  private static boolean isNonAffixedPattern(String pattern) {
+    return pattern.length() == 1 && pattern.charAt(0) == '0';
   }
 
-  private boolean hasStemWithFlags(List<CharsRef> stems, char[] flags) {
-    for (CharsRef stem : stems) {
-      IntsRef forms = dictionary.lookupWord(stem.chars, stem.offset, stem.length);
-      if (forms != null && hasAllFlags(flags, forms)) {
-        return true;
-      }
-    }
-    return false;
+  private boolean stemHasFlags(CharsRef stem, char[] flags) {
+    IntsRef forms = dictionary.lookupWord(stem.chars, stem.offset, stem.length);
+    return forms != null && hasAllFlags(flags, forms);
   }
 
   private boolean hasAllFlags(char[] flags, IntsRef forms) {
     for (char flag : flags) {
-      if (!dictionary.hasFlag(forms, flag, scratch)) {
+      if (!dictionary.hasFlag(forms, flag)) {
         return false;
       }
     }
@@ -114,25 +102,25 @@ class CheckCompoundPattern {
     if (replacement != null && charsMatch(word, breakPos, replacement)) {
       return new CharsRef(
           word.subSequence(0, breakPos)
-              + new String(endChars)
-              + new String(beginChars)
-              + word.subSequence(breakPos + replacement.length, word.length));
+              + endChars
+              + beginChars
+              + word.subSequence(breakPos + replacement.length(), word.length));
     }
     return null;
   }
 
   int endLength() {
-    return endChars.length;
+    return endChars.length();
   }
 
-  private static boolean charsMatch(CharsRef word, int offset, char[] pattern) {
-    int len = pattern.length;
+  private static boolean charsMatch(CharsRef word, int offset, CharSequence pattern) {
+    int len = pattern.length();
     if (word.length - offset < len || offset < 0 || offset > word.length) {
       return false;
     }
 
     for (int i = 0; i < len; i++) {
-      if (word.chars[word.offset + offset + i] != pattern[i]) {
+      if (word.chars[word.offset + offset + i] != pattern.charAt(i)) {
         return false;
       }
     }

@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.util.ArrayUtil;
-import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.CharsRef;
 import org.apache.lucene.util.IntsRef;
 import org.apache.lucene.util.automaton.CharacterRunAutomaton;
@@ -37,7 +36,6 @@ import org.apache.lucene.util.fst.FST;
  */
 final class Stemmer {
   private final Dictionary dictionary;
-  private final BytesRef scratch = new BytesRef();
   private final StringBuilder segment = new StringBuilder();
 
   // used for normalization
@@ -96,28 +94,45 @@ final class Stemmer {
       word = scratchBuffer;
     }
 
-    if (dictionary.isForbiddenWord(word, length, scratch)) {
+    if (dictionary.isForbiddenWord(word, length)) {
       return Collections.emptyList();
     }
 
+    List<CharsRef> list = new ArrayList<>();
+    RootProcessor processor =
+        (stem, forms, formID) -> {
+          list.add(newStem(stem, forms, formID));
+          return true;
+        };
+
+    if (!doStem(word, 0, length, null, WordContext.SIMPLE_WORD, processor)) {
+      return list;
+    }
+
     WordCase wordCase = caseOf(word, length);
-    List<CharsRef> list = doStem(word, 0, length, null, WordContext.SIMPLE_WORD);
     if (wordCase == WordCase.UPPER || wordCase == WordCase.TITLE) {
-      addCaseVariations(word, length, wordCase, list);
+      addCaseVariations(word, length, wordCase, processor);
     }
     return list;
   }
 
-  private void addCaseVariations(char[] word, int length, WordCase wordCase, List<CharsRef> list) {
+  private void addCaseVariations(
+      char[] word, int length, WordCase wordCase, RootProcessor processor) {
     if (wordCase == WordCase.UPPER) {
       caseFoldTitle(word, length);
       char[] aposCase = capitalizeAfterApostrophe(titleBuffer, length);
       if (aposCase != null) {
-        list.addAll(doStem(aposCase, 0, length, wordCase, WordContext.SIMPLE_WORD));
+        if (!doStem(aposCase, 0, length, wordCase, WordContext.SIMPLE_WORD, processor)) {
+          return;
+        }
       }
-      list.addAll(doStem(titleBuffer, 0, length, wordCase, WordContext.SIMPLE_WORD));
+      if (!doStem(titleBuffer, 0, length, wordCase, WordContext.SIMPLE_WORD, processor)) {
+        return;
+      }
       for (char[] variation : sharpSVariations(titleBuffer, length)) {
-        list.addAll(doStem(variation, 0, variation.length, null, WordContext.SIMPLE_WORD));
+        if (!doStem(variation, 0, variation.length, null, WordContext.SIMPLE_WORD, processor)) {
+          return;
+        }
       }
     }
 
@@ -126,10 +141,14 @@ final class Stemmer {
     }
 
     caseFoldLower(wordCase == WordCase.UPPER ? titleBuffer : word, length);
-    list.addAll(doStem(lowerBuffer, 0, length, wordCase, WordContext.SIMPLE_WORD));
+    if (!doStem(lowerBuffer, 0, length, wordCase, WordContext.SIMPLE_WORD, processor)) {
+      return;
+    }
     if (wordCase == WordCase.UPPER) {
       for (char[] variation : sharpSVariations(lowerBuffer, length)) {
-        list.addAll(doStem(variation, 0, variation.length, null, WordContext.SIMPLE_WORD));
+        if (!doStem(variation, 0, variation.length, null, WordContext.SIMPLE_WORD, processor)) {
+          return;
+        }
       }
     }
   }
@@ -220,62 +239,67 @@ final class Stemmer {
     return result.filter(s -> !s.equals(src)).map(String::toCharArray).collect(Collectors.toList());
   }
 
-  List<CharsRef> doStem(
-      char[] word, int offset, int length, WordCase originalCase, WordContext context) {
-    List<CharsRef> stems = new ArrayList<>();
+  boolean doStem(
+      char[] word,
+      int offset,
+      int length,
+      WordCase originalCase,
+      WordContext context,
+      RootProcessor processor) {
     IntsRef forms = dictionary.lookupWord(word, offset, length);
     if (forms != null) {
       for (int i = 0; i < forms.length; i += formStep) {
-        char[] wordFlags = dictionary.decodeFlags(forms.ints[forms.offset + i], scratch);
-        if (!acceptCase(originalCase, wordFlags, word, offset, length)) {
+        int entryId = forms.ints[forms.offset + i];
+        if (!acceptCase(originalCase, entryId, word, offset, length)) {
           continue;
         }
         // we can't add this form, it's a pseudostem requiring an affix
-        if (Dictionary.hasFlag(wordFlags, dictionary.needaffix)) {
+        if (dictionary.hasFlag(entryId, dictionary.needaffix)) {
           continue;
         }
         // we can't add this form, it only belongs inside a compound word
-        if (!context.isCompound() && Dictionary.hasFlag(wordFlags, dictionary.onlyincompound)) {
+        if (!context.isCompound() && dictionary.hasFlag(entryId, dictionary.onlyincompound)) {
           continue;
         }
         if (context.isCompound()) {
           if (context != WordContext.COMPOUND_END
-              && Dictionary.hasFlag(wordFlags, dictionary.compoundForbid)) {
-            return new ArrayList<>();
+              && dictionary.hasFlag(entryId, dictionary.compoundForbid)) {
+            return false;
           }
-          if (!Dictionary.hasFlag(wordFlags, dictionary.compoundFlag)
-              && !Dictionary.hasFlag(wordFlags, context.requiredFlag(dictionary))) {
+          if (!dictionary.hasFlag(entryId, dictionary.compoundFlag)
+              && !dictionary.hasFlag(entryId, context.requiredFlag(dictionary))) {
             continue;
           }
         }
-        stems.add(newStem(word, offset, length, forms, i));
+        if (!processor.processRoot(new CharsRef(word, offset, length), forms, i)) {
+          return false;
+        }
       }
     }
     try {
-      stems.addAll(
-          stem(
-              word,
-              offset,
-              length,
-              context,
-              -1,
-              Dictionary.FLAG_UNSET,
-              -1,
-              0,
-              true,
-              true,
-              false,
-              false,
-              originalCase));
+      return stem(
+          word,
+          offset,
+          length,
+          context,
+          -1,
+          Dictionary.FLAG_UNSET,
+          -1,
+          0,
+          true,
+          true,
+          false,
+          false,
+          originalCase,
+          processor);
     } catch (IOException bogus) {
       throw new RuntimeException(bogus);
     }
-    return stems;
   }
 
   private boolean acceptCase(
-      WordCase originalCase, char[] wordFlags, char[] word, int offset, int length) {
-    boolean keepCase = Dictionary.hasFlag(wordFlags, dictionary.keepcase);
+      WordCase originalCase, int entryId, char[] word, int offset, int length) {
+    boolean keepCase = dictionary.hasFlag(entryId, dictionary.keepcase);
     if (originalCase != null) {
       if (keepCase
           && dictionary.checkSharpS
@@ -285,7 +309,7 @@ final class Stemmer {
       }
       return !keepCase;
     }
-    return !Dictionary.hasHiddenFlag(wordFlags);
+    return !dictionary.hasFlag(entryId, Dictionary.HIDDEN_FLAG);
   }
 
   private boolean containsSharpS(char[] word, int offset, int length) {
@@ -319,7 +343,12 @@ final class Stemmer {
     return deduped;
   }
 
-  private CharsRef newStem(char[] buffer, int offset, int length, IntsRef forms, int formID) {
+  interface RootProcessor {
+    /** @return whether the processing should be continued */
+    boolean processRoot(CharsRef stem, IntsRef forms, int formID);
+  }
+
+  private CharsRef newStem(CharsRef stem, IntsRef forms, int formID) {
     final String exception;
     if (dictionary.hasStemExceptions) {
       int exceptionID = forms.ints[forms.offset + formID + 1];
@@ -337,7 +366,7 @@ final class Stemmer {
       if (exception != null) {
         scratchSegment.append(exception);
       } else {
-        scratchSegment.append(buffer, offset, length);
+        scratchSegment.append(stem.chars, stem.offset, stem.length);
       }
       try {
         Dictionary.applyMappings(dictionary.oconv, scratchSegment);
@@ -351,7 +380,7 @@ final class Stemmer {
       if (exception != null) {
         return new CharsRef(exception);
       } else {
-        return new CharsRef(buffer, offset, length);
+        return stem;
       }
     }
   }
@@ -385,9 +414,9 @@ final class Stemmer {
    *     most suffix must also contain circumfix flag.
    * @param originalCase if non-null, represents original word case to disallow case variations of
    *     word with KEEPCASE flags
-   * @return List of stems, or empty list if no stems are found
+   * @return whether the processing should be continued
    */
-  private List<CharsRef> stem(
+  private boolean stem(
       char[] word,
       int offset,
       int length,
@@ -400,12 +429,9 @@ final class Stemmer {
       boolean doSuffix,
       boolean previousWasPrefix,
       boolean circumfix,
-      WordCase originalCase)
+      WordCase originalCase,
+      RootProcessor processor)
       throws IOException {
-
-    // TODO: allow this stuff to be reused by tokenfilter
-    List<CharsRef> stems = new ArrayList<>();
-
     if (doPrefix && dictionary.prefixes != null) {
       FST<IntsRef> fst = dictionary.prefixes;
       FST.Arc<IntsRef> arc = prefixArcs[recursionDepth];
@@ -440,19 +466,21 @@ final class Stemmer {
             }
 
             boolean pureAffix = strippedWord == word;
-            stems.addAll(
-                applyAffix(
-                    strippedWord,
-                    pureAffix ? offset + i : 0,
-                    pureAffix ? length - i : strippedWord.length,
-                    context,
-                    prefix,
-                    previous,
-                    -1,
-                    recursionDepth,
-                    true,
-                    circumfix,
-                    originalCase));
+            if (!applyAffix(
+                strippedWord,
+                pureAffix ? offset + i : 0,
+                pureAffix ? length - i : strippedWord.length,
+                context,
+                prefix,
+                previous,
+                -1,
+                recursionDepth,
+                true,
+                circumfix,
+                originalCase,
+                processor)) {
+              return false;
+            }
           }
         }
       }
@@ -493,25 +521,27 @@ final class Stemmer {
             }
 
             boolean pureAffix = strippedWord == word;
-            stems.addAll(
-                applyAffix(
-                    strippedWord,
-                    pureAffix ? offset : 0,
-                    pureAffix ? i : strippedWord.length,
-                    context,
-                    suffix,
-                    previous,
-                    prefixId,
-                    recursionDepth,
-                    false,
-                    circumfix,
-                    originalCase));
+            if (!applyAffix(
+                strippedWord,
+                pureAffix ? offset : 0,
+                pureAffix ? i : strippedWord.length,
+                context,
+                suffix,
+                previous,
+                prefixId,
+                recursionDepth,
+                false,
+                circumfix,
+                originalCase,
+                processor)) {
+              return false;
+            }
           }
         }
       }
     }
 
-    return stems;
+    return true;
   }
 
   /**
@@ -561,32 +591,30 @@ final class Stemmer {
     int append = dictionary.affixData(affix, Dictionary.AFFIX_APPEND);
 
     if (context.isCompound()) {
-      if (!isPrefix && dictionary.hasFlag(append, dictionary.compoundForbid, scratch)) {
+      if (!isPrefix && dictionary.hasFlag(append, dictionary.compoundForbid)) {
         return false;
       }
       WordContext allowed = isPrefix ? WordContext.COMPOUND_BEGIN : WordContext.COMPOUND_END;
-      if (context != allowed && !dictionary.hasFlag(append, dictionary.compoundPermit, scratch)) {
+      if (context != allowed && !dictionary.hasFlag(append, dictionary.compoundPermit)) {
         return false;
       }
       if (context == WordContext.COMPOUND_END
           && !isPrefix
           && !previousWasPrefix
-          && dictionary.hasFlag(append, dictionary.onlyincompound, scratch)) {
+          && dictionary.hasFlag(append, dictionary.onlyincompound)) {
         return false;
       }
     }
 
     if (recursionDepth == 0) {
       // check if affix is allowed in a non-compound word
-      return context.isCompound()
-          || !dictionary.hasFlag(append, dictionary.onlyincompound, scratch);
+      return context.isCompound() || !dictionary.hasFlag(append, dictionary.onlyincompound);
     }
 
     if (isCrossProduct(affix)) {
       // cross check incoming continuation class (flag of previous affix) against list.
-      char[] appendFlags = dictionary.decodeFlags(append, scratch);
-      if (context.isCompound() || !Dictionary.hasFlag(appendFlags, dictionary.onlyincompound)) {
-        return previousWasPrefix || Dictionary.hasFlag(appendFlags, prevFlag);
+      if (context.isCompound() || !dictionary.hasFlag(append, dictionary.onlyincompound)) {
+        return previousWasPrefix || dictionary.hasFlag(append, prevFlag);
       }
     }
 
@@ -632,9 +660,9 @@ final class Stemmer {
    *     as a stem!
    * @param recursionDepth current recursion depth
    * @param prefix true if we are removing a prefix (false if it's a suffix)
-   * @return List of stems for the word, or an empty list if none are found
+   * @return whether the processing should be continued
    */
-  private List<CharsRef> applyAffix(
+  private boolean applyAffix(
       char[] strippedWord,
       int offset,
       int length,
@@ -645,25 +673,24 @@ final class Stemmer {
       int recursionDepth,
       boolean prefix,
       boolean circumfix,
-      WordCase originalCase)
+      WordCase originalCase,
+      RootProcessor processor)
       throws IOException {
     char flag = dictionary.affixData(affix, Dictionary.AFFIX_FLAG);
-
-    List<CharsRef> stems = new ArrayList<>();
 
     boolean skipLookup = needsAnotherAffix(affix, previousAffix, !prefix);
     IntsRef forms = skipLookup ? null : dictionary.lookupWord(strippedWord, offset, length);
     if (forms != null) {
       for (int i = 0; i < forms.length; i += formStep) {
-        char[] wordFlags = dictionary.decodeFlags(forms.ints[forms.offset + i], scratch);
-        if (Dictionary.hasFlag(wordFlags, flag) || isFlagAppendedByAffix(prefixId, flag)) {
+        int entryId = forms.ints[forms.offset + i];
+        if (dictionary.hasFlag(entryId, flag) || isFlagAppendedByAffix(prefixId, flag)) {
           // confusing: in this one exception, we already chained the first prefix against the
           // second,
           // so it doesnt need to be checked against the word
           boolean chainedPrefix = dictionary.complexPrefixes && recursionDepth == 1 && prefix;
           if (!chainedPrefix && prefixId >= 0) {
             char prefixFlag = dictionary.affixData(prefixId, Dictionary.AFFIX_FLAG);
-            if (!Dictionary.hasFlag(wordFlags, prefixFlag)
+            if (!dictionary.hasFlag(entryId, prefixFlag)
                 && !isFlagAppendedByAffix(affix, prefixFlag)) {
               continue;
             }
@@ -679,22 +706,24 @@ final class Stemmer {
           }
 
           // we are looking for a case variant, but this word does not allow it
-          if (!acceptCase(originalCase, wordFlags, strippedWord, offset, length)) {
+          if (!acceptCase(originalCase, entryId, strippedWord, offset, length)) {
             continue;
           }
-          if (!context.isCompound() && Dictionary.hasFlag(wordFlags, dictionary.onlyincompound)) {
+          if (!context.isCompound() && dictionary.hasFlag(entryId, dictionary.onlyincompound)) {
             continue;
           }
           if (context.isCompound()) {
             char cFlag = context.requiredFlag(dictionary);
-            if (!Dictionary.hasFlag(wordFlags, cFlag)
+            if (!dictionary.hasFlag(entryId, cFlag)
                 && !isFlagAppendedByAffix(affix, cFlag)
-                && !Dictionary.hasFlag(wordFlags, dictionary.compoundFlag)
+                && !dictionary.hasFlag(entryId, dictionary.compoundFlag)
                 && !isFlagAppendedByAffix(affix, dictionary.compoundFlag)) {
               continue;
             }
           }
-          stems.add(newStem(strippedWord, offset, length, forms, i));
+          if (!processor.processRoot(new CharsRef(strippedWord, offset, length), forms, i)) {
+            return false;
+          }
         }
       }
     }
@@ -720,7 +749,7 @@ final class Stemmer {
           // COMPLEXPREFIXES = true: we don't recurse! only one suffix allowed
           // COMPLEXPREFIXES = false: combine with another suffix
         } else {
-          return stems;
+          return true;
         }
       } else {
         doPrefix = false;
@@ -728,29 +757,29 @@ final class Stemmer {
           prefixId = affix;
           // we took away the second prefix: go look for another suffix
         } else if (prefix || dictionary.complexPrefixes || !dictionary.twoStageAffix) {
-          return stems;
+          return true;
         }
         // we took away a prefix, then a suffix: go look for another suffix
       }
 
-      stems.addAll(
-          stem(
-              strippedWord,
-              offset,
-              length,
-              context,
-              affix,
-              flag,
-              prefixId,
-              recursionDepth + 1,
-              doPrefix,
-              true,
-              prefix,
-              circumfix,
-              originalCase));
+      return stem(
+          strippedWord,
+          offset,
+          length,
+          context,
+          affix,
+          flag,
+          prefixId,
+          recursionDepth + 1,
+          doPrefix,
+          true,
+          prefix,
+          circumfix,
+          originalCase,
+          processor);
     }
 
-    return stems;
+    return true;
   }
 
   private boolean needsAnotherAffix(int affix, int previousAffix, boolean isSuffix) {
@@ -765,7 +794,7 @@ final class Stemmer {
   private boolean isFlagAppendedByAffix(int affixId, char flag) {
     if (affixId < 0 || flag == Dictionary.FLAG_UNSET) return false;
     int appendId = dictionary.affixData(affixId, Dictionary.AFFIX_APPEND);
-    return dictionary.hasFlag(appendId, flag, scratch);
+    return dictionary.hasFlag(appendId, flag);
   }
 
   private boolean isCrossProduct(int affix) {

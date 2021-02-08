@@ -14,19 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.solr.client.solrj.request.beans;
 
-import java.util.Map;
+package org.apache.solr.core.backup;
 
-import org.apache.solr.common.annotation.JsonProperty;
-import org.apache.solr.common.util.ReflectMapWriter;
+/**
+ * Aggregate stats from multiple {@link ShardBackupMetadata}
+ *
+ * Counted stats may represent multiple shards within a given {@link BackupId}, or span multiple different {@link BackupId BackupIds}.
+ */
+public class AggregateBackupStats {
+    private int numFiles = 0;
+    private long totalSize = 0;
 
-public class CreateConfigInfo implements ReflectMapWriter {
-  @JsonProperty(required = true)
-  public String name;
-  @JsonProperty
-  public String baseConfigSet;
-  @JsonProperty
-  public Map<String,Object> properties;
+    public AggregateBackupStats() {
+    }
 
+    public void add(ShardBackupMetadata shardBackupMetadata) {
+        numFiles += shardBackupMetadata.numFiles();
+        totalSize += shardBackupMetadata.totalSize();
+    }
+
+    public int getNumFiles() {
+        return numFiles;
+    }
+
+    public long getTotalSize() {
+        return totalSize;
+    }
 }

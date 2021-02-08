@@ -44,8 +44,16 @@ public class SpellCheckerTest extends StemmerTestBase {
     doTest("allcaps");
   }
 
-  public void rep() throws Exception {
+  public void testRepSuggestions() throws Exception {
     doTest("rep");
+  }
+
+  public void testPhSuggestions() throws Exception {
+    doTest("ph");
+  }
+
+  public void testPhSuggestions2() throws Exception {
+    doTest("ph2");
   }
 
   public void testForceUCase() throws Exception {
@@ -120,6 +128,10 @@ public class SpellCheckerTest extends StemmerTestBase {
     doTest("breakoff");
   }
 
+  public void testCheckCompoundRep() throws Exception {
+    doTest("checkcompoundrep");
+  }
+
   public void testCompoundrule() throws Exception {
     doTest("compoundrule");
   }
@@ -168,13 +180,16 @@ public class SpellCheckerTest extends StemmerTestBase {
     doTest("sug2");
   }
 
-  protected void doTest(String name) throws Exception {
-    checkSpellCheckerExpectations(
-        Path.of(getClass().getResource(name + ".aff").toURI()).getParent().resolve(name), true);
+  public void testMapSuggestions() throws Exception {
+    doTest("map");
   }
 
-  static void checkSpellCheckerExpectations(Path basePath, boolean checkSuggestions)
-      throws IOException, ParseException {
+  protected void doTest(String name) throws Exception {
+    checkSpellCheckerExpectations(
+        Path.of(getClass().getResource(name + ".aff").toURI()).getParent().resolve(name));
+  }
+
+  static void checkSpellCheckerExpectations(Path basePath) throws IOException, ParseException {
     InputStream affixStream = Files.newInputStream(Path.of(basePath.toString() + ".aff"));
     InputStream dictStream = Files.newInputStream(Path.of(basePath.toString() + ".dic"));
 
@@ -202,7 +217,7 @@ public class SpellCheckerTest extends StemmerTestBase {
       for (String word : wrongWords) {
         assertFalse("Unexpectedly considered correct: " + word, speller.spell(word.trim()));
       }
-      if (Files.exists(sug) && checkSuggestions) {
+      if (Files.exists(sug)) {
         String suggestions =
             wrongWords.stream()
                 .map(s -> String.join(", ", speller.suggest(s)))
