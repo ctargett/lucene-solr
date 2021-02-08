@@ -80,7 +80,7 @@ These icons include the following links.
 |Issue Tracker |Navigates to the JIRA issue tracking server for the Apache Solr project. This server resides at https://issues.apache.org/jira/browse/SOLR.
 |IRC Channel |Navigates to Solr's http://en.wikipedia.org/wiki/Internet_Relay_Chat[IRC] live-chat room: http://webchat.freenode.net/?channels=#solr.
 |Community forum |Navigates to the Apache Wiki page which has further information about ways to engage in the Solr User community mailing lists: https://cwiki.apache.org/confluence/display/solr/UsingMailingLists.
-|Solr Query Syntax |Navigates to the section <<query-syntax-and-parsing.adoc#,Query Syntax and Parsing>> in this Reference Guide.
+|Solr Query Syntax |Navigates to the section <<query-syntax-and-parsers.adoc#,Query Syntax and Parsing>> in this Reference Guide.
 |===
 
 These links cannot be modified without editing the `index.html` in the `server/solr/solr-webapp` directory that contains the Admin UI files.

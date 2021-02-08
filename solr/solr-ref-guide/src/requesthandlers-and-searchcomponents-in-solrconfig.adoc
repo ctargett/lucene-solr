@@ -222,7 +222,7 @@ As you can see below, what we see as a search experience is mostly a sequence of
 [cols="20,40,40",options="header"]
 |===
 |Component Name |Class Name |More Information
-|query |`solr.QueryComponent` |Described in the section <<query-syntax-and-parsing.adoc#,Query Syntax and Parsing>>.
+|query |`solr.QueryComponent` |Described in the section <<query-syntax-and-parsers.adoc#,Query Syntax and Parsing>>.
 |facet |`solr.FacetComponent` |Original parameter-based facet component, described in the section <<faceting.adoc#,Faceting>>.
 |facet_module |`solr.facet.FacetModule` | JSON Faceting and Analytics module, described in the section <<json-facet-api.adoc#, JSON Facet API>>.
 |mlt |`solr.MoreLikeThisComponent` |Described in the section <<morelikethis.adoc#,MoreLikeThis>>.

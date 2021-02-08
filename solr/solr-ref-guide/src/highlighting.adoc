@@ -55,7 +55,7 @@ When setting this, you might also need to set `hl.qparser`.
 The default is the value of the `q` parameter (already parsed).
 
 `hl.qparser`::
-The <<query-syntax-and-parsing.adoc#,query parser>> to use for the `hl.q` query.  It only applies when `hl.q` is set.
+The <<query-syntax-and-parsers.adoc#,query parser>> to use for the `hl.q` query.  It only applies when `hl.q` is set.
 +
 The default is the value of the `defType` parameter which in turn defaults to `lucene`.
 

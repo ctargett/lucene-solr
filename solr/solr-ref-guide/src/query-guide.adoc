@@ -1,5 +1,5 @@
 = Query Guide
-:page-children: query-syntax-and-parsing, \
+:page-children: query-syntax-and-parsers, \
     enhancing-queries, \
     controlling-results, \
     streaming-expressions
@@ -26,10 +26,10 @@ This section describes options to control how Solr works with user input and ret
 It covers the following topics:
 
 ****
-<<query-syntax-and-parsing.adoc#,*Query Syntax and Parsing*>>: Solr's query syntax and parsing.
+<<query-syntax-and-parsers.adoc#,*Query Syntax and Parsers*>>: Query parsers and supported syntax for user searches.
 
 // This pulls the sub-section list from the child page to reduce errors
-include::query-syntax-and-parsing.adoc[tag=parser-sections]
+include::query-syntax-and-parsers.adoc[tag=parser-sections]
 ****
 
 ****

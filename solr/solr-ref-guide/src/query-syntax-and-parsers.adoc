@@ -1,4 +1,4 @@
-= Query Syntax and Parsing
+= Query Syntax and Parsers
 :page-children: query-parameters, \
     query-screen, \
     common-query-parameters, \
@@ -32,20 +32,15 @@
 // under the License.
 
 [.lead]
+A _query parser_ converts a user's search terms into a Lucene query to find appropriately matching documents.
+
 Solr supports several query parsers, offering search application designers great flexibility in controlling how queries are parsed.
 
-This section explains how to specify the query parser to be used. It also describes the syntax and features supported by the main query parsers included with Solr and describes some other parsers that may be useful for particular situations. There are some query parameters common to all Solr parsers; these are discussed in the section <<common-query-parameters.adoc#,Common Query Parameters>>.
+This section explains how to specify a query parser and describes the syntax and features supported by several parsers available in Solr.
 
-The parsers discussed in this Guide are:
+There are some query parameters common to all Solr parsers; these are discussed in the section <<common-query-parameters.adoc#common-query-parameters,Common Query Parameters>>.
 
-* <<standard-query-parser.adoc#,Standard Query Parser>>
-* <<dismax-query-parser.adoc#,DisMax Query Parser>>
-* <<edismax-query-parser.adoc#,Extended DisMax Query Parser>>
-* <<other-parsers.adoc#,Other Parsers>>
-
-The query parser plugins are all subclasses of {solr-javadocs}/core/org/apache/solr/search/QParserPlugin.html[QParserPlugin]. If you have custom parsing needs, you may want to extend that class to create your own query parser.
-
-*TODO rework the above text*
+Query parsers are also called `QParserPlugins`. They are all subclasses of {solr-javadocs}/core/org/apache/solr/search/QParserPlugin.html[QParserPlugin]. If you have custom parsing needs, you may want to extend that class to create your own query parser.
 
 ****
 // This tags the below list so it can be used in the parent page section list
@@ -67,6 +62,7 @@ The query parser plugins are all subclasses of {solr-javadocs}/core/org/apache/s
 | <<spatial-search.adoc#,Spatial Search>>: Solr's spatial search capabilities.
 | <<other-parsers.adoc#,Other Parsers>>: More parsers designed for use in specific situations.
 | <<parallel-sql-interface.adoc#,Parallel SQL Interface>>: Send SQL statements to Solr, and use advanced parallel query processing and relational algebra for complex data analysis.
+|
 |===
 // end::parser-sections[]
 ****
