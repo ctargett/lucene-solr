@@ -1,9 +1,7 @@
 = SolrCloud
-:page-children: getting-started-with-solrcloud, \
-    cloud-screens, \
+:page-children: cloud-screens, \
     collections-core-admin, \
     how-solrcloud-works, \
-    solrcloud-resilience, \
     solrcloud-configuration-and-parameters
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
@@ -37,25 +35,21 @@ In this section, we'll cover everything you need to know about using Solr in Sol
 // tag::solrcloud-sections[]
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
-| <<getting-started-with-solrcloud.adoc#,Getting Started with SolrCloud>>
 | <<cloud-screens.adoc#,Cloud Screens>>: Information about nodes when running in SolrCloud mode.
 | <<collections-core-admin.adoc#,Collections / Core Admin>>: Information about each collection via the Admin UI.
 a| <<how-solrcloud-works.adoc#,How SolrCloud Works>>
 
-** <<shards-and-indexing-data-in-solrcloud.adoc#,Shards and Indexing Data in SolrCloud>>
-** <<distributed-requests.adoc#,Distributed Requests>>
-a| <<solrcloud-resilience.adoc#,SolrCloud Resilience>>
-
+* <<shards-and-indexing-data-in-solrcloud.adoc#,Shards and Indexing Data in SolrCloud>>
+* <<distributed-requests.adoc#,Distributed Requests>>
 * <<solrcloud-recoveries-and-write-tolerance.adoc#,SolrCloud Recoveries and Write Tolerance>>
 * <<solrcloud-query-routing-and-read-tolerance.adoc#,SolrCloud Query Routing And Read Tolerance>>
+* <<aliases.adoc#,Standard and Routed Aliases>>
 a| <<solrcloud-configuration-and-parameters.adoc#,SolrCloud Configuration and Parameters>>
 
 * <<setting-up-an-external-zookeeper-ensemble.adoc#,Setting Up an External ZooKeeper Ensemble>>
 * <<using-zookeeper-to-manage-configuration-files.adoc#,Using ZooKeeper to Manage Configuration Files>>
-* <<zookeeper-access-control.adoc#,ZooKeeper Access Control>>
 * <<collections-api.adoc#,Collections API>>
-* <<parameter-reference.adoc#,Parameter Reference>>
-* <<command-line-utilities.adoc#,Command Line Utilities>>
+* <<zookeeper-utilities.adoc#,ZooKeeper Utilities>>
 * <<solrcloud-with-legacy-configuration-files.adoc#,SolrCloud with Legacy Configuration Files>>
 * <<configsets-api.adoc#,Configsets API>>
 |===

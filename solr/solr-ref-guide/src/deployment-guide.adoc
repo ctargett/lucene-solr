@@ -38,11 +38,23 @@ include::monitoring-solr.adoc[tag=monitoring-sections]
 ****
 
 ****
-<<securing-solr.adoc#,*Securing Solr*>>: Authentication and authorization plugins available with Solr.
+<<securing-solr.adoc#,*Securing Solr*>>: Authentication and authorization plugins available with Solr. *TODO* format this like the others.
+
+Authentication Plugins:
 
 // This pulls the sub-section list from the child page to reduce errors
-include::securing-solr.adoc[tags=list-of-authentication-plugins;list-of-authorization-plugins]
+include::securing-solr.adoc[tag=list-of-authentication-plugins]
+
+Authorization Plugins:
+
+// This pulls the sub-section list from the child page to reduce errors
+include::securing-solr.adoc[tag=list-of-authorization-plugins]
+
+Audit Logging and SSL:
+
 * <<audit-logging.adoc#,Audit Logging>>
+* <<enabling-ssl.adoc#,Enabling SSL>>
+* <<zookeeper-access-control.adoc#,ZooKeeper Access Control>>
 ****
 
 ****

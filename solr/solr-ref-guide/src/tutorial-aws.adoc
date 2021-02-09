@@ -172,7 +172,7 @@ You should able to see Solr UI dashboard for both nodes.
 
 == Create Collection, Index and Query
 
-You can refer <<solr-tutorial.adoc#exercise-1,Solr Tutorial>> for an extensive walkthrough on creating collections with multiple shards and  replicas, indexing data via different methods and querying documents accordingly.
+You can refer <<solr-tutorial.adoc#,Solr Tutorial>> for an extensive walkthrough on creating collections with multiple shards and  replicas, indexing data via different methods and querying documents accordingly.
 
 == Deploying with External ZooKeeper
 

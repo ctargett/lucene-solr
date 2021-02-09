@@ -5,8 +5,7 @@
     jvm-settings, \
     upgrading-a-solr-cluster, \
     making-and-restoring-backups, \
-    running-solr-on-hdfs, \
-    aws-solrcloud-tutorial
+    running-solr-on-hdfs
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -39,7 +38,6 @@ This section covers system requirements, installation, upgrades, and deployments
 | <<upgrading-a-solr-cluster.adoc#,Upgrading a Solr Cluster>>: Upgrading a production SolrCloud cluster.
 | <<making-and-restoring-backups.adoc#,Making and Restoring Backups>>: Backup strategies for your Solr indexes.
 | <<running-solr-on-hdfs.adoc#,Running Solr on HDFS>>: Store Solr indexes and transaction logs in HDFS.
-| <<aws-solrcloud-tutorial.adoc#,SolrCloud on AWS EC2>>: Deploying Solr in Amazon Web Services (AWS) using EC2 instances.
 |===
 // end::install-sections[]
 ****
