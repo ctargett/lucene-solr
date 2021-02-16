@@ -1,5 +1,6 @@
 = Scaling Solr
-:page-children: solrcloud, \
+:page-children: clusters, \
+    solrcloud, \
     legacy-scaling-and-distribution
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
@@ -18,7 +19,15 @@
 // specific language governing permissions and limitations
 // under the License.
 
-*TODO* build this page out if keeping
+Solr supports large implementations.
+
+The section <<clusters.adoc#,Solr Clusters>> describes the two main approaches available for scaling.
+
+Both approaches share the ability to distribute parts of an index across multiple servers, a process called _sharding_.
+This allows for an index that is larger than any one server can host and maintain reasonable performance.
+
+A second process called _replication_ is also shared by both approaches.
+This allows for copying the index (in whole or as shards) across multiple servers, and provides query volume distribution.
 
 ****
 // This tags the below list so it can be used in the parent page section list

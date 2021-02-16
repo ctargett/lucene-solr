@@ -1,8 +1,17 @@
 = SolrCloud
 :page-children: cloud-screens, \
     collections-core-admin, \
-    how-solrcloud-works, \
-    solrcloud-configuration-and-parameters
+    shards-and-indexing-data-in-solrcloud, \
+    distributed-requests, \
+    solrcloud-recoveries-and-write-tolerance, \
+    solrcloud-query-routing-and-read-tolerance, \
+    aliases, \
+    setting-up-an-external-zookeeper-ensemble, \
+    using-zookeeper-to-manage-configuration-files, \
+    collections-api, \
+    zookeeper-utilities, \
+    solrcloud-with-legacy-configuration-files, \
+    configsets-api
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -20,15 +29,19 @@
 // specific language governing permissions and limitations
 // under the License.
 
-Apache Solr includes the ability to set up a cluster of Solr servers that combines fault tolerance and high availability. Called *SolrCloud*, these capabilities provide distributed indexing and search capabilities, supporting the following features:
+Apache Solr includes the ability to set up a cluster of Solr servers that are coordinated to provide overall system fault tolerance and high availability.
+Called *SolrCloud*, these capabilities provide distributed indexing and search capabilities, supporting the following features:
 
 * Central configuration for the entire cluster
 * Automatic load balancing and fail-over for queries
-* ZooKeeper integration for cluster coordination and configuration.
+* ZooKeeper integration for cluster coordination and configuration
 
-SolrCloud is flexible distributed search and indexing, without a leader node to allocate nodes, shards and replicas. Instead, Solr uses ZooKeeper to manage these locations, depending on configuration files and schemas. Queries and updates can be sent to any server. Solr will use the information in the ZooKeeper database to figure out which servers need to handle the request.
+SolrCloud is flexible distributed search and indexing, without a leader node to allocate nodes, shards and replicas.
+Instead, Solr uses ZooKeeper to manage these locations, depending on configuration files and schemas.
+Queries and updates can be sent to any server.
+Solr will use the information stored in ZooKeeper to figure out which servers need to handle the request.
 
-In this section, we'll cover everything you need to know about using Solr in SolrCloud mode. We've split up the details into the following topics:
+This section will cover everything you need to know about using Solr in SolrCloud mode.
 
 ****
 // This tags the below list so it can be used in the parent page section list
@@ -37,21 +50,46 @@ In this section, we'll cover everything you need to know about using Solr in Sol
 |===
 | <<cloud-screens.adoc#,Cloud Screens>>: Information about nodes when running in SolrCloud mode.
 | <<collections-core-admin.adoc#,Collections / Core Admin>>: Information about each collection via the Admin UI.
-a| <<how-solrcloud-works.adoc#,How SolrCloud Works>>
-
-* <<shards-and-indexing-data-in-solrcloud.adoc#,Shards and Indexing Data in SolrCloud>>
-* <<distributed-requests.adoc#,Distributed Requests>>
-* <<solrcloud-recoveries-and-write-tolerance.adoc#,SolrCloud Recoveries and Write Tolerance>>
-* <<solrcloud-query-routing-and-read-tolerance.adoc#,SolrCloud Query Routing And Read Tolerance>>
-* <<aliases.adoc#,Standard and Routed Aliases>>
-a| <<solrcloud-configuration-and-parameters.adoc#,SolrCloud Configuration and Parameters>>
-
-* <<setting-up-an-external-zookeeper-ensemble.adoc#,Setting Up an External ZooKeeper Ensemble>>
-* <<using-zookeeper-to-manage-configuration-files.adoc#,Using ZooKeeper to Manage Configuration Files>>
-* <<collections-api.adoc#,Collections API>>
-* <<zookeeper-utilities.adoc#,ZooKeeper Utilities>>
-* <<solrcloud-with-legacy-configuration-files.adoc#,SolrCloud with Legacy Configuration Files>>
-* <<configsets-api.adoc#,Configsets API>>
+| <<shards-and-indexing-data-in-solrcloud.adoc#,Shards and Indexing Data in SolrCloud>>
+| <<distributed-requests.adoc#,Distributed Requests>>
+| <<solrcloud-recoveries-and-write-tolerance.adoc#,SolrCloud Recoveries and Write Tolerance>>
+| <<solrcloud-query-routing-and-read-tolerance.adoc#,SolrCloud Query Routing And Read Tolerance>>
+| <<aliases.adoc#,Aliases>>
+|<<setting-up-an-external-zookeeper-ensemble.adoc#,Setting Up an External ZooKeeper Ensemble>>
+| <<using-zookeeper-to-manage-configuration-files.adoc#,Using ZooKeeper to Manage Configuration Files>>
+| <<collections-api.adoc#,Collections API>>
+| <<zookeeper-utilities.adoc#,ZooKeeper Utilities>>
+| <<solrcloud-with-legacy-configuration-files.adoc#,SolrCloud with Legacy Configuration Files>>
+| <<configsets-api.adoc#,Configsets API>>
+|
 |===
 // end::solrcloud-sections[]
 ****
+
+== Key SolrCloud Concepts
+
+A SolrCloud cluster consists of some "logical" concepts layered on top of some "physical" concepts.
+
+=== Logical Concepts
+
+* A Cluster can host multiple Collections of Solr Documents.
+* A collection can be partitioned into multiple Shards, which contain a subset of the Documents in the Collection.
+* The number of Shards that a Collection has determines:
+** The theoretical limit to the number of Documents that Collection can reasonably contain.
+** The amount of parallelization that is possible for an individual search request.
+
+=== Physical Concepts
+
+* A Cluster is made up of one or more Solr Nodes, which are running instances of the Solr server process.
+* Each Node can host multiple Cores.
+* Each Core in a Cluster is a physical Replica for a logical Shard.
+* Every Replica uses the same configuration specified for the Collection that it is a part of.
+* The number of Replicas that each Shard has determines:
+** The level of redundancy built into the Collection and how fault tolerant the Cluster can be in the event that some Nodes become unavailable.
+** The theoretical limit in the number concurrent search requests that can be processed under heavy load.
+
+WARNING: Make sure the DNS resolution in your cluster is stable, i.e.,
+for each live host belonging to a Cluster the host name always corresponds to the
+same specific IP and physical node. For example, in clusters deployed on AWS this would
+require setting `preserve_hostname: true` in `/etc/cloud/cloud.cfg`. Changing DNS resolution
+of live nodes may lead to unexpected errors. See SOLR-13159 for more details.
