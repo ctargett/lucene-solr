@@ -14,6 +14,8 @@ New Features
 
 * LUCENE-9004: Approximate nearest vector search via NSW graphs
 
+* LUCENE-9659: SpanPayloadCheckQuery now supports inequalities. (Kevin Watters, Gus Heck)
+
 System Requirements
 
 * LUCENE-8738: Move to Java 11 as minimum Java version.
@@ -86,6 +88,9 @@ API Changes
   between modules. See MIGRATE.md for details. (David Ryan, Tomoko Uchida, Uwe Schindler, Dawid Weiss)
 
 * LUCENE-9646: Set BM25Similarity discountOverlaps via the constructor (Patrick Marty via Bruno Roustant)
+
+* LUCENE-9480: Make DataInput's skipBytes(long) abstract as the implementation was not performant.
+  IndexInput's api is unaffected: skipBytes() is implemented via seek(). (Greg Miller)
 
 Improvements
 
@@ -190,6 +195,7 @@ Improvements
   (Jaison Bi via Bruno Roustant)
 
 Bug fixes
+
 
 * LUCENE-9686: Fix read past EOF handling in DirectIODirectory. (Zach Chen,
   Julie Tibshirani)
@@ -297,6 +303,10 @@ Bug Fixes
 * LUCENE-9744: NPE on a degenerate query in MinimumShouldMatchIntervalsSource
   $MinimumMatchesIterator.getSubMatches(). (Alan Woodward)
 
+* LUCENE-9762: DoubleValuesSource.fromQuery (also used by FunctionScoreQuery.boostByQuery) could
+  throw an exception when the query implements TwoPhaseIterator and when the score is requested
+  repeatedly. (David Smiley, hossman)
+
 Other
 ---------------------
 (No changes)
@@ -310,6 +320,7 @@ New Features
 
 * LUCENE-9572: TypeAsSynonymFilter has been enhanced support ignoring some types, and to allow
   the generated synonyms to copy some or all flags from the original token (Gus Heck).
+
 
 * LUCENE-9552: New LatLonPoint query that accepts an array of LatLonGeometries. (Ignacio Vera)
 
