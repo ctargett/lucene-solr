@@ -1,4 +1,8 @@
-= Replication Screen
+= ZooKeeper
+:page-children: setting-up-an-external-zookeeper-ensemble, \
+    using-zookeeper-to-manage-configuration-files, \
+    zookeeper-utilities, \
+    cloud-screens
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -16,16 +20,18 @@
 // specific language governing permissions and limitations
 // under the License.
 
-The Replication screen shows you the current replication state for the core you have specified.
+[.lead]
+*TODO*
 
-This screen will only appear if you are not running Solr in SolrCloud mode.
-
-If you are using Leader-Follower index replication, you can use this screen to:
-
-. View the replicatable index state. (on a leader node)
-. View the current replication status (on a follower node)
-. Disable replication. (on a leader node)
-
-image::images/replication-screen/replication.png[image,width=412,height=250]
-
-More details on how to configure replication is available in the section called <<user-managed-index-replication.adoc#,Index Replication>>.
+****
+// This tags the below list so it can be used in the parent page section list
+// tag::zookeeper-sections[]
+[cols="1,1",frame=none,grid=none,stripes=none]
+|===
+|<<setting-up-an-external-zookeeper-ensemble.adoc#,Setting Up an External ZooKeeper Ensemble>>
+| <<using-zookeeper-to-manage-configuration-files.adoc#,Using ZooKeeper to Manage Configuration Files>>
+| <<zookeeper-utilities.adoc#,ZooKeeper Utilities>>
+| <<cloud-screens.adoc#,Cloud Screens>>: Information about nodes when running in SolrCloud mode.
+|===
+// end::zookeeper-sections[]
+****

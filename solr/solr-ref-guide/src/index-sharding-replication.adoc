@@ -1,4 +1,10 @@
-= Legacy Scaling and Distribution
+= Index Sharding and Replication
+:page-children: shards-and-indexing-data-in-solrcloud, \
+    distributed-search-with-index-sharding, \
+    merging-indexes, \
+    user-managed-index-replication, \
+    replication-screen, \
+    solrcloud-recoveries-and-write-tolerance
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -16,21 +22,19 @@
 // specific language governing permissions and limitations
 // under the License.
 
-This section describes how to set up distribution and replication in Solr. It is considered "legacy" behavior, since while it is still supported in Solr, the SolrCloud functionality described in the previous chapter is where the current development is headed. However, if you don't need all that SolrCloud delivers, search distribution and index replication may be sufficient.
-
-This section covers the following topics:
+TBD new parent for sharding topics
 
 ****
 // This tags the below list so it can be used in the parent page section list
-// tag::cluster-sections[]
+// tag::sharding-sections[]
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
-| <<distributed-search-with-index-sharding.adoc#,Distributed Search with Index Sharding>>: Detailed information about implementing distributed searching in Solr.
+| <<shards-and-indexing-data-in-solrcloud.adoc#,Shards and Indexing in SolrCloud>>
+| <<distributed-search-with-index-sharding.adoc#,Distributed Search with Index Sharding>>: Implementing distributed searching in Solr.
+| <<merging-indexes.adoc#,Merging Indexes>>: Information about combining separate indexes in Solr.
 | <<user-managed-index-replication.adoc#,Index Replication>>: Detailed information about replicating your Solr indexes.
 | <<replication-screen.adoc#,Replication Screen>>: The current replication status for the core, and lets you enable/disable replication.
-| <<combining-distribution-and-replication.adoc#,Combining Distribution and Replication>>: Detailed information about replicating shards in a distributed index.
-| <<merging-indexes.adoc#,Merging Indexes>>: Information about combining separate indexes in Solr.
-|
+| <<solrcloud-recoveries-and-write-tolerance.adoc#,SolrCloud Recoveries and Write Tolerance>>
 |===
-// end::cluster-sections[]
+// end::sharding-sections[]
 ****

@@ -1,4 +1,4 @@
-= Index Replication
+= User-Managed Index Replication
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -21,7 +21,7 @@ Index Replication distributes complete copies of a leader index to one or more f
 The figure below shows a Solr configuration using index replication. The leader server's index is replicated on the followers.
 
 .A Solr index can be replicated across multiple follower servers, which then process requests.
-image::images/index-replication/worddav2b7e14725d898b4104cdd9c502fc77cd.png[image,width=159,height=235]
+image::images/index-replication/user-managed-replication.png[]
 
 
 == Index Replication in Solr

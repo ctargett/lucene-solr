@@ -142,7 +142,7 @@ The appropriateness of a document to the search conducted by the user.
 [[replica]]Replica::
 A <<core,Core>> that acts as a physical copy of a <<shard,Shard>> in a <<solrclouddef,SolrCloud>> <<collection,Collection>>.
 
-[[replication]]<<index-replication.adoc#,Replication>>::
+[[replication]]<<user-managed-index-replication.adoc#,Replication>>::
 
 A method of copying a leader index from one server to one or more "follower" or "child" servers.
 

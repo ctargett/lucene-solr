@@ -46,7 +46,7 @@ Each replica, whether it is a leader or a follower, is called a _core_.
 
 == SolrCloud Mode
 
-SolrCloud mode (also simply called "SolrCloud") uses Apache ZooKeeper to provide the centralized cluster management that is its main feature.
+SolrCloud mode (also called "SolrCloud") uses Apache ZooKeeper to provide the centralized cluster management that is its main feature.
 ZooKeeper tracks each node of the cluster and the state of each core on each node.
 
 In this mode, configuration files are stored in ZooKeeper and not on the file system of each node.

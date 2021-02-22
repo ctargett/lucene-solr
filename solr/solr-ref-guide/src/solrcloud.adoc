@@ -1,15 +1,6 @@
 = SolrCloud
-:page-children: cloud-screens, \
-    collections-core-admin, \
-    shards-and-indexing-data-in-solrcloud, \
-    distributed-requests, \
-    solrcloud-recoveries-and-write-tolerance, \
-    solrcloud-query-routing-and-read-tolerance, \
-    aliases, \
-    setting-up-an-external-zookeeper-ensemble, \
-    using-zookeeper-to-manage-configuration-files, \
+:page-children: aliases, \
     collections-api, \
-    zookeeper-utilities, \
     solrcloud-with-legacy-configuration-files, \
     configsets-api
 // Licensed to the Apache Software Foundation (ASF) under one

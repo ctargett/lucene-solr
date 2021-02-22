@@ -1,5 +1,9 @@
 = Scaling Solr
 :page-children: clusters, \
+    index-sharding-replication, \
+    distributed-requests, \
+    zookeeper, \
+    collections-core-admin, \
     solrcloud, \
     legacy-scaling-and-distribution
 // Licensed to the Apache Software Foundation (ASF) under one
@@ -32,12 +36,23 @@ This allows for copying the index (in whole or as shards) across multiple server
 ****
 // This tags the below list so it can be used in the parent page section list
 // tag::scaling-sections[]
-*<<solrcloud.adoc#,SolrCloud>>*
+*Index Scaling and Replication*
 
-include::solrcloud.adoc[tag=solrcloud-sections]
+include::index-sharding-replication.adoc[tag=sharding-sections]
 
-*<<legacy-scaling-and-distribution.adoc#,Legacy Scaling and Distribution>>*
+*Distributed Requests*
 
-include::legacy-scaling-and-distribution.adoc[tag=cluster-sections]
+[cols="1,1",frame=none,grid=none,stripes=none]
+|===
+| <<distributed-requests.adoc#,Distributed Requests>>
+| <<combining-distribution-and-replication.adoc#,Combining Distribution and Replication>>: Detailed information about replicating shards in a distributed index.
+| <<solrcloud-query-routing-and-read-tolerance.adoc#,SolrCloud Query Routing And Read Tolerance>>
+|
+|===
+
+*ZooKeeper Setup and Management*
+
+include::zookeeper.adoc[tag=zookeeper-sections]
+
 // end::scaling-sections[]
 ****
