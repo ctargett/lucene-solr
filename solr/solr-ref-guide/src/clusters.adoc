@@ -27,8 +27,15 @@ First let's cover a few general concepts and then outline the differences betwee
 
 == Cluster Concepts
 
+=== Shards
+
 In both cluster modes, a single logical index can be split across nodes as _shards_.
 Each shard contains a subset of overall index.
+
+The number of shards dictates the theoretical limit to the number of documents that can be indexed to Solr.
+It also determines the amount of parallelization possible for an individual search request.
+
+=== Replicas
 
 In order to provide some failover for each shard, each shard can be copied as a _replica_.
 A replica has the same configuration as the shard and any other replicas for the same index.
@@ -36,13 +43,21 @@ A replica has the same configuration as the shard and any other replicas for the
 It's possible to have replicas without having created shards.
 In this case, each replica would be a full copy of the entire index, instead of being only a copy of a part of the entire index.
 
+The number of replicas determines the level of fault tolerance the entire cluster has in the event of a node failure.
+It also dictates the theoretical limit on the number of concurrent search requests that can be processed under heavy load.
+
+=== Leaders
+
 Once replicas have been created, a _leader_ must be identified.
 The responsibility of the leader is to be a source-of-truth for each replica.
 When updates are made to the index, they are first processed by the leader and then by each replica (the exact mechanism for how this happens varies).
 
 The replicas which are not leaders are _followers_.
 
+=== Cores
+
 Each replica, whether it is a leader or a follower, is called a _core_.
+Multiple cores can be hosted on any one node.
 
 == SolrCloud Mode
 

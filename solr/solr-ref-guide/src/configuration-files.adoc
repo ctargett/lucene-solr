@@ -75,7 +75,7 @@ Inside Solr's Home, you'll find these files:
 
 Note that the SolrCloud example does not include a `conf` directory for each Solr Core (so there is no `solrconfig.xml` or Schema file). This is because the configuration files usually found in the `conf` directory are stored in ZooKeeper so they can be propagated across the cluster.
 
-If you are using SolrCloud with the embedded ZooKeeper instance, you may also see `zoo.cfg` and `zoo.data` which are ZooKeeper configuration and data files. However, if you are running your own ZooKeeper ensemble, you would supply your own ZooKeeper configuration file when you start it and the copies in Solr would be unused. For more information about SolrCloud, see the section <<solrcloud.adoc#,SolrCloud>>.
+If you are using SolrCloud with the embedded ZooKeeper instance, you may also see `zoo.cfg` and `zoo.data` which are ZooKeeper configuration and data files. However, if you are running your own ZooKeeper ensemble, you would supply your own ZooKeeper configuration file when you start it and the copies in Solr would be unused. For more information about SolrCloud, see the section <<clusters.adoc#solrcloud-mode,SolrCloud>>.
 
 == Files Screen
 
@@ -84,7 +84,7 @@ The Files screen in the Admin UI lets you browse & view the configuration files 
 .The Files Screen
 image::images/configuration-files/files-screen.png[Files screen,height=400]
 
-If you are using <<solrcloud.adoc#,SolrCloud>>, the files displayed are the configuration files for this collection stored in ZooKeeper.
+If you are using <<clusters.adoc#solrcloud-mode,SolrCloud>>, the files displayed are the configuration files for this collection stored in ZooKeeper.
 In a standalone Solr installations, all files in the `conf` directory are displayed.
 
 The configuration files shown may or may not be used by the collection as use of the file depends on how they are referenced in either `solrconfig.xml` or your schema.

@@ -306,7 +306,7 @@ Boolean that indicates if the results of the query should be filtered so that on
 
 === Graph Query Limitations
 
-The `graph` parser only works in single node Solr installations, or with <<solrcloud.adoc#,SolrCloud>> collections that use exactly 1 shard.
+The `graph` parser only works in single node Solr installations, or with SolrCloud collections that use exactly 1 shard.
 
 === Graph Query Examples
 

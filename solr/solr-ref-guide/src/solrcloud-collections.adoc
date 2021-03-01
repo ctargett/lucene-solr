@@ -1,17 +1,15 @@
-= Configuration APIs
-:page-children:  config-api, \
-    request-parameters-api, \
-    managed-resources, \
-    collections-api, \
-    configsets-api, \
-    v2-api
+= SolrCloud Collections
+:page-children: collection-management, \
+    collection-aliasing, \
+    aliases, \
+    collections-core-admin
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
 // regarding copyright ownership.  The ASF licenses this file
 // to you under the Apache License, Version 2.0 (the
 // "License"); you may not use this file except in compliance
-// with the License.  You may ouildbtain a copy of the License at
+// with the License.  You may obtain a copy of the License at
 //
 //   http://www.apache.org/licenses/LICENSE-2.0
 //
@@ -22,19 +20,18 @@
 // specific language governing permissions and limitations
 // under the License.
 
-Solr includes several APIs that can be used to modify settings in `solrconfig.xml`.
+[.lead]
+*TODO*
 
 ****
 // This tags the below list so it can be used in the parent page section list
-// tag::configapi-sections[]
+// tag::collections-sections[]
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
-| <<config-api.adoc#,Config API>>
-| <<request-parameters-api.adoc#,Request Parameters API>>
-| <<managed-resources.adoc#,Managed Resources>>
-| <<collections-api.adoc#,Collections API>>
-| <<configsets-api.adoc#,Configsets API>>
-| <<v2-api.adoc#,V2 API>>: Describes how to use the new V2 APIs, a redesigned API framework covering most Solr APIs.
+|<<collection-management.adoc#,Collection Management>>: Create, list, reload and delete collections; set collection properties; migrate documents to another collection; rebalance leaders; backup and restore collections.
+|<<collection-aliasing.adoc#,Collection Aliasing>>: Create, list or delete collection aliases; set alias properties.
+| <<aliases.adoc#,Aliases>>
+| <<collections-core-admin.adoc#,Collections / Core Admin>>
 |===
-// end::configapi-sections[]
+// end::collections-sections[]
 ****

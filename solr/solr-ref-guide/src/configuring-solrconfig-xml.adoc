@@ -44,7 +44,7 @@ In `solrconfig.xml`, you configure important features such as:
 
 * the Admin Web interface
 
-* parameters related to replication and duplication (these parameters are covered in detail in <<legacy-scaling-and-distribution.adoc#,Legacy Scaling and Distribution>>)
+* parameters related to replication and duplication when not running in SolrCloud mode
 
 The `solrconfig.xml` file is located in the `conf/` directory for each collection. Several well-commented example files can be found in the `server/solr/configsets/` directories demonstrating best practices for many different types of installations.
 

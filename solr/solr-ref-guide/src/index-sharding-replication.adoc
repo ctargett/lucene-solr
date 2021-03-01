@@ -1,10 +1,9 @@
 = Index Sharding and Replication
 :page-children: shards-and-indexing-data-in-solrcloud, \
-    distributed-search-with-index-sharding, \
-    merging-indexes, \
+    shard-management, \
+    replica-management, \
     user-managed-index-replication, \
-    replication-screen, \
-    solrcloud-recoveries-and-write-tolerance
+    replication-screen
 // Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -22,19 +21,18 @@
 // specific language governing permissions and limitations
 // under the License.
 
-TBD new parent for sharding topics
+*TODO* new parent for sharding topics
 
 ****
 // This tags the below list so it can be used in the parent page section list
 // tag::sharding-sections[]
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
-| <<shards-and-indexing-data-in-solrcloud.adoc#,Shards and Indexing in SolrCloud>>
-| <<distributed-search-with-index-sharding.adoc#,Distributed Search with Index Sharding>>: Implementing distributed searching in Solr.
-| <<merging-indexes.adoc#,Merging Indexes>>: Information about combining separate indexes in Solr.
-| <<user-managed-index-replication.adoc#,Index Replication>>: Detailed information about replicating your Solr indexes.
-| <<replication-screen.adoc#,Replication Screen>>: The current replication status for the core, and lets you enable/disable replication.
-| <<solrcloud-recoveries-and-write-tolerance.adoc#,SolrCloud Recoveries and Write Tolerance>>
+| <<shards-and-indexing-data-in-solrcloud.adoc#,Shards and Indexing Data in SolrCloud>>
+| <<shard-management.adoc#,Shard Management>>: Create and delete a shard; split a shard into two or more additional shards; force a shard leader.
+| <<replica-management.adoc#,Replica Management>>: Add or delete a replica; set replica properties; move a replica to a different node.
+| <<user-managed-index-replication.adoc#,User-Managed Index Replication>>: Detailed information about replicating your Solr indexes.
+| <<replication-screen.adoc#,Replication Screen>>: The current replication status for the core, and lets you enable/disable replication.|
 |===
 // end::sharding-sections[]
 ****

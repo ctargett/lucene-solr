@@ -158,7 +158,7 @@ Logic and configuration parameters used by request handlers to process query req
 [[shard]]Shard::
 In SolrCloud, a logical partition of a single <<collection,Collection>>. Every shard consists of at least one physical <<replica,Replica>>, but there may be multiple Replicas distributed across multiple <<node,Nodes>> for fault tolerance. See also <<solrclouddef,SolrCloud>>.
 
-[[solrclouddef]]<<solrcloud.adoc#,SolrCloud>>::
+[[solrclouddef]]<<clusters.adoc#solrcloud-mode,SolrCloud>>::
 Umbrella term for a suite of functionality in Solr which allows managing a <<cluster,Cluster>> of Solr <<node,Nodes>> for scalability, fault tolerance, and high availability.
 
 [[schema]]<<solr-schema.adoc#,Solr Schema (managed-schema or schema.xml)>>::
