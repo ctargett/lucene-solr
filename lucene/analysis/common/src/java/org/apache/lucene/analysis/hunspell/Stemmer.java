@@ -16,7 +16,6 @@
  */
 package org.apache.lucene.analysis.hunspell;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +24,6 @@ import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.util.ArrayUtil;
 import org.apache.lucene.util.CharsRef;
 import org.apache.lucene.util.IntsRef;
-import org.apache.lucene.util.automaton.CharacterRunAutomaton;
 import org.apache.lucene.util.fst.FST;
 
 /**
@@ -259,12 +257,8 @@ final class Stemmer {
         }
       }
     }
-    try {
-      return stem(
-          word, offset, length, context, -1, Dictionary.FLAG_UNSET, -1, 0, true, false, processor);
-    } catch (IOException bogus) {
-      throw new RuntimeException(bogus);
-    }
+    return stem(
+        word, offset, length, context, -1, Dictionary.FLAG_UNSET, -1, 0, true, false, processor);
   }
 
   /**
@@ -373,22 +367,18 @@ final class Stemmer {
       int recursionDepth,
       boolean doPrefix,
       boolean previousWasPrefix,
-      RootProcessor processor)
-      throws IOException {
+      RootProcessor processor) {
     if (doPrefix && dictionary.prefixes != null) {
       FST<IntsRef> fst = dictionary.prefixes;
       FST.Arc<IntsRef> arc = prefixArcs[recursionDepth];
       fst.getFirstArc(arc);
-      IntsRef NO_OUTPUT = fst.outputs.getNoOutput();
-      IntsRef output = NO_OUTPUT;
+      IntsRef output = fst.outputs.getNoOutput();
       int limit = dictionary.fullStrip ? length + 1 : length;
       for (int i = 0; i < limit; i++) {
         if (i > 0) {
-          char ch = word[offset + i - 1];
-          if (fst.findTargetArc(ch, arc, arc, prefixReader) == null) {
+          output = Dictionary.nextArc(fst, arc, prefixReader, output, word[offset + i - 1]);
+          if (output == null) {
             break;
-          } else if (arc.output() != NO_OUTPUT) {
-            output = fst.outputs.add(output, arc.output());
           }
         }
         if (!arc.isFinal()) {
@@ -431,16 +421,13 @@ final class Stemmer {
       FST<IntsRef> fst = dictionary.suffixes;
       FST.Arc<IntsRef> arc = suffixArcs[recursionDepth];
       fst.getFirstArc(arc);
-      IntsRef NO_OUTPUT = fst.outputs.getNoOutput();
-      IntsRef output = NO_OUTPUT;
+      IntsRef output = fst.outputs.getNoOutput();
       int limit = dictionary.fullStrip ? 0 : 1;
       for (int i = length; i >= limit; i--) {
         if (i < length) {
-          char ch = word[offset + i];
-          if (fst.findTargetArc(ch, arc, arc, suffixReader) == null) {
+          output = Dictionary.nextArc(fst, arc, suffixReader, output, word[offset + i]);
+          if (output == null) {
             break;
-          } else if (arc.output() != NO_OUTPUT) {
-            output = fst.outputs.add(output, arc.output());
           }
         }
         if (!arc.isFinal()) {
@@ -498,13 +485,12 @@ final class Stemmer {
     int stripLen = stripEnd - stripStart;
 
     char[] stripData = dictionary.stripData;
-    boolean condition =
-        isPrefix
-            ? checkCondition(
-                affix, stripData, stripStart, stripLen, word, offset + affixLen, deAffixedLen)
-            : checkCondition(affix, word, offset, deAffixedLen, stripData, stripStart, stripLen);
-    if (!condition) {
-      return null;
+    int condition = dictionary.getAffixCondition(affix);
+    if (condition != 0) {
+      int deAffixedOffset = isPrefix ? offset + affixLen : offset;
+      if (!dictionary.patterns.get(condition).acceptsStem(word, deAffixedOffset, deAffixedLen)) {
+        return null;
+      }
     }
 
     if (stripLen == 0) return word;
@@ -559,33 +545,6 @@ final class Stemmer {
     return false;
   }
 
-  /** checks condition of the concatenation of two strings */
-  // note: this is pretty stupid, we really should subtract strip from the condition up front and
-  // just check the stem
-  // but this is a little bit more complicated.
-  private boolean checkCondition(
-      int affix, char[] c1, int c1off, int c1len, char[] c2, int c2off, int c2len) {
-    int condition = dictionary.getAffixCondition(affix);
-    if (condition != 0) {
-      CharacterRunAutomaton pattern = dictionary.patterns.get(condition);
-      int state = 0;
-      for (int i = c1off; i < c1off + c1len; i++) {
-        state = pattern.step(state, c1[i]);
-        if (state == -1) {
-          return false;
-        }
-      }
-      for (int i = c2off; i < c2off + c2len; i++) {
-        state = pattern.step(state, c2[i]);
-        if (state == -1) {
-          return false;
-        }
-      }
-      return pattern.isAccept(state);
-    }
-    return true;
-  }
-
   /**
    * Applies the affix rule to the given word, producing a list of stems if any are found
    *
@@ -610,8 +569,7 @@ final class Stemmer {
       int prefixId,
       int recursionDepth,
       boolean prefix,
-      RootProcessor processor)
-      throws IOException {
+      RootProcessor processor) {
     char flag = dictionary.affixData(affix, Dictionary.AFFIX_FLAG);
 
     boolean skipLookup = needsAnotherAffix(affix, previousAffix, !prefix, prefixId);
@@ -648,11 +606,11 @@ final class Stemmer {
       if (recursionDepth == 0) {
         if (prefix) {
           prefixId = affix;
-          doPrefix = dictionary.complexPrefixes && dictionary.isSecondStageAffix(flag);
+          doPrefix = dictionary.complexPrefixes && dictionary.isSecondStagePrefix(flag);
           // we took away the first prefix.
           // COMPLEXPREFIXES = true:  combine with a second prefix and another suffix
           // COMPLEXPREFIXES = false: combine with a suffix
-        } else if (!dictionary.complexPrefixes && dictionary.isSecondStageAffix(flag)) {
+        } else if (!dictionary.complexPrefixes && dictionary.isSecondStageSuffix(flag)) {
           doPrefix = false;
           // we took away a suffix.
           // COMPLEXPREFIXES = true: we don't recurse! only one suffix allowed
@@ -665,7 +623,7 @@ final class Stemmer {
         if (prefix && dictionary.complexPrefixes) {
           prefixId = affix;
           // we took away the second prefix: go look for another suffix
-        } else if (prefix || dictionary.complexPrefixes || !dictionary.isSecondStageAffix(flag)) {
+        } else if (prefix || dictionary.complexPrefixes || !dictionary.isSecondStageSuffix(flag)) {
           return true;
         }
         // we took away a prefix, then a suffix: go look for another suffix

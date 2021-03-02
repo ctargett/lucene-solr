@@ -16,6 +16,8 @@
  */
 package org.apache.lucene.analysis.hunspell;
 
+import static org.apache.lucene.analysis.hunspell.AffixKind.*;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -59,8 +61,6 @@ import org.apache.lucene.util.IntsRefBuilder;
 import org.apache.lucene.util.OfflineSorter;
 import org.apache.lucene.util.OfflineSorter.ByteSequencesReader;
 import org.apache.lucene.util.OfflineSorter.ByteSequencesWriter;
-import org.apache.lucene.util.automaton.CharacterRunAutomaton;
-import org.apache.lucene.util.automaton.RegExp;
 import org.apache.lucene.util.fst.FST;
 import org.apache.lucene.util.fst.FSTCompiler;
 import org.apache.lucene.util.fst.IntSequenceOutputs;
@@ -89,7 +89,7 @@ public class Dictionary {
    * All condition checks used by prefixes and suffixes. these are typically re-used across many
    * affix stripping rules. so these are deduplicated, to save RAM.
    */
-  ArrayList<CharacterRunAutomaton> patterns = new ArrayList<>();
+  ArrayList<AffixCondition> patterns = new ArrayList<>();
 
   /**
    * The entries in the .dic file, mapping to their set of flags. the fst output is the ordinal list
@@ -149,7 +149,7 @@ public class Dictionary {
    * All flags used in affix continuation classes. If an outer affix's flag isn't here, there's no
    * need to do 2-level affix stripping with it.
    */
-  private char[] secondStageAffixFlags;
+  private char[] secondStagePrefixFlags, secondStageSuffixFlags;
 
   char circumfix;
   char keepcase, forceUCase;
@@ -297,29 +297,29 @@ public class Dictionary {
     final FST.BytesReader bytesReader = fst.getBytesReader();
     final FST.Arc<IntsRef> arc = fst.getFirstArc(new FST.Arc<>());
     // Accumulate output as we go
-    final IntsRef NO_OUTPUT = fst.outputs.getNoOutput();
-    IntsRef output = NO_OUTPUT;
+    IntsRef output = fst.outputs.getNoOutput();
 
     int l = offset + length;
-    try {
-      for (int i = offset, cp; i < l; i += Character.charCount(cp)) {
-        cp = Character.codePointAt(word, i, l);
-        if (fst.findTargetArc(cp, arc, arc, bytesReader) == null) {
-          return null;
-        } else if (arc.output() != NO_OUTPUT) {
-          output = fst.outputs.add(output, arc.output());
-        }
-      }
-      if (fst.findTargetArc(FST.END_LABEL, arc, arc, bytesReader) == null) {
+    for (int i = offset, cp; i < l; i += Character.charCount(cp)) {
+      cp = Character.codePointAt(word, i, l);
+      output = nextArc(fst, arc, bytesReader, output, cp);
+      if (output == null) {
         return null;
-      } else if (arc.output() != NO_OUTPUT) {
-        return fst.outputs.add(output, arc.output());
-      } else {
-        return output;
+      }
+    }
+    return nextArc(fst, arc, bytesReader, output, FST.END_LABEL);
+  }
+
+  static IntsRef nextArc(
+      FST<IntsRef> fst, FST.Arc<IntsRef> arc, FST.BytesReader reader, IntsRef output, int ch) {
+    try {
+      if (fst.findTargetArc(ch, arc, arc, reader) == null) {
+        return null;
       }
     } catch (IOException bogus) {
       throw new RuntimeException(bogus);
     }
+    return fst.outputs.add(output, arc.output());
   }
 
   /**
@@ -333,11 +333,12 @@ public class Dictionary {
       throws IOException, ParseException {
     TreeMap<String, List<Integer>> prefixes = new TreeMap<>();
     TreeMap<String, List<Integer>> suffixes = new TreeMap<>();
-    Set<Character> stage2Flags = new HashSet<>();
+    Set<Character> prefixContFlags = new HashSet<>();
+    Set<Character> suffixContFlags = new HashSet<>();
     Map<String, Integer> seenPatterns = new HashMap<>();
 
     // zero condition -> 0 ord
-    seenPatterns.put(".*", 0);
+    seenPatterns.put(AffixCondition.ALWAYS_TRUE_KEY, 0);
     patterns.add(null);
 
     // zero strip -> 0 ord
@@ -361,9 +362,11 @@ public class Dictionary {
       } else if ("AM".equals(firstWord)) {
         parseMorphAlias(line);
       } else if ("PFX".equals(firstWord)) {
-        parseAffix(prefixes, stage2Flags, line, reader, false, seenPatterns, seenStrips, flags);
+        parseAffix(
+            prefixes, prefixContFlags, line, reader, PREFIX, seenPatterns, seenStrips, flags);
       } else if ("SFX".equals(firstWord)) {
-        parseAffix(suffixes, stage2Flags, line, reader, true, seenPatterns, seenStrips, flags);
+        parseAffix(
+            suffixes, suffixContFlags, line, reader, SUFFIX, seenPatterns, seenStrips, flags);
       } else if (line.equals("COMPLEXPREFIXES")) {
         complexPrefixes =
             true; // 2-stage prefix+1-stage suffix instead of 2-stage suffix+1-stage prefix
@@ -478,7 +481,8 @@ public class Dictionary {
 
     this.prefixes = affixFST(prefixes);
     this.suffixes = affixFST(suffixes);
-    secondStageAffixFlags = toSortedCharArray(stage2Flags);
+    secondStagePrefixFlags = toSortedCharArray(prefixContFlags);
+    secondStageSuffixFlags = toSortedCharArray(suffixContFlags);
 
     int totalChars = 0;
     for (String strip : seenStrips.keySet()) {
@@ -653,25 +657,6 @@ public class Dictionary {
     return fstCompiler.compile();
   }
 
-  static String escapeDash(String re) {
-    // we have to be careful, even though dash doesn't have a special meaning,
-    // some dictionaries already escape it (e.g. pt_PT), so we don't want to nullify it
-    StringBuilder escaped = new StringBuilder();
-    for (int i = 0; i < re.length(); i++) {
-      char c = re.charAt(i);
-      if (c == '-') {
-        escaped.append("\\-");
-      } else {
-        escaped.append(c);
-        if (c == '\\' && i + 1 < re.length()) {
-          escaped.append(re.charAt(i + 1));
-          i++;
-        }
-      }
-    }
-    return escaped.toString();
-  }
-
   /**
    * Parses a specific affix rule putting the result into the provided affix map
    *
@@ -686,7 +671,7 @@ public class Dictionary {
       Set<Character> secondStageFlags,
       String header,
       LineNumberReader reader,
-      boolean isSuffix,
+      AffixKind kind,
       Map<String, Integer> seenPatterns,
       Map<String, Integer> seenStrips,
       FlagEnumerator flags)
@@ -736,41 +721,18 @@ public class Dictionary {
       }
 
       String condition = ruleArgs.length > 4 ? ruleArgs[4] : ".";
-      // at least the gascon affix file has this issue
-      if (condition.startsWith("[") && condition.indexOf(']') == -1) {
-        condition = condition + "]";
-      }
-      // "dash hasn't got special meaning" (we must escape it)
-      if (condition.indexOf('-') >= 0) {
-        condition = escapeDash(condition);
-      }
-
-      final String regex;
-      if (".".equals(condition)) {
-        regex = ".*"; // Zero condition is indicated by dot
-      } else if (condition.equals(strip)) {
-        regex = ".*"; // TODO: optimize this better:
-        // if we remove 'strip' from condition, we don't have to append 'strip' to check it...!
-        // but this is complicated...
-      } else {
-        // TODO: really for suffixes we should reverse the automaton and run them backwards
-        regex = isSuffix ? ".*" + condition : condition + ".*";
-      }
+      String key = AffixCondition.uniqueKey(kind, strip, condition);
 
       // deduplicate patterns
-      Integer patternIndex = seenPatterns.get(regex);
+      Integer patternIndex = seenPatterns.get(key);
       if (patternIndex == null) {
         patternIndex = patterns.size();
         if (patternIndex > Short.MAX_VALUE) {
           throw new UnsupportedOperationException(
               "Too many patterns, please report this to dev@lucene.apache.org");
         }
-        seenPatterns.put(regex, patternIndex);
-        try {
-          patterns.add(new CharacterRunAutomaton(conditionRegexp(regex).toAutomaton()));
-        } catch (IllegalArgumentException e) {
-          throw new IllegalArgumentException("On line " + reader.getLineNumber() + ": " + line, e);
-        }
+        seenPatterns.put(key, patternIndex);
+        patterns.add(AffixCondition.compile(kind, strip, condition, line));
       }
 
       Integer stripOrd = seenStrips.get(strip);
@@ -809,23 +771,12 @@ public class Dictionary {
         affixArg = cleanInput(affixArg, sb).toString();
       }
 
-      if (isSuffix) {
+      if (kind == SUFFIX) {
         affixArg = new StringBuilder(affixArg).reverse().toString();
       }
 
       affixes.computeIfAbsent(affixArg, __ -> new ArrayList<>()).add(currentAffix);
       currentAffix++;
-    }
-  }
-
-  private static RegExp conditionRegexp(String regex) {
-    try {
-      return new RegExp(regex, RegExp.NONE);
-    } catch (IllegalArgumentException e) {
-      if (e.getMessage().contains("expected ']'")) {
-        return conditionRegexp(regex + "]");
-      }
-      throw e;
     }
   }
 
@@ -1624,8 +1575,12 @@ public class Dictionary {
     return chars;
   }
 
-  boolean isSecondStageAffix(char flag) {
-    return Arrays.binarySearch(secondStageAffixFlags, flag) >= 0;
+  boolean isSecondStagePrefix(char flag) {
+    return Arrays.binarySearch(secondStagePrefixFlags, flag) >= 0;
+  }
+
+  boolean isSecondStageSuffix(char flag) {
+    return Arrays.binarySearch(secondStageSuffixFlags, flag) >= 0;
   }
 
   /** folds single character (according to LANG if present) */

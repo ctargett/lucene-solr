@@ -22,6 +22,7 @@ import static org.apache.lucene.analysis.hunspell.Dictionary.AFFIX_STRIP_ORD;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -29,11 +30,12 @@ import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
+import org.apache.lucene.util.ArrayUtil;
 import org.apache.lucene.util.IntsRef;
 import org.apache.lucene.util.fst.FST;
 import org.apache.lucene.util.fst.IntsRefFSTEnum;
+import org.apache.lucene.util.fst.IntsRefFSTEnum.InputOutput;
 
 /**
  * A class that traverses the entire dictionary and applies affix rules to check if those yield
@@ -43,6 +45,7 @@ class GeneratingSuggester {
   private static final int MAX_ROOTS = 100;
   private static final int MAX_WORDS = 100;
   private static final int MAX_GUESSES = 200;
+  private static final int MAX_ROOT_LENGTH_DIFF = 4;
   private final Dictionary dictionary;
   private final Hunspell speller;
 
@@ -60,48 +63,59 @@ class GeneratingSuggester {
 
   private List<Weighted<Root<String>>> findSimilarDictionaryEntries(
       String word, WordCase originalCase) {
-    PriorityQueue<Weighted<Root<String>>> roots = new PriorityQueue<>();
-    processFST(
-        dictionary.words,
-        (key, forms) -> {
-          if (Math.abs(key.length - word.length()) > 4) return;
+    Comparator<Weighted<Root<String>>> natural = Comparator.naturalOrder();
+    PriorityQueue<Weighted<Root<String>>> roots = new PriorityQueue<>(natural.reversed());
 
-          String root = toString(key);
-          List<Root<String>> entries = filterSuitableEntries(root, forms);
-          if (entries.isEmpty()) return;
+    IntsRefFSTEnum<IntsRef> fstEnum = new IntsRefFSTEnum<>(dictionary.words);
+    InputOutput<IntsRef> mapping;
+    while ((mapping = nextKey(fstEnum, word.length() + 4)) != null) {
+      speller.checkCanceled.run();
 
-          if (originalCase == WordCase.LOWER
-              && WordCase.caseOf(root) == WordCase.TITLE
-              && !dictionary.hasLanguage("de")) {
-            return;
-          }
+      IntsRef key = mapping.input;
+      if (Math.abs(key.length - word.length()) > MAX_ROOT_LENGTH_DIFF) {
+        assert key.length < word.length(); // nextKey takes care of longer keys
+        continue;
+      }
 
-          String lower = dictionary.toLowerCase(root);
-          int sc =
-              ngram(3, word, lower, EnumSet.of(NGramOptions.LONGER_WORSE))
-                  + commonPrefix(word, root);
+      String root = toString(key);
+      List<Root<String>> entries = filterSuitableEntries(root, mapping.output);
+      if (entries.isEmpty()) continue;
 
-          if (roots.size() == MAX_ROOTS && sc < roots.peek().score) {
-            return;
-          }
+      if (originalCase == WordCase.LOWER
+          && WordCase.caseOf(root) == WordCase.TITLE
+          && !dictionary.hasLanguage("de")) {
+        continue;
+      }
 
-          entries.forEach(e -> roots.add(new Weighted<>(e, sc)));
-          while (roots.size() > MAX_ROOTS) {
-            roots.poll();
-          }
-        });
+      String lower = dictionary.toLowerCase(root);
+      int sc =
+          ngram(3, word, lower, EnumSet.of(NGramOptions.LONGER_WORSE)) + commonPrefix(word, root);
+
+      if (roots.size() == MAX_ROOTS && sc < roots.peek().score) {
+        continue;
+      }
+
+      entries.forEach(e -> roots.add(new Weighted<>(e, sc)));
+      while (roots.size() > MAX_ROOTS) {
+        roots.poll();
+      }
+    }
     return roots.stream().sorted().collect(Collectors.toList());
   }
 
-  private void processFST(FST<IntsRef> fst, BiConsumer<IntsRef, IntsRef> keyValueConsumer) {
-    if (fst == null) return;
+  private static InputOutput<IntsRef> nextKey(IntsRefFSTEnum<IntsRef> fstEnum, int maxLen) {
     try {
-      IntsRefFSTEnum<IntsRef> fstEnum = new IntsRefFSTEnum<>(fst);
-      IntsRefFSTEnum.InputOutput<IntsRef> mapping;
-      while ((mapping = fstEnum.next()) != null) {
-        speller.checkCanceled.run();
-        keyValueConsumer.accept(mapping.input, mapping.output);
+      InputOutput<IntsRef> next = fstEnum.next();
+      while (next != null && next.input.length > maxLen) {
+        int offset = next.input.offset;
+        int[] ints = ArrayUtil.copyOfSubArray(next.input.ints, offset, offset + maxLen);
+        if (ints[ints.length - 1] == Integer.MAX_VALUE) {
+          throw new AssertionError("Too large char");
+        }
+        ints[ints.length - 1]++;
+        next = fstEnum.seekCeil(new IntsRef(ints, 0, ints.length));
       }
+      return next;
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -167,73 +181,107 @@ class GeneratingSuggester {
   }
 
   private List<String> expandRoot(Root<String> root, String misspelled) {
-    List<String> crossProducts = new ArrayList<>();
+    List<char[]> crossProducts = new ArrayList<>();
     Set<String> result = new LinkedHashSet<>();
 
     if (!dictionary.hasFlag(root.entryId, dictionary.needaffix)) {
       result.add(root.word);
     }
 
+    char[] wordChars = root.word.toCharArray();
+
     // suffixes
-    processFST(
-        dictionary.suffixes,
-        (key, ids) -> {
-          String suffix = new StringBuilder(toString(key)).reverse().toString();
-          if (misspelled.length() <= suffix.length() || !misspelled.endsWith(suffix)) return;
+    processAffixes(
+        false,
+        misspelled,
+        (suffixLength, suffixId) -> {
+          int stripLength = affixStripLength(suffixId);
+          if (!hasCompatibleFlags(root, suffixId)
+              || !checkAffixCondition(suffixId, wordChars, 0, wordChars.length - stripLength)) {
+            return;
+          }
 
-          for (int i = 0; i < ids.length; i++) {
-            int suffixId = ids.ints[ids.offset + i];
-            if (!hasCompatibleFlags(root, suffixId) || !checkAffixCondition(suffixId, root.word)) {
-              continue;
-            }
-
-            String withSuffix =
-                root.word.substring(0, root.word.length() - affixStripLength(suffixId)) + suffix;
-            result.add(withSuffix);
-            if (dictionary.isCrossProduct(suffixId)) {
-              crossProducts.add(withSuffix);
-            }
+          String suffix = misspelled.substring(misspelled.length() - suffixLength);
+          String withSuffix = root.word.substring(0, root.word.length() - stripLength) + suffix;
+          result.add(withSuffix);
+          if (dictionary.isCrossProduct(suffixId)) {
+            crossProducts.add(withSuffix.toCharArray());
           }
         });
 
     // cross-product prefixes
-    processFST(
-        dictionary.prefixes,
-        (key, ids) -> {
-          String prefix = toString(key);
-          if (misspelled.length() <= prefix.length() || !misspelled.startsWith(prefix)) return;
+    processAffixes(
+        true,
+        misspelled,
+        (prefixLength, prefixId) -> {
+          if (!dictionary.hasFlag(root.entryId, dictionary.affixData(prefixId, AFFIX_FLAG))
+              || !dictionary.isCrossProduct(prefixId)) {
+            return;
+          }
 
-          for (int i = 0; i < ids.length; i++) {
-            int prefixId = ids.ints[ids.offset + i];
-            if (!dictionary.hasFlag(root.entryId, dictionary.affixData(prefixId, AFFIX_FLAG))
-                || !dictionary.isCrossProduct(prefixId)) {
-              continue;
-            }
-
-            for (String suffixed : crossProducts) {
-              if (checkAffixCondition(prefixId, suffixed)) {
-                result.add(prefix + suffixed.substring(affixStripLength(prefixId)));
-              }
+          int stripLength = affixStripLength(prefixId);
+          String prefix = misspelled.substring(0, prefixLength);
+          for (char[] suffixed : crossProducts) {
+            int stemLength = suffixed.length - stripLength;
+            if (checkAffixCondition(prefixId, suffixed, stripLength, stemLength)) {
+              result.add(prefix + new String(suffixed, stripLength, stemLength));
             }
           }
         });
 
     // pure prefixes
-    processFST(
-        dictionary.prefixes,
-        (key, ids) -> {
-          String prefix = toString(key);
-          if (misspelled.length() <= prefix.length() || !misspelled.startsWith(prefix)) return;
-
-          for (int i = 0; i < ids.length; i++) {
-            int prefixId = ids.ints[ids.offset + i];
-            if (hasCompatibleFlags(root, prefixId) && checkAffixCondition(prefixId, root.word)) {
-              result.add(prefix + root.word.substring(affixStripLength(prefixId)));
-            }
+    processAffixes(
+        true,
+        misspelled,
+        (prefixLength, prefixId) -> {
+          int stripLength = affixStripLength(prefixId);
+          int stemLength = wordChars.length - stripLength;
+          if (hasCompatibleFlags(root, prefixId)
+              && checkAffixCondition(prefixId, wordChars, stripLength, stemLength)) {
+            String prefix = misspelled.substring(0, prefixLength);
+            result.add(prefix + root.word.substring(stripLength));
           }
         });
 
     return result.stream().limit(MAX_WORDS).collect(Collectors.toList());
+  }
+
+  private void processAffixes(boolean prefixes, String word, AffixProcessor processor) {
+    FST<IntsRef> fst = prefixes ? dictionary.prefixes : dictionary.suffixes;
+    if (fst == null) return;
+
+    FST.Arc<IntsRef> arc = fst.getFirstArc(new FST.Arc<>());
+    if (arc.isFinal()) {
+      processAffixIds(0, arc.nextFinalOutput(), processor);
+    }
+
+    FST.BytesReader reader = fst.getBytesReader();
+
+    IntsRef output = fst.outputs.getNoOutput();
+    int length = word.length();
+    int step = prefixes ? 1 : -1;
+    int limit = prefixes ? length : -1;
+    for (int i = prefixes ? 0 : length - 1; i != limit; i += step) {
+      output = Dictionary.nextArc(fst, arc, reader, output, word.charAt(i));
+      if (output == null) {
+        break;
+      }
+
+      if (arc.isFinal()) {
+        IntsRef affixIds = fst.outputs.add(output, arc.nextFinalOutput());
+        processAffixIds(prefixes ? i + 1 : length - i, affixIds, processor);
+      }
+    }
+  }
+
+  private void processAffixIds(int affixLength, IntsRef affixIds, AffixProcessor processor) {
+    for (int j = 0; j < affixIds.length; j++) {
+      processor.processAffix(affixLength, affixIds.ints[affixIds.offset + j]);
+    }
+  }
+
+  private interface AffixProcessor {
+    void processAffix(int affixLength, int affixId);
   }
 
   private boolean hasCompatibleFlags(Root<?> root, int affixId) {
@@ -247,9 +295,9 @@ class GeneratingSuggester {
         && !dictionary.hasFlag(append, dictionary.onlyincompound);
   }
 
-  private boolean checkAffixCondition(int suffixId, String stem) {
+  private boolean checkAffixCondition(int suffixId, char[] word, int offset, int length) {
     int condition = dictionary.getAffixCondition(suffixId);
-    return condition == 0 || dictionary.patterns.get(condition).run(stem);
+    return condition == 0 || dictionary.patterns.get(condition).acceptsStem(word, offset, length);
   }
 
   private int affixStripLength(int affixId) {
@@ -335,12 +383,20 @@ class GeneratingSuggester {
     if (l2 == 0) {
       return 0;
     }
+
+    int[] lastStarts = new int[l1];
     for (int j = 1; j <= n; j++) {
       int ns = 0;
       for (int i = 0; i <= (l1 - j); i++) {
-        if (s2.contains(s1.substring(i, i + j))) {
-          ns++;
-        } else if (opt.contains(NGramOptions.WEIGHTED)) {
+        if (lastStarts[i] >= 0) {
+          int pos = indexOfSubstring(s2, lastStarts[i], s1, i, j);
+          lastStarts[i] = pos;
+          if (pos >= 0) {
+            ns++;
+            continue;
+          }
+        }
+        if (opt.contains(NGramOptions.WEIGHTED)) {
           ns--;
           if (i == 0 || i == l1 - j) {
             ns--; // side weight
@@ -361,6 +417,19 @@ class GeneratingSuggester {
       ns = Math.abs(l2 - l1) - 2;
     }
     return score - Math.max(ns, 0);
+  }
+
+  private static int indexOfSubstring(
+      String haystack, int haystackPos, String needle, int needlePos, int len) {
+    char c = needle.charAt(needlePos);
+    int limit = haystack.length() - len;
+    for (int i = haystackPos; i <= limit; i++) {
+      if (haystack.charAt(i) == c
+          && haystack.regionMatches(i + 1, needle, needlePos + 1, len - 1)) {
+        return i;
+      }
+    }
+    return -1;
   }
 
   private static int lcs(String s1, String s2) {
