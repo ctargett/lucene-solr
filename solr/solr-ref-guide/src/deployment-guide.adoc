@@ -1,5 +1,6 @@
 = Deployment Guide
 :page-children: installation-deployment, \
+    scaling-solr, \
     monitoring-solr, \
     securing-solr, \
     client-apis
@@ -28,6 +29,13 @@ The Deployment Guide covers installation, upgrades, deployments, monitoring, and
 
 // This pulls the sub-section list from the child page to reduce errors
 include::installation-deployment.adoc[tag=install-sections]
+****
+
+****
+<<scaling-solr.adoc#,*Scaling Solr*>>: Cluster configuration options.
+
+// This pulls the sub-section list from the child page to reduce errors
+include::scaling-solr.adoc[tag=scaling-sections]
 ****
 
 ****

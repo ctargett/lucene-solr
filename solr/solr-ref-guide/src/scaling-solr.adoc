@@ -1,7 +1,7 @@
 = Scaling Solr
 :page-children: clusters, \
     index-sharding-replication, \
-    distributed-requests, \
+    distributed-queries, \
     cluster-coordination, \
     solrcloud-collections, \
     solrcloud-with-legacy-configuration-files
@@ -24,13 +24,15 @@
 
 Solr supports large implementations.
 
-The section <<clusters.adoc#,Solr Clusters>> describes the two main approaches available for scaling.
+The section *<<clusters.adoc#,Solr Clusters>>* describes the two main approaches available for scaling.
 
 Both approaches share the ability to distribute parts of an index across multiple servers, a process called _sharding_.
 This allows for an index that is larger than any one server can host and maintain reasonable performance.
 
 A second process called _replication_ is also shared by both approaches.
 This allows for copying the index (in whole or as shards) across multiple servers, and provides query volume distribution.
+
+The differences between the approaches are then how each cluster is managed and what features are available to you.
 
 ****
 // This tags the below list so it can be used in the parent page section list
@@ -39,17 +41,11 @@ This allows for copying the index (in whole or as shards) across multiple server
 
 include::index-sharding-replication.adoc[tag=sharding-sections]
 
-*Distributed Requests*
+*Distributed Queries*
 
-[cols="1,1",frame=none,grid=none,stripes=none]
-|===
-| <<distributed-requests.adoc#,Distributed Requests>>
-| <<combining-distribution-and-replication.adoc#,Combining Distribution and Replication>>: Detailed information about replicating shards in a distributed index.
-| <<distributed-search-with-index-sharding.adoc#,Distributed Search with Index Sharding>>: Detailed information about implementing distributed searching in Solr.
-| <<solrcloud-query-routing-and-read-tolerance.adoc#,SolrCloud Query Routing And Read Tolerance>>
-|===
+include::distributed-queries.adoc[tag=shard-queries-sections]
 
-*Cluster Coordination*
+*SolrCloud Cluster Coordination*
 
 include::cluster-coordination.adoc[tag=coordination-sections]
 

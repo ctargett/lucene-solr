@@ -28,11 +28,11 @@
 // tag::sharding-sections[]
 [cols="1,1",frame=none,grid=none,stripes=none]
 |===
-| <<shards-and-indexing-data-in-solrcloud.adoc#,Shards and Indexing Data in SolrCloud>>
-| <<shard-management.adoc#,Shard Management>>: Create and delete a shard; split a shard into two or more additional shards; force a shard leader.
-| <<replica-management.adoc#,Replica Management>>: Add or delete a replica; set replica properties; move a replica to a different node.
-| <<user-managed-index-replication.adoc#,User-Managed Index Replication>>: Detailed information about replicating your Solr indexes.
-| <<replication-screen.adoc#,Replication Screen>>: The current replication status for the core, and lets you enable/disable replication.|
+| [.badge.badge-pill.badge-solrcloud]*SolrCloud* <<shards-and-indexing-data-in-solrcloud.adoc#,Shards and Indexing Data in SolrCloud>>
+| [.badge.badge-pill.badge-solrcloud]*SolrCloud* <<shard-management.adoc#,Shard Management>>: Create and delete a shard; split a shard into two or more additional shards; force a shard leader.
+| [.badge.badge-pill.badge-solrcloud]*SolrCloud* <<replica-management.adoc#,Replica Management>>: Add or delete a replica; set replica properties; move a replica to a different node.
+| [.badge.badge-pill.badge-userManaged]*User-Managed* <<user-managed-index-replication.adoc#,User-Managed Index Replication>>: Detailed information about replicating your Solr indexes.
+| [.badge.badge-pill.badge-userManaged]*User-Managed* <<replication-screen.adoc#,Replication Screen>>: The current replication status for the core, and lets you enable/disable replication.|
 |===
 // end::sharding-sections[]
 ****

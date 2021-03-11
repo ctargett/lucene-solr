@@ -3,7 +3,6 @@
     configuring-solrconfig-xml, \
     solr-cores-and-solr-xml, \
     configuration-apis, \
-    scaling-solr, \
     near-real-time-searching, \
     solr-plugins
 // Licensed to the Apache Software Foundation (ASF) under one
@@ -49,13 +48,6 @@ include::solr-cores-and-solr-xml.adoc[tag=solrxml-sections]
 
 // This pulls the sub-section list from the child page to reduce errors
 include::configuration-apis.adoc[tag=configapi-sections]
-****
-
-****
-<<scaling-solr.adoc#,*Scaling Solr*>>: Cluster configuration options.
-
-// This pulls the sub-section list from the child page to reduce errors
-include::scaling-solr.adoc[tag=scaling-sections]
 ****
 
 ****
